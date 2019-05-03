@@ -210,3 +210,10 @@ nbdist/
 .nb-gradle/
 
 # End of https://www.gitignore.io/api/java,code,maven,eclipse,netbeans,intellij
+
+compiler/_build
+compiler/sintatico\.automaton
+
+compiler/sintatico\.conflicts
+
+compiler/lexicoTest\.ml
