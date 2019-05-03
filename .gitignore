@@ -217,3 +217,7 @@ compiler/sintatico\.automaton
 compiler/sintatico\.conflicts
 
 compiler/lexicoTest\.ml
+
+compiler/erroSint\.ml
+
+compiler/sintatico\.msg
