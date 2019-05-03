@@ -32,6 +32,14 @@
  %token CONCAT
  %token EOF
 
+ %left OULOG
+ %left ELOG
+ %left IGUAL DIFER
+ %left MAIOR MENOR
+ %left CONCAT
+ %left MAIS MENOS
+ %left MULT DIV
+
  %start <Ast.programa> programa
 
  %%
