@@ -221,3 +221,5 @@ compiler/lexicoTest\.ml
 compiler/erroSint\.ml
 
 compiler/sintatico\.msg
+
+compiler/sintaticoTest\.byte
