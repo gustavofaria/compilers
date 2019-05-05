@@ -19,7 +19,7 @@ let digito = ['0' - '9']
 let inteiro = '-'? digito+
 
 let letra = ['a' - 'z' 'A' - 'Z']
-let identificador = letra ( letra | digito | '_')*
+let identificador = (letra | '_' ) ( letra | digito | '_')*
 
 let brancos = [' ' '\t']+
 let novalinha = '\r' | '\n' | "\r\n"
