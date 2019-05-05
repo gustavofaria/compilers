@@ -1,15 +1,18 @@
 (* The type of the abstract syntax tree (AST). *)
 type ident = string
 
-type programa = Programa of ident * declaracoes * comandos
+type programa = Programa of ident * declaracoesopt * declaracoesfunc * comandos
+and declaracoesfunc = declaracaofunc list
+and declaracoesopt = declaracoes option
 and declaracoes = declaracao list
 and comandos = comando list
 and declaracao = DecVar of ident * tipo
+
+and declaracaofunc = DecFun of ident * declaracoes * tipo * declaracoesopt * comandos
                                      
 and tipo = TipoInt
          | TipoString
          | TipoBool
-         | TipoArranjo of tipo * int * int
          | TipoRegistro of campos
 
 and campos = campo list
@@ -20,6 +23,7 @@ and comando = CmdAtrib of variavel * expressao
             | CmdWhile of expressao * comandos
             | CmdEntrada of variaveis
             | CmdSaida of expressao list
+            | ChamFunc of ident * expressao list
 
 and variaveis = variavel list
 and variavel = VarSimples of ident
@@ -31,6 +35,7 @@ and expressao = ExpVar of variavel
               | ExpString of string
               | ExpBool of bool
               | ExpOp of oper * expressao * expressao
+              | ExpChamFunc of ident * expressao list
 
 and oper = Mais
          | Menos

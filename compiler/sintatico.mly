@@ -7,17 +7,14 @@ open Ast
 %token <int> INT
 %token <string> ID
 %token <string> STRING
-%token <bool> BOOL
 %token PROGRAMA
 %token VAR
+%token FUNCTION
 %token INICIO
 %token FIM
-%token VIRG DPTOS PTO PPTO PTV
-%token ACOL FCOL
+%token VIRG DPTOS PTO PTV
 %token APAR FPAR
-%token INTEIRO CADEIA BOOLEANO
-%token ARRANJO DE
-%token REGISTRO
+%token INTEIRO CADEIA
 %token SE ENTAO SENAO
 %token WHILE DO
 %token ENTRADA
@@ -53,15 +50,36 @@ programa: PROGRAMA
             nome = ID
           PTV   
             ds = declaracoes 
+            fn = func *
           INICIO
             cs = comando*
           FIM 
             finalizador
-          EOF { Programa (nome, List.flatten ds, cs) }
+          EOF { Programa (nome, ds, fn, cs) }
 
-declaracoes: option( VAR ) dec = declaracao* {dec}
+declaracoes: decs = option(VAR dec = declaracao+ { List.flatten dec}) {decs}
+            
 
 declaracao: ids = separated_nonempty_list(VIRG, ID) DPTOS t = tipo PTV {
+                   List.map (fun id -> DecVar (id,t)) ids
+          }
+
+func: FUNCTION 
+            nome = ID
+          APAR
+            args = argumentos
+          FPAR
+          DPTOS 
+            retorno = tipo
+            PTV 
+          ds = declaracoes 
+          INICIO
+            cs = comando*
+          FIM PTV { DecFun (nome, args, retorno, ds, cs) }
+
+argumentos: dec = separated_list(PTV, declaracao_args) { List.flatten dec}
+
+declaracao_args: ids = separated_nonempty_list(VIRG, ID) DPTOS t = tipo {
                    List.map (fun id -> DecVar (id,t)) ids
           }
 
@@ -69,36 +87,20 @@ finalizador:  PTO  {}
             | PTV  {}
 
 tipo: t=tipo_simples  { t }
-    | t=tipo_arranjo  { t }
-    | t=tipo_registro { t }
-
 
 tipo_simples: INTEIRO  { TipoInt    }
             | CADEIA   { TipoString }
-            | BOOLEANO { TipoBool   }
-
-
-tipo_arranjo: ARRANJO ACOL lim=limites FCOL DE tp=tipo {
-                let (inicio, fim) = lim in
-                TipoArranjo (tp, inicio, fim)
-            }
-
-tipo_registro: REGISTRO
-                 campos=nonempty_list(id=ID DPTOS tp=tipo PTV { (id,tp) } )
-               FIM REGISTRO { TipoRegistro campos }
-
-
-limites: inicio=INT PPTO fim=INT { (inicio, fim) }
 
 comando: c=comando_atribuicao { c }
        | c=comando_se         { c }
        | c=comando_while      { c }
        | c=comando_entrada    { c }
        | c=comando_saida      { c }
+       | c=chamada_func       { c }
 
 comando_atribuicao: v=variavel ATRIB e=expressao PTV {
-      CmdAtrib (v,e)
-}
+      CmdAtrib (v,e) }
+       
 
 comando_se: SE teste=expressao ENTAO
               INICIO
@@ -126,15 +128,15 @@ comando_saida: SAIDA APAR xs=separated_nonempty_list(VIRG, expressao) FPAR PTV {
              }
 
 expressao:
-         | v=variavel { ExpVar v    }
-         | i=INT      { ExpInt i    }
-         | s=STRING   { ExpString s }
-         | b=BOOL     { ExpBool b   }
-	 | e1=expressao op=oper e2=expressao { ExpOp (op, e1, e2) }
- 	 | APAR e=expressao FPAR { e }
+          | v=variavel { ExpVar v    }
+          | i=INT      { ExpInt i    }
+          | s=STRING   { ExpString s }
+          | e1=expressao op=oper e2=expressao { ExpOp (op, e1, e2) }
+          | APAR e=expressao FPAR { e }
+          | c = exp_chamada_func { c } 
 
 %inline oper:
-	| MAIS  { Mais  }
+	      | MAIS  { Mais  }
         | MENOS { Menos }
         | MULT  { Mult  }
         | DIV   { Div   }
@@ -149,6 +151,6 @@ expressao:
 variavel:
         | x=ID       { VarSimples x }
         | v=variavel PTO x=ID { VarCampo (v,x) }
-        | v=variavel ACOL e=expressao FCOL { VarElemento (v,e) }
 
-
+chamada_func: x=ID APAR args=separated_nonempty_list(VIRG,expressao) FPAR PTV { ChamFunc (x,args) }
+exp_chamada_func: x=ID APAR args=separated_list(VIRG,expressao) FPAR { ExpChamFunc (x,args) }

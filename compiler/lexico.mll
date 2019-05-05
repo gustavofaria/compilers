@@ -2,6 +2,7 @@
   open Lexing
   open Printf 
   open Sintatico
+  open String
 
   exception Erro of string
 
@@ -42,6 +43,7 @@ let p = [ 'p'  'P' ]
 let r = [ 'r'  'R' ]
 let s = [ 's'  'S' ]
 let t = [ 't'  'T' ]
+let u = [ 'u'  'U' ]
 let v = [ 'v'  'V' ]
 let w = [ 'w'  'W' ]
 
@@ -66,10 +68,7 @@ rule token =
   | '^'   { CONCAT }
   | '('   { APAR }
   | ')'   { FPAR }
-  | '['   { ACOL }
-  | ']'   { FCOL }
   | ','   { VIRG }
-  | ".."  { PPTO }
   | '.'   { PTO }
   | ':'   { DPTOS }
   | ';'   { PTV }
@@ -79,24 +78,19 @@ rule token =
                STRING str } 
   | p r o g r a m  { PROGRAMA } 
   | v a r      { VAR }
+  | f u n c t i o n { FUNCTION }
   | b e g i n   { INICIO }     
   | e n d      { FIM }
   | i n t e g e r  { INTEIRO }
-  | "cadeia"   { CADEIA }
-  | "booleano" { BOOLEANO }
-  | "arranjo"  { ARRANJO }
-  | "de"       { DE }
-  | "registro" { REGISTRO }
+  | s t r i n g   { CADEIA }
   | i f       { SE }
   | t h e n    { ENTAO }
   | e l s e    { SENAO }
   | w h i l e  { WHILE }
   | d o         { DO }
-  | "entrada"  { ENTRADA }
+  | r e a d  { ENTRADA }
   | w r i t e    { SAIDA }
-  | "verdadeiro" { BOOL true }
-  | "falso"      { BOOL false}  
-  | identificador as x    { ID x }
+  | identificador as x    { ID (uppercase_ascii x ) }
   | inteiro as n  { INT (int_of_string n) }
   | _  { raise (Erro ("Caracter desconhecido: " ^ Lexing.lexeme lexbuf)) }
   | eof   { EOF }
