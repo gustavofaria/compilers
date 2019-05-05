@@ -9,6 +9,7 @@ open Ast
 %token <string> STRING
 %token <bool> BOOL
 %token PROGRAMA
+%token VAR
 %token INICIO
 %token FIM
 %token VIRG DPTOS PTO PPTO PTV
@@ -18,6 +19,7 @@ open Ast
 %token ARRANJO DE
 %token REGISTRO
 %token SE ENTAO SENAO
+%token WHILE DO
 %token ENTRADA
 %token SAIDA
 %token ATRIB
@@ -47,18 +49,24 @@ open Ast
 
 %%
 
-programa: PROGRAMA
-            ds = declaracao*
+programa: PROGRAMA 
+            nome = ID
+          PTV   
+            ds = declaracoes 
           INICIO
             cs = comando*
-          FIM PTV
-          EOF { Programa (List.flatten ds, cs) }
+          FIM 
+            finalizador
+          EOF { Programa (nome, List.flatten ds, cs) }
 
+declaracoes: option( VAR ) dec = declaracao* {dec}
 
 declaracao: ids = separated_nonempty_list(VIRG, ID) DPTOS t = tipo PTV {
                    List.map (fun id -> DecVar (id,t)) ids
           }
 
+finalizador:  PTO  {}
+            | PTV  {}
 
 tipo: t=tipo_simples  { t }
     | t=tipo_arranjo  { t }
@@ -84,6 +92,7 @@ limites: inicio=INT PPTO fim=INT { (inicio, fim) }
 
 comando: c=comando_atribuicao { c }
        | c=comando_se         { c }
+       | c=comando_while      { c }
        | c=comando_entrada    { c }
        | c=comando_saida      { c }
 
@@ -91,18 +100,28 @@ comando_atribuicao: v=variavel ATRIB e=expressao PTV {
       CmdAtrib (v,e)
 }
 
-comando_se: SE APAR teste=expressao FPAR ENTAO
+comando_se: SE teste=expressao ENTAO
+              INICIO
                entao=comando+
-               senao=option(SENAO cs=comando+ {cs})
-            FIM SE PTV {
+              FIM option(PTV)
+               senao=option(SENAO INICIO cs=comando+ FIM option(PTV){cs})
+             {
               CmdSe (teste, entao, senao)
+            }
+
+comando_while: WHILE teste=expressao DO
+              INICIO
+               doit=comando+
+              FIM option(PTV)
+             {
+              CmdWhile (teste, doit)
             }
 
 comando_entrada: ENTRADA xs=separated_nonempty_list(VIRG, variavel) PTV {
                    CmdEntrada xs
                }
 
-comando_saida: SAIDA xs=separated_nonempty_list(VIRG, variavel) PTV {
+comando_saida: SAIDA APAR xs=separated_nonempty_list(VIRG, expressao) FPAR PTV {
                  CmdSaida xs
              }
 

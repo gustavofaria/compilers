@@ -23,14 +23,36 @@ let identificador = letra ( letra | digito | '_')*
 let brancos = [' ' '\t']+
 let novalinha = '\r' | '\n' | "\r\n"
 
-let comentario = "--" [^ '\r' '\n' ]*
+let comentario = "//" [^ '\r' '\n' ]*
+
+let a = [ 'a'  'A' ]
+let b = [ 'b'  'B' ]
+let c = [ 'c'  'C' ]
+let d = [ 'd'  'D' ]
+let e = [ 'e'  'E' ]
+let f = [ 'f'  'F' ]
+let g = [ 'g'  'G' ]
+let h = [ 'h'  'H' ]
+let i = [ 'i'  'I' ]
+let l = [ 'l'  'L' ]
+let m = [ 'm'  'M' ]
+let n = [ 'n'  'N' ]
+let o = [ 'o'  'O' ]
+let p = [ 'p'  'P' ]
+let r = [ 'r'  'R' ]
+let s = [ 's'  'S' ]
+let t = [ 't'  'T' ]
+let v = [ 'v'  'V' ]
+let w = [ 'w'  'W' ]
+
 
 rule token = 
   parse
   | brancos { token lexbuf }
   | novalinha  { incr_num_linha lexbuf; token lexbuf }
   | comentario { token lexbuf }
-  | "/*"       { comentario_bloco 0 lexbuf }  
+  | "(*"       { comentario_bloco_ast 0 lexbuf }  
+  | "{"       { comentario_bloco_chave 0 lexbuf }  
   | '+'   { MAIS }
   | '-'   { MENOS }
   | '*'   { MULT }
@@ -52,24 +74,26 @@ rule token =
   | ':'   { DPTOS }
   | ';'   { PTV }
   | ":="  { ATRIB }
-  | '"'   { let buffer = Buffer.create 1 in 
+  | '''   { let buffer = Buffer.create 1 in 
             let str = leia_string buffer lexbuf in
                STRING str } 
-  | "programa" { PROGRAMA }
-  | "inicio"   { INICIO }
-  | "fim"      { FIM }
-  | "inteiro"  { INTEIRO }
+  | p r o g r a m  { PROGRAMA } 
+  | v a r      { VAR }
+  | b e g i n   { INICIO }     
+  | e n d      { FIM }
+  | i n t e g e r  { INTEIRO }
   | "cadeia"   { CADEIA }
   | "booleano" { BOOLEANO }
   | "arranjo"  { ARRANJO }
   | "de"       { DE }
   | "registro" { REGISTRO }
-  | "fim"      { FIM }
-  | "se"       { SE }
-  | "entao"    { ENTAO }
-  | "senao"    { SENAO }
+  | i f       { SE }
+  | t h e n    { ENTAO }
+  | e l s e    { SENAO }
+  | w h i l e  { WHILE }
+  | d o         { DO }
   | "entrada"  { ENTRADA }
-  | "saida"    { SAIDA }
+  | w r i t e    { SAIDA }
   | "verdadeiro" { BOOL true }
   | "falso"      { BOOL false}  
   | identificador as x    { ID x }
@@ -77,18 +101,23 @@ rule token =
   | _  { raise (Erro ("Caracter desconhecido: " ^ Lexing.lexeme lexbuf)) }
   | eof   { EOF }
 
-and comentario_bloco n = parse
-   "*/"   { if n=0 then token lexbuf 
-            else comentario_bloco (n-1) lexbuf }
-| "/*"    { comentario_bloco (n+1) lexbuf }
-| _       { comentario_bloco n lexbuf }
+and comentario_bloco_ast n = parse
+   "*)"   { if n=0 then token lexbuf 
+            else comentario_bloco_ast (n-1) lexbuf }
+| "(*"    { comentario_bloco_ast (n+1) lexbuf }
+| _       { comentario_bloco_ast n lexbuf }
+and comentario_bloco_chave n = parse
+   "}"   { if n=0 then token lexbuf 
+            else comentario_bloco_chave (n-1) lexbuf }
+| "{"    { comentario_bloco_chave (n+1) lexbuf }
+| _       { comentario_bloco_chave n lexbuf }
 | eof     { raise (Erro "Comentário não terminado") }
 
 and leia_string buffer = parse
-   '"'      { Buffer.contents buffer}
+   '''      { Buffer.contents buffer}
 | "\\t"     { Buffer.add_char buffer '\t'; leia_string buffer lexbuf }
 | "\\n"     { Buffer.add_char buffer '\n'; leia_string buffer lexbuf }
-| '\\' '"'  { Buffer.add_char buffer '"'; leia_string buffer lexbuf }
+| '\\' '\''  { Buffer.add_char buffer '\''; leia_string buffer lexbuf }
 | '\\' '\\' { Buffer.add_char buffer '\\'; leia_string buffer lexbuf }
 | _ as c    { Buffer.add_char buffer c; leia_string buffer lexbuf }
 | eof       { raise (Erro "A string não foi terminada") }	
