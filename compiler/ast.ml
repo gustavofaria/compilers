@@ -49,6 +49,8 @@ and oper = Mais
          | Igual
          | Difer
          | Maior
+         | Menorigual
+         | Maiorigual
          | E
          | Ou
          | Concat

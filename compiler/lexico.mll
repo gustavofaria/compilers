@@ -61,6 +61,8 @@ rule token =
   | '*'   { MULT }
   | '/'   { DIV }
   | '<'   { MENOR }
+  | "<="  { MENORIGUAL }
+  | ">="  { MAIORIGUAL }
   | '='   { IGUAL }
   | "!="  { DIFER }
   | '>'   { MAIOR }

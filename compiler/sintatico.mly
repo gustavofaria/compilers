@@ -33,6 +33,8 @@ open Ast
 %token IGUAL
 %token DIFER
 %token MAIOR
+%token MENORIGUAL
+%token MAIORIGUAL
 %token ELOG
 %token OULOG
 %token CONCAT
@@ -166,6 +168,8 @@ expressao:
         | IGUAL { Igual }
         | DIFER { Difer }
         | MAIOR { Maior }
+        | MENORIGUAL { Menorigual }
+        | MAIORIGUAL { Maiorigual }
         | ELOG  { E     }
         | OULOG { Ou    }
         | CONCAT   { Concat   }
