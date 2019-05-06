@@ -97,6 +97,8 @@ rule token =
   | e l s e    { SENAO }
   | w h i l e  { WHILE }
   | d o         { DO }
+  | c a s e     { CASE }
+  | o f         { OF   }
   | r e a d  { ENTRADA }
   | r e a d l n { ENTRADALN }
   | w r i t e    { SAIDA }

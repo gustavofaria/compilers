@@ -20,6 +20,7 @@ open Ast
 %token INTEIRO CADEIA CARACTER BOOLEANO FLUTUANTE
 %token SE ENTAO SENAO
 %token WHILE DO
+%token CASE OF
 %token ENTRADA
 %token ENTRADALN
 %token SAIDA
@@ -109,6 +110,7 @@ comando: c=comando_atribuicao { c }
        | c=comando_entradaln  { c }
        | c=comando_saidaln    { c }
        | c=comando_expressao  { c }
+       | c=comando_switch     { c }
 
 comando_atribuicao: v=variavel ATRIB e=expressao PTV {
       CmdAtrib (v,e) }
@@ -152,11 +154,28 @@ comando_saidaln: SAIDALN APAR xs=separated_nonempty_list(VIRG, expressao) FPAR P
   
 comando_expressao: e=expressao PTV { CmdExpressao e }
 
+comando_switch: CASE teste=expressao OF
+                testes=case
+                senao=optional(else)
+                { CmdSwitch (teste, testes, senao) }
+
+
+case: l=literal_case DPTOS c=comando_case { Case (l,c) }
+
+comando_case: comando { c }
+              | INICIO c = comando+ FIM { c }
+
+literal_case: i=INT      { ExpInt i    }
+            | s=STRING   { ExpString s }
+            | b=BOOL     { ExpBool b   }
+            | c=CHAR     { ExpChar c   }
+
 expressao:
           | v=variavel { ExpVar v    }
           | i=INT      { ExpInt i    }
           | s=STRING   { ExpString s }
           | b=BOOL     { ExpBool b   }
+          | c=CHAR     { ExpChar c   }
           | f=FLOAT    { ExpFloat f  }
           | e1=expressao op=oper e2=expressao { ExpOp (op, e1, e2) }
           | APAR e=expressao FPAR { e }
