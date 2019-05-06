@@ -73,14 +73,16 @@ rule token =
   | ':'   { DPTOS }
   | ';'   { PTV }
   | ":="  { ATRIB }
-  | '''   { let buffer = Buffer.create 1 in 
+  | '"'   { let buffer = Buffer.create 1 in 
             let str = leia_string buffer lexbuf in
-               STRING str } 
+               STRING str }
+  | ''' _ as c ''' { CHAR (int_of_string c) }
   | p r o g r a m  { PROGRAMA } 
   | v a r      { VAR }
   | f u n c t i o n { FUNCTION }
   | b e g i n   { INICIO }     
   | e n d      { FIM }
+  | c h a r    { CARACTER }
   | i n t e g e r  { INTEIRO }
   | s t r i n g   { CADEIA }
   | i f       { SE }
@@ -89,7 +91,9 @@ rule token =
   | w h i l e  { WHILE }
   | d o         { DO }
   | r e a d  { ENTRADA }
+  | r e a d l n { ENTRADALN }
   | w r i t e    { SAIDA }
+  | w r i t e l n { WRITELN }
   | identificador as x    { ID (uppercase_ascii x ) }
   | inteiro as n  { INT (int_of_string n) }
   | _  { raise (Erro ("Caracter desconhecido: " ^ Lexing.lexeme lexbuf)) }
@@ -108,7 +112,7 @@ and comentario_bloco_chave n = parse
 | eof     { raise (Erro "Comentário não terminado") }
 
 and leia_string buffer = parse
-   '''      { Buffer.contents buffer}
+   '"'      { Buffer.contents buffer}
 | "\\t"     { Buffer.add_char buffer '\t'; leia_string buffer lexbuf }
 | "\\n"     { Buffer.add_char buffer '\n'; leia_string buffer lexbuf }
 | '\\' '\''  { Buffer.add_char buffer '\''; leia_string buffer lexbuf }

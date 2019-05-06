@@ -13,7 +13,7 @@ and declaracaofunc = DecFun of ident * declaracoes * tipo * declaracoesopt * com
 and tipo = TipoInt
          | TipoString
          | TipoBool
-         | TipoRegistro of campos
+         | TipoChar
 
 and campos = campo list
 and campo = ident * tipo
@@ -23,7 +23,9 @@ and comando = CmdAtrib of variavel * expressao
             | CmdWhile of expressao * comandos
             | CmdEntrada of variaveis
             | CmdSaida of expressao list
-            | ChamFunc of ident * expressao list
+            | CmdEntradaln of variaveis
+            | CmdSaidaln of expressao list
+            | CmdExpressao of expressao
 
 and variaveis = variavel list
 and variavel = VarSimples of ident
