@@ -17,6 +17,7 @@
 
 let digito = ['0' - '9']
 let inteiro = '-'? digito+
+let float =  digito+ '.' digito+
 
 let letra = ['a' - 'z' 'A' - 'Z']
 let identificador = (letra | '_' ) ( letra | digito | '_')*
@@ -86,6 +87,7 @@ rule token =
   | i n t e g e r  { INTEIRO }
   | s t r i n g   { CADEIA }
   | b o o l e a n { BOOLEANO }
+  | f l o a t     { FLUTUANTE }
   | t r u e       { BOOL true }
   | f a l s e    { BOOL false}  
   | i f       { SE }
@@ -99,6 +101,7 @@ rule token =
   | w r i t e l n { WRITELN }
   | identificador as x    { ID (uppercase_ascii x ) }
   | inteiro as n  { INT (int_of_string n) }
+  | float as f    { FLOAT f }
   | _  { raise (Erro ("Caracter desconhecido: " ^ Lexing.lexeme lexbuf)) }
   | eof   { EOF }
 

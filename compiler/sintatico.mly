@@ -9,6 +9,7 @@ open Ast
 %token <string> STRING
 %token <string> CHAR
 %token <bool> BOOL
+%token <float> FLOAT
 %token PROGRAMA
 %token VAR
 %token FUNCTION
@@ -16,7 +17,7 @@ open Ast
 %token FIM
 %token VIRG DPTOS PTO PTV
 %token APAR FPAR
-%token INTEIRO CADEIA CARACTER BOOLEANO
+%token INTEIRO CADEIA CARACTER BOOLEANO FLUTUANTE
 %token SE ENTAO SENAO
 %token WHILE DO
 %token ENTRADA
@@ -92,10 +93,11 @@ finalizador:  PTO  {}
 
 tipo: t=tipo_simples  { t }
 
-tipo_simples: INTEIRO  { TipoInt    }
-            | CADEIA   { TipoString }
-            | BOOLEANO { TipoBool   }
-            | CARACTER     { TipoChar   }
+tipo_simples: INTEIRO   { TipoInt    }
+            | CADEIA    { TipoString }
+            | BOOLEANO  { TipoBool   }
+            | CARACTER  { TipoChar   }
+            | FLUTUANTE { TipoFloat  }
 
 comando: c=comando_atribuicao { c }
        | c=comando_se         { c }
@@ -150,6 +152,7 @@ expressao:
           | i=INT      { ExpInt i    }
           | s=STRING   { ExpString s }
           | b=BOOL     { ExpBool b   }
+          | f=FLOAT    { ExpFloat f  }
           | e1=expressao op=oper e2=expressao { ExpOp (op, e1, e2) }
           | APAR e=expressao FPAR { e }
           | c = chamada_func { c } 

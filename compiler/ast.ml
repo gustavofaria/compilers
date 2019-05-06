@@ -14,6 +14,7 @@ and tipo = TipoInt
          | TipoString
          | TipoBool
          | TipoChar
+         | TipoFloat
 
 and campos = campo list
 and campo = ident * tipo
@@ -36,6 +37,7 @@ and expressao = ExpVar of variavel
               | ExpInt of int
               | ExpString of string
               | ExpBool of bool
+              | ExpFloat of float
               | ExpOp of oper * expressao * expressao
               | ExpChamFunc of ident * expressao list
 
