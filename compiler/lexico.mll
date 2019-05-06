@@ -64,10 +64,10 @@ rule token =
   | "<="  { MENORIGUAL }
   | ">="  { MAIORIGUAL }
   | '='   { IGUAL }
-  | "!="  { DIFER }
+  | "<>"  { DIFER }
   | '>'   { MAIOR }
-  | "&&"  { ELOG }
-  | "||"  { OULOG }
+  | "and"  { ELOG }
+  | "or"  { OULOG }
   | '^'   { CONCAT }
   | '('   { APAR }
   | ')'   { FPAR }
