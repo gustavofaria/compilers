@@ -210,7 +210,7 @@ programa: PROGRAMA ID PTV INICIO FIM PTV WHILE
 ## PROGRAMA ID PTV declaracoes list(func) INICIO list(comando) FIM finalizador 
 ##
 
-error-16
+Código encontrado após o fim do programa.
 
 programa: PROGRAMA ID PTV INICIO FIM WHILE 
 ##
@@ -281,7 +281,7 @@ programa: PROGRAMA ID PTV INICIO ID ATRIB WHILE
 ## variavel ATRIB 
 ##
 
-error-21
+Esperava uma expressão
 
 programa: PROGRAMA ID PTV INICIO ID PTO ID WHILE 
 ##
@@ -367,7 +367,7 @@ programa: PROGRAMA ID PTV INICIO SAIDA APAR STRING WHILE
 ## expressao 
 ##
 
-error-27
+Caracter inválido no meio da expressão 
 
 programa: PROGRAMA ID PTV INICIO SAIDA APAR WHILE 
 ##
@@ -379,7 +379,7 @@ programa: PROGRAMA ID PTV INICIO SAIDA APAR WHILE
 ## SAIDA APAR 
 ##
 
-error-28
+O argumento para o comando de saída não pode ser vazio
 
 programa: PROGRAMA ID PTV INICIO SAIDA WHILE 
 ##
@@ -391,7 +391,7 @@ programa: PROGRAMA ID PTV INICIO SAIDA WHILE
 ## SAIDA 
 ##
 
-error-29
+Necesário abrir parênteses para o comando de saída
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO ENTRADA ID PTV FIM PTV ENTAO 
 ##
@@ -415,7 +415,7 @@ programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO ENTRADA ID PTV FIM SENAO
 ## SENAO INICIO nonempty_list(comando) FIM 
 ##
 
-error-31
+Comando não reconhecido
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO ENTRADA ID PTV FIM SENAO INICIO VIRG 
 ##
@@ -427,7 +427,7 @@ programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO ENTRADA ID PTV FIM SENAO
 ## SENAO INICIO 
 ##
 
-error-32
+Falha ao ler comandos do senão
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO ENTRADA ID PTV FIM SENAO WHILE 
 ##
@@ -439,7 +439,7 @@ programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO ENTRADA ID PTV FIM SENAO
 ## SENAO 
 ##
 
-error-33
+Erro ao abrir escopo de 'else'.
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO ENTRADA ID PTV FIM VIRG 
 ##
@@ -463,7 +463,7 @@ programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO VIRG
 ## SE expressao ENTAO INICIO 
 ##
 
-error-35
+Erro ao ler comandos do if
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO WHILE 
 ##
@@ -545,7 +545,7 @@ programa: PROGRAMA ID PTV INICIO WHILE APAR STRING WHILE
 ## APAR expressao 
 ##
 
-error-40
+Faltou fechar parênteses da expressão
 
 programa: PROGRAMA ID PTV INICIO WHILE APAR WHILE 
 ##
@@ -595,7 +595,7 @@ programa: PROGRAMA ID PTV INICIO WHILE ID WHILE
 ## ID 
 ##
 
-error-44
+Impossível avaliar a expressão 
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING CONCAT STRING WHILE 
 ##
@@ -630,7 +630,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING CONCAT WHILE
 ## expressao CONCAT 
 ##
 
-error-46
+A operação de concatenação espera uma expressão do lado direito.
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING DIFER STRING WHILE 
 ##
@@ -702,7 +702,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING DO INICIO ENTRADA ID PTV VIRG
 ## comando 
 ##
 
-error-52
+Encontrado else sem if.
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING DO INICIO VIRG 
 ##
@@ -714,7 +714,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING DO INICIO VIRG
 ## WHILE expressao DO INICIO 
 ##
 
-error-53
+erro ao ler comandos do laço while
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING DO WHILE 
 ##
@@ -726,7 +726,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING DO WHILE
 ## WHILE expressao DO 
 ##
 
-error-54
+Faltando lexema de início de escopo
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING ELOG STRING WHILE 
 ##
@@ -866,7 +866,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING MAIS WHILE
 ## expressao MAIS 
 ##
 
-error-62
+O operador '+' espera duas expressões como argumento.
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING MENOR STRING WHILE 
 ##
@@ -889,7 +889,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING MENOR STRING WHILE
 ## expressao MENOR expressao 
 ##
 
-error-63
+O operador '<' espera duas expressões como argumento.
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING MENOR WHILE 
 ##
@@ -901,7 +901,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING MENOR WHILE
 ## expressao MENOR 
 ##
 
-error-64
+O operador '<' espera duas expressões como argumento.
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING MENOS STRING WHILE 
 ##
@@ -924,7 +924,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING MENOS STRING WHILE
 ## expressao MENOS expressao 
 ##
 
-error-65
+O operador '-' espera duas expressões como argumento.
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING MENOS WHILE 
 ##
@@ -936,7 +936,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING MENOS WHILE
 ## expressao MENOS 
 ##
 
-error-66
+O operador '-' espera duas expressões como argumento.
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING MULT WHILE 
 ##
@@ -948,7 +948,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING MULT WHILE
 ## expressao MULT 
 ##
 
-error-67
+O operador '*' espera duas expressões como argumento.
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING OULOG STRING WHILE 
 ##
@@ -971,7 +971,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING OULOG STRING WHILE
 ## expressao OULOG expressao 
 ##
 
-error-68
+O operador '||' espera duas expressões como argumento.
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING OULOG WHILE 
 ##
@@ -983,7 +983,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING OULOG WHILE
 ## expressao OULOG 
 ##
 
-error-69
+O operador '||' espera duas expressões como argumento.
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING WHILE 
 ##
@@ -1006,7 +1006,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING WHILE
 ## WHILE expressao 
 ##
 
-error-70
+Erro ao reconhecer while. Possivelmente faltando 'do' 
 
 programa: PROGRAMA ID PTV INICIO WHILE WHILE 
 ##
@@ -1018,7 +1018,7 @@ programa: PROGRAMA ID PTV INICIO WHILE WHILE
 ## WHILE 
 ##
 
-error-71
+O comando while espera uma expressão de teste
 
 programa: PROGRAMA ID PTV VAR ID DPTOS CADEIA PTV WHILE 
 ##
@@ -1031,7 +1031,7 @@ programa: PROGRAMA ID PTV VAR ID DPTOS CADEIA PTV WHILE
 ## declaracao 
 ##
 
-error-72
+Erro ao capturar declaração de variáveis
 
 programa: PROGRAMA ID PTV VAR ID DPTOS INTEIRO WHILE 
 ##
@@ -1043,7 +1043,7 @@ programa: PROGRAMA ID PTV VAR ID DPTOS INTEIRO WHILE
 ## separated_nonempty_list(VIRG,ID) DPTOS tipo 
 ##
 
-error-73
+Esperava ";" ao final da declaração;
 
 programa: PROGRAMA ID PTV VAR ID DPTOS WHILE 
 ##
@@ -1080,7 +1080,9 @@ programa: PROGRAMA ID PTV VAR ID WHILE
 ## ID 
 ##
 
-error-78
+Erro na declaracao de variáveis.
+A declaração pode ser do tipo:
+var1, var2:type; var3:type;
 
 programa: PROGRAMA ID PTV VAR WHILE 
 ##
@@ -1104,7 +1106,7 @@ programa: PROGRAMA ID PTV WHILE
 ## PROGRAMA ID PTV 
 ##
 
-error-80
+Esperava uma lista de declarações, 'var', ou a abertura de escopo
 
 programa: PROGRAMA ID WHILE 
 ##
