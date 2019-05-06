@@ -8,6 +8,7 @@ open Ast
 %token <string> ID
 %token <string> STRING
 %token <string> CHAR
+%token <bool> BOOL
 %token PROGRAMA
 %token VAR
 %token FUNCTION
@@ -15,7 +16,7 @@ open Ast
 %token FIM
 %token VIRG DPTOS PTO PTV
 %token APAR FPAR
-%token INTEIRO CADEIA CARACTER
+%token INTEIRO CADEIA CARACTER BOOLEANO
 %token SE ENTAO SENAO
 %token WHILE DO
 %token ENTRADA
@@ -148,6 +149,7 @@ expressao:
           | v=variavel { ExpVar v    }
           | i=INT      { ExpInt i    }
           | s=STRING   { ExpString s }
+          | b=BOOL     { ExpBool b   }
           | e1=expressao op=oper e2=expressao { ExpOp (op, e1, e2) }
           | APAR e=expressao FPAR { e }
           | c = chamada_func { c } 

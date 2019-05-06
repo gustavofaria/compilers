@@ -85,6 +85,9 @@ rule token =
   | c h a r    { CARACTER }
   | i n t e g e r  { INTEIRO }
   | s t r i n g   { CADEIA }
+  | b o o l e a n { BOOLEANO }
+  | t r u e       { BOOL true }
+  | f a l s e    { BOOL false}  
   | i f       { SE }
   | t h e n    { ENTAO }
   | e l s e    { SENAO }
