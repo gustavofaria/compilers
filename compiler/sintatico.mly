@@ -118,10 +118,13 @@ comando_se: SE teste=expressao ENTAO
               INICIO
                entao=comando+
               FIM option(PTV)
-               senao=option(SENAO INICIO cs=comando+ FIM option(PTV){cs})
+               senao=option(else)
              {
               CmdSe (teste, entao, senao)
             }
+
+else: SENAO INICIO cs=comando+ FIM option(PTV) {cs}
+     | SENAO if=comando_se { if }
 
 comando_while: WHILE teste=expressao DO
               INICIO
