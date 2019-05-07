@@ -43,6 +43,7 @@ open Ast
 %left OULOG
 %left ELOG
 %left IGUAL DIFER
+%left MAIORIGUAL MENORIGUAL
 %left MAIOR MENOR
 %left CONCAT
 %left MAIS MENOS
