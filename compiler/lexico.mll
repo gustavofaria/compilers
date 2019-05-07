@@ -66,8 +66,8 @@ rule token =
   | '='   { IGUAL }
   | "<>"  { DIFER }
   | '>'   { MAIOR }
-  | "and"  { ELOG }
-  | "or"  { OULOG }
+  | a n d { ELOG }
+  | o r   { OULOG }
   | '^'   { CONCAT }
   | '('   { APAR }
   | ')'   { FPAR }
