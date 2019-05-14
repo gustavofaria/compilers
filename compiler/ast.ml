@@ -28,6 +28,7 @@ and comando = CmdAtrib of variavel * expressao
             | CmdSaidaln of expressao list
             | CmdExpressao of expressao
             | CmdSwitch of expressao * (case list) * (comandos option)
+            | CmdFor of variavel * expressao * expressao * comandos
 
 and case = Case of literal_case * (comando list)
 
@@ -43,10 +44,11 @@ and variavel = VarSimples of ident
 and expressao = ExpVar of variavel
               | ExpInt of int
               | ExpFloat of float
-              | ExpString of string
               | ExpChar of char
+              | ExpString of string
               | ExpOp of oper * expressao * expressao
               | ExpBool of bool
+              | ExpChamFunc of ident * (expressao list)
 
 and oper = Mais
          | Menos
