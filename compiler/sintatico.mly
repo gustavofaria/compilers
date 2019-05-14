@@ -7,7 +7,7 @@ open Ast
 %token <int> INT
 %token <string> ID
 %token <string> STRING
-%token <string> CHAR
+%token <char> CHAR
 %token <bool> BOOL
 %token <float> FLOAT
 %token PROGRAMA
@@ -121,10 +121,12 @@ comando_se: SE teste=expressao ENTAO
               INICIO
                entao=comando+
               FIM option(PTV)
-               senao=option(SENAO INICIO cs=comando+ FIM option(PTV))
+              senao= option(SENAO _senao = myelse { _senao })
              {
               CmdSe (teste, entao, senao)
             }
+
+myelse: INICIO cs=comando+ FIM option(PTV) {cs}
 
 comando_while: WHILE teste=expressao DO
               INICIO
@@ -153,20 +155,19 @@ comando_saidaln: SAIDALN APAR xs=separated_nonempty_list(VIRG, expressao) FPAR P
 comando_expressao: e=expressao PTV { CmdExpressao e }
 
 comando_switch: CASE teste=expressao OF
-                testes=case
-                senao=optional(else)
+                testes=case+
+                senao=option(myelse)
                 { CmdSwitch (teste, testes, senao) }
 
 
 case: l=literal_case DPTOS c=comando_case { Case (l,c) }
 
-comando_case: comando { c }
+comando_case: c = comando { [c] }
               | INICIO c = comando+ FIM { c }
 
-literal_case: i=INT      { ExpInt i    }
-            | s=STRING   { ExpString s }
-            | b=BOOL     { ExpBool b   }
-            | c=CHAR     { ExpChar c   }
+literal_case:| i=INT      { LitInt i    }
+            | b=BOOL     { LitBool b   }
+            | c=CHAR     { LitChar c   }
 
 expressao:
           | v=variavel { ExpVar v    }
@@ -177,7 +178,6 @@ expressao:
           | f=FLOAT    { ExpFloat f  }
           | e1=expressao op=oper e2=expressao { ExpOp (op, e1, e2) }
           | APAR e=expressao FPAR { e }
-          | c = chamada_func { c } 
 
 %inline oper:
 	      | MAIS  { Mais  }
@@ -199,4 +199,3 @@ variavel:
         | v=variavel PTO x=ID { VarCampo (v,x) }
 
 
-chamada_func: x=ID APAR args=separated_list(VIRG,expressao) FPAR { ExpChamFunc (x,args) }

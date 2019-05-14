@@ -79,7 +79,7 @@ rule token =
   | '"'   { let buffer = Buffer.create 1 in 
             let str = leia_string buffer lexbuf in
                STRING str }
-  | ''' _ as c ''' { CHAR (int_of_string c) }
+  | '\'' _ as c '\'' { CHAR c.[1] }
   | p r o g r a m  { PROGRAMA } 
   | v a r      { VAR }
   | f u n c t i o n { FUNCTION }
@@ -102,10 +102,10 @@ rule token =
   | r e a d  { ENTRADA }
   | r e a d l n { ENTRADALN }
   | w r i t e    { SAIDA }
-  | w r i t e l n { WRITELN }
+  | w r i t e l n { SAIDALN }
   | identificador as x    { ID (uppercase_ascii x ) }
   | inteiro as n  { INT (int_of_string n) }
-  | float as f    { FLOAT f }
+  | float as f    { FLOAT (float_of_string  f) }
   | _  { raise (Erro ("Caracter desconhecido: " ^ Lexing.lexeme lexbuf)) }
   | eof   { EOF }
 
