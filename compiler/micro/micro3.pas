@@ -14,7 +14,7 @@ begin
     begin
         writeln('O número não está no intervalo entre 100 2 200');
     end;
-    end
+end
 else
 begin
     writeln('O número não está no intervalo entre 100 e 200');
