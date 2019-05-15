@@ -63,10 +63,7 @@ programa: PROGRAMA
           PTV   
             ds = declaracoes 
             fn = func *
-          INICIO
-            cs = comando*
-          FIM 
-            finalizador
+            cs = comando_case
           EOF { Programa (nome, ds, fn, cs) }
 
 declaracoes: decs = option(VAR dec = declaracao+ { List.flatten dec}) {decs}
@@ -85,9 +82,8 @@ func: FUNCTION
             retorno = tipo
             PTV 
           ds = declaracoes 
-          INICIO
-            cs = comando*
-          FIM PTV { DecFun (nome, args, retorno, ds, cs) }
+          cs=comando_case
+           { DecFun (nome, args, retorno, ds, cs) }
 
 argumentos: dec = separated_list(PTV, declaracao_args) { List.flatten dec}
 
@@ -133,9 +129,8 @@ comando_se: SE teste=expressao ENTAO
 myelse: cs=comando_case {cs}
 
 comando_while: WHILE teste=expressao DO
-              INICIO
-               doit=comando+
-              FIM option(PTV)
+               doit=comando_case
+               option(PTV)
              {
               CmdWhile (teste, doit)
             }
@@ -176,8 +171,8 @@ comando_switch: CASE teste=expressao OF
 
 case: l=literal_case DPTOS c=comando_case { Case (l,c) }
 
-comando_case: c = comando { [c] }
-              | INICIO c = comando+ FIM option(PTV) { c }
+comando_case: c = comando option(finalizador) { [c] }
+              | INICIO c = comando+  FIM option(finalizador) { c }
 
 literal_case:| i=INT      { LitInt i    }
             | b=BOOL     { LitBool b   }
