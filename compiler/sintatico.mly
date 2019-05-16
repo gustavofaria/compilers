@@ -1,4 +1,3 @@
-
 %{
 open Ast
 
@@ -40,6 +39,8 @@ open Ast
 %token OULOG
 %token CONCAT
 %token EOF
+%token FOR
+%token TO
 
 %left OULOG
 %left ELOG
@@ -49,8 +50,7 @@ open Ast
 %left CONCAT
 %left MAIS MENOS
 %left MULT DIV
-%left SE
-%left SENAO
+
 
 %start <Ast.programa> programa
 
@@ -61,7 +61,10 @@ programa: PROGRAMA
           PTV   
             ds = declaracoes 
             fn = func *
-            cs = comando_case
+          INICIO
+            cs = comando*
+          FIM 
+            finalizador
           EOF { Programa (nome, ds, fn, cs) }
 
 declaracoes: decs = option(VAR dec = declaracao+ { List.flatten dec}) {decs}
@@ -80,8 +83,9 @@ func: FUNCTION
             retorno = tipo
             PTV 
           ds = declaracoes 
-          cs=comando_case
-           { DecFun (nome, args, retorno, ds, cs) }
+          INICIO
+            cs = comando*
+          FIM PTV { DecFun (nome, args, retorno, ds, cs) }
 
 argumentos: dec = separated_list(PTV, declaracao_args) { List.flatten dec}
 
@@ -109,62 +113,69 @@ comando: c=comando_atribuicao { c }
        | c=comando_saidaln    { c }
        | c=comando_expressao  { c }
        | c=comando_switch     { c }
+       | c=comando_for        { c }
 
-comando_atribuicao: v=variavel ATRIB e=expressao {
+comando_atribuicao: v=variavel ATRIB e=expressao PTV {
       CmdAtrib (v,e) }
        
 
 comando_se: SE teste=expressao ENTAO
               INICIO
-               entao=comando+
+               entao=comando_case
               FIM option(PTV)
               senao= option(SENAO _senao = myelse { _senao })
              {
               CmdSe (teste, entao, senao)
             }
 
-myelse: INICIO cs=comando+ FIM option(PTV) {cs}
+myelse: cs=comando_case {cs}
 
 comando_while: WHILE teste=expressao DO
-               doit=comando_case
+              INICIO
+               doit=comando+
+              FIM option(PTV)
              {
               CmdWhile (teste, doit)
             }
 
-comando_entrada: ENTRADA APAR xs=separated_nonempty_list(VIRG, variavel) FPAR PTV {
 comando_for: FOR v=variavel ATRIB e=expressao TO exp = expressao DO
-               doit=comando_case
+              INICIO
+               doit=comando+
+              FIM option(PTV)
              {
               CmdFor (v, e, exp, doit)
             }
             
+comando_entrada: ENTRADA APAR xs=separated_nonempty_list(VIRG, variavel) FPAR PTV {
                    CmdEntrada xs
                }
 
-comando_entradaln: ENTRADALN APAR xs=separated_nonempty_list(VIRG, variavel) FPAR {
+comando_entradaln: ENTRADALN APAR xs=separated_nonempty_list(VIRG, variavel) FPAR PTV {
                    CmdEntradaln xs
                }
 
-comando_saida: SAIDA APAR xs=separated_nonempty_list(VIRG, expressao) FPAR {
+comando_saida: SAIDA APAR xs=separated_nonempty_list(VIRG, expressao) FPAR PTV {
                  CmdSaida xs
              }
 
-comando_saidaln: SAIDALN APAR xs=separated_nonempty_list(VIRG, expressao) FPAR {
+comando_saidaln: SAIDALN APAR xs=separated_nonempty_list(VIRG, expressao) FPAR PTV {
                  CmdSaidaln xs
              }
   
-comando_expressao: e=expressao { CmdExpressao e }
+comando_expressao: e=expressao PTV { CmdExpressao e }
 
 comando_switch: CASE teste=expressao OF
                 testes=case+
                 senao= option(SENAO _senao = myelse { _senao })
+                FIM 
+                option(PTV)
                 { CmdSwitch (teste, testes, senao) }
 
 
 case: l=literal_case DPTOS c=comando_case { Case (l,c) }
 
 comando_case: c = comando { [c] }
-              | INICIO c = comando+ FIM { c }
+              | INICIO c = comando+ FIM option(PTV) { c }
 
 literal_case:| i=INT      { LitInt i    }
             | b=BOOL     { LitBool b   }
@@ -173,12 +184,14 @@ literal_case:| i=INT      { LitInt i    }
 expressao:
           | v=variavel { ExpVar v    }
           | i=INT      { ExpInt i    }
+          | c=CHAR     { ExpChar c   }
           | s=STRING   { ExpString s }
           | b=BOOL     { ExpBool b   }
-          | c=CHAR     { ExpChar c   }
           | f=FLOAT    { ExpFloat f  }
           | e1=expressao op=oper e2=expressao { ExpOp (op, e1, e2) }
           | APAR e=expressao FPAR { e }
+          | c = chamada_func { c }
+
 
 %inline oper:
 	      | MAIS  { Mais  }
@@ -198,5 +211,7 @@ expressao:
 variavel:
         | x=ID       { VarSimples x }
         | v=variavel PTO x=ID { VarCampo (v,x) }
+
+chamada_func: x=ID APAR args=separated_list(VIRG,expressao) FPAR { ExpChamFunc (x,args) }
 
 

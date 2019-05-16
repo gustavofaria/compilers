@@ -1,6 +1,6 @@
 programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS BOOLEANO PTV INICIO FIM PTV WHILE 
 ##
-## Ends in an error in state: 175.
+## Ends in an error in state: 194.
 ##
 ## list(func) -> func . list(func) [ INICIO ]
 ##
@@ -12,7 +12,7 @@ programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS BOOLEANO PTV INICIO FIM PT
 
 programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS INTEIRO PTV INICIO FIM WHILE 
 ##
-## Ends in an error in state: 163.
+## Ends in an error in state: 182.
 ##
 ## func -> FUNCTION ID APAR argumentos FPAR DPTOS tipo PTV declaracoes INICIO list(comando) FIM . PTV [ INICIO FUNCTION ]
 ##
@@ -177,7 +177,7 @@ programa: PROGRAMA ID PTV FUNCTION WHILE
 
 programa: PROGRAMA ID PTV INICIO APAR STRING WHILE 
 ##
-## Ends in an error in state: 52.
+## Ends in an error in state: 53.
 ##
 ## expressao -> expressao . MAIS expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ELOG DIV DIFER CONCAT ]
 ## expressao -> expressao . MENOS expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ELOG DIV DIFER CONCAT ]
@@ -192,7 +192,7 @@ programa: PROGRAMA ID PTV INICIO APAR STRING WHILE
 ## expressao -> expressao . ELOG expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ELOG DIV DIFER CONCAT ]
 ## expressao -> expressao . OULOG expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ELOG DIV DIFER CONCAT ]
 ## expressao -> expressao . CONCAT expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ELOG DIV DIFER CONCAT ]
-## expressao -> APAR expressao . FPAR [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> APAR expressao . FPAR [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## APAR expressao 
@@ -202,9 +202,9 @@ programa: PROGRAMA ID PTV INICIO APAR STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO APAR WHILE 
 ##
-## Ends in an error in state: 48.
+## Ends in an error in state: 49.
 ##
-## expressao -> APAR . expressao FPAR [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> APAR . expressao FPAR [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## APAR 
@@ -212,36 +212,48 @@ programa: PROGRAMA ID PTV INICIO APAR WHILE
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV INICIO STRING PTV FIM VIRG 
+programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV FIM VIRG 
 ##
-## Ends in an error in state: 126.
+## Ends in an error in state: 156.
 ##
-## myelse -> INICIO nonempty_list(comando) FIM . option(PTV) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_switch -> CASE expressao OF nonempty_list(case) option(__anonymous_2) FIM . option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
-## INICIO nonempty_list(comando) FIM 
+## CASE expressao OF nonempty_list(case) option(__anonymous_2) FIM 
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV INICIO VIRG 
+programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV SENAO BOOL PTV EOF 
 ##
-## Ends in an error in state: 120.
+## Ends in an error in state: 155.
 ##
-## myelse -> INICIO . nonempty_list(comando) FIM option(PTV) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_switch -> CASE expressao OF nonempty_list(case) option(__anonymous_2) . FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
-## INICIO 
+## CASE expressao OF nonempty_list(case) option(__anonymous_2) 
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV VIRG 
+programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV SENAO VIRG 
 ##
-## Ends in an error in state: 151.
+## Ends in an error in state: 135.
 ##
-## nonempty_list(case) -> case . [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
-## nonempty_list(case) -> case . nonempty_list(case) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## option(__anonymous_2) -> SENAO . myelse [ FIM ]
+##
+## The known suffix of the stack is as follows:
+## SENAO 
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV WHILE 
+##
+## Ends in an error in state: 162.
+##
+## nonempty_list(case) -> case . [ SENAO FIM ]
+## nonempty_list(case) -> case . nonempty_list(case) [ SENAO FIM ]
 ##
 ## The known suffix of the stack is as follows:
 ## case 
@@ -249,23 +261,11 @@ programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV VIRG
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS INICIO VIRG 
-##
-## Ends in an error in state: 146.
-##
-## comando_case -> INICIO . nonempty_list(comando) FIM [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
-##
-## The known suffix of the stack is as follows:
-## INICIO 
-##
-
-<YOUR SYNTAX ERROR MESSAGE HERE>
-
 programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS VIRG 
 ##
-## Ends in an error in state: 145.
+## Ends in an error in state: 160.
 ##
-## case -> literal_case DPTOS . comando_case [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## case -> literal_case DPTOS . comando_case [ SENAO INT FIM CHAR BOOL ]
 ##
 ## The known suffix of the stack is as follows:
 ## literal_case DPTOS 
@@ -275,9 +275,9 @@ programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS VIRG
 
 programa: PROGRAMA ID PTV INICIO CASE STRING OF INT WHILE 
 ##
-## Ends in an error in state: 144.
+## Ends in an error in state: 159.
 ##
-## case -> literal_case . DPTOS comando_case [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## case -> literal_case . DPTOS comando_case [ SENAO INT FIM CHAR BOOL ]
 ##
 ## The known suffix of the stack is as follows:
 ## literal_case 
@@ -287,9 +287,9 @@ programa: PROGRAMA ID PTV INICIO CASE STRING OF INT WHILE
 
 programa: PROGRAMA ID PTV INICIO CASE STRING OF WHILE 
 ##
-## Ends in an error in state: 115.
+## Ends in an error in state: 130.
 ##
-## comando_switch -> CASE expressao OF . nonempty_list(case) option(myelse) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_switch -> CASE expressao OF . nonempty_list(case) option(__anonymous_2) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## CASE expressao OF 
@@ -299,9 +299,9 @@ programa: PROGRAMA ID PTV INICIO CASE STRING OF WHILE
 
 programa: PROGRAMA ID PTV INICIO CASE STRING WHILE 
 ##
-## Ends in an error in state: 114.
+## Ends in an error in state: 129.
 ##
-## comando_switch -> CASE expressao . OF nonempty_list(case) option(myelse) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_switch -> CASE expressao . OF nonempty_list(case) option(__anonymous_2) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ## expressao -> expressao . MAIS expressao [ OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
 ## expressao -> expressao . MENOS expressao [ OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
 ## expressao -> expressao . MULT expressao [ OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
@@ -324,9 +324,9 @@ programa: PROGRAMA ID PTV INICIO CASE STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO CASE WHILE 
 ##
-## Ends in an error in state: 113.
+## Ends in an error in state: 128.
 ##
-## comando_switch -> CASE . expressao OF nonempty_list(case) option(myelse) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_switch -> CASE . expressao OF nonempty_list(case) option(__anonymous_2) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## CASE 
@@ -336,9 +336,9 @@ programa: PROGRAMA ID PTV INICIO CASE WHILE
 
 programa: PROGRAMA ID PTV INICIO ENTRADA APAR ID FPAR WHILE 
 ##
-## Ends in an error in state: 111.
+## Ends in an error in state: 126.
 ##
-## comando_entrada -> ENTRADA APAR separated_nonempty_list(VIRG,variavel) FPAR . PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_entrada -> ENTRADA APAR separated_nonempty_list(VIRG,variavel) FPAR . PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## ENTRADA APAR separated_nonempty_list(VIRG,variavel) FPAR 
@@ -348,9 +348,9 @@ programa: PROGRAMA ID PTV INICIO ENTRADA APAR ID FPAR WHILE
 
 programa: PROGRAMA ID PTV INICIO ENTRADA APAR WHILE 
 ##
-## Ends in an error in state: 109.
+## Ends in an error in state: 124.
 ##
-## comando_entrada -> ENTRADA APAR . separated_nonempty_list(VIRG,variavel) FPAR PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_entrada -> ENTRADA APAR . separated_nonempty_list(VIRG,variavel) FPAR PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## ENTRADA APAR 
@@ -360,9 +360,9 @@ programa: PROGRAMA ID PTV INICIO ENTRADA APAR WHILE
 
 programa: PROGRAMA ID PTV INICIO ENTRADA WHILE 
 ##
-## Ends in an error in state: 108.
+## Ends in an error in state: 123.
 ##
-## comando_entrada -> ENTRADA . APAR separated_nonempty_list(VIRG,variavel) FPAR PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_entrada -> ENTRADA . APAR separated_nonempty_list(VIRG,variavel) FPAR PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## ENTRADA 
@@ -372,9 +372,9 @@ programa: PROGRAMA ID PTV INICIO ENTRADA WHILE
 
 programa: PROGRAMA ID PTV INICIO ENTRADALN APAR ID FPAR WHILE 
 ##
-## Ends in an error in state: 106.
+## Ends in an error in state: 121.
 ##
-## comando_entradaln -> ENTRADALN APAR separated_nonempty_list(VIRG,variavel) FPAR . PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_entradaln -> ENTRADALN APAR separated_nonempty_list(VIRG,variavel) FPAR . PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## ENTRADALN APAR separated_nonempty_list(VIRG,variavel) FPAR 
@@ -384,7 +384,7 @@ programa: PROGRAMA ID PTV INICIO ENTRADALN APAR ID FPAR WHILE
 
 programa: PROGRAMA ID PTV INICIO ENTRADALN APAR ID VIRG WHILE 
 ##
-## Ends in an error in state: 103.
+## Ends in an error in state: 118.
 ##
 ## separated_nonempty_list(VIRG,variavel) -> variavel VIRG . separated_nonempty_list(VIRG,variavel) [ FPAR ]
 ##
@@ -396,7 +396,7 @@ programa: PROGRAMA ID PTV INICIO ENTRADALN APAR ID VIRG WHILE
 
 programa: PROGRAMA ID PTV INICIO ENTRADALN APAR ID WHILE 
 ##
-## Ends in an error in state: 102.
+## Ends in an error in state: 117.
 ##
 ## separated_nonempty_list(VIRG,variavel) -> variavel . [ FPAR ]
 ## separated_nonempty_list(VIRG,variavel) -> variavel . VIRG separated_nonempty_list(VIRG,variavel) [ FPAR ]
@@ -410,9 +410,9 @@ programa: PROGRAMA ID PTV INICIO ENTRADALN APAR ID WHILE
 
 programa: PROGRAMA ID PTV INICIO ENTRADALN APAR WHILE 
 ##
-## Ends in an error in state: 101.
+## Ends in an error in state: 116.
 ##
-## comando_entradaln -> ENTRADALN APAR . separated_nonempty_list(VIRG,variavel) FPAR PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_entradaln -> ENTRADALN APAR . separated_nonempty_list(VIRG,variavel) FPAR PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## ENTRADALN APAR 
@@ -422,9 +422,9 @@ programa: PROGRAMA ID PTV INICIO ENTRADALN APAR WHILE
 
 programa: PROGRAMA ID PTV INICIO ENTRADALN WHILE 
 ##
-## Ends in an error in state: 100.
+## Ends in an error in state: 115.
 ##
-## comando_entradaln -> ENTRADALN . APAR separated_nonempty_list(VIRG,variavel) FPAR PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_entradaln -> ENTRADALN . APAR separated_nonempty_list(VIRG,variavel) FPAR PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## ENTRADALN 
@@ -434,7 +434,7 @@ programa: PROGRAMA ID PTV INICIO ENTRADALN WHILE
 
 programa: PROGRAMA ID PTV INICIO FIM PTV WHILE 
 ##
-## Ends in an error in state: 173.
+## Ends in an error in state: 192.
 ##
 ## programa -> PROGRAMA ID PTV declaracoes list(func) INICIO list(comando) FIM finalizador . EOF [ # ]
 ##
@@ -446,7 +446,7 @@ programa: PROGRAMA ID PTV INICIO FIM PTV WHILE
 
 programa: PROGRAMA ID PTV INICIO FIM WHILE 
 ##
-## Ends in an error in state: 170.
+## Ends in an error in state: 189.
 ##
 ## programa -> PROGRAMA ID PTV declaracoes list(func) INICIO list(comando) FIM . finalizador EOF [ # ]
 ##
@@ -456,11 +456,158 @@ programa: PROGRAMA ID PTV INICIO FIM WHILE
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
+programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING TO STRING DO INICIO STRING PTV FIM VIRG 
+##
+## Ends in an error in state: 165.
+##
+## comando_for -> FOR variavel ATRIB expressao TO expressao DO INICIO nonempty_list(comando) FIM . option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+##
+## The known suffix of the stack is as follows:
+## FOR variavel ATRIB expressao TO expressao DO INICIO nonempty_list(comando) FIM 
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING TO STRING DO INICIO VIRG 
+##
+## Ends in an error in state: 114.
+##
+## comando_for -> FOR variavel ATRIB expressao TO expressao DO INICIO . nonempty_list(comando) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+##
+## The known suffix of the stack is as follows:
+## FOR variavel ATRIB expressao TO expressao DO INICIO 
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING TO STRING DO WHILE 
+##
+## Ends in an error in state: 113.
+##
+## comando_for -> FOR variavel ATRIB expressao TO expressao DO . INICIO nonempty_list(comando) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+##
+## The known suffix of the stack is as follows:
+## FOR variavel ATRIB expressao TO expressao DO 
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING TO STRING WHILE 
+##
+## Ends in an error in state: 112.
+##
+## comando_for -> FOR variavel ATRIB expressao TO expressao . DO INICIO nonempty_list(comando) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## expressao -> expressao . MAIS expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOS expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MULT expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIV expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOR expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . IGUAL expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIFER expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIOR expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENORIGUAL expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIORIGUAL expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . ELOG expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . OULOG expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . CONCAT expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
+##
+## The known suffix of the stack is as follows:
+## FOR variavel ATRIB expressao TO expressao 
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING TO WHILE 
+##
+## Ends in an error in state: 111.
+##
+## comando_for -> FOR variavel ATRIB expressao TO . expressao DO INICIO nonempty_list(comando) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+##
+## The known suffix of the stack is as follows:
+## FOR variavel ATRIB expressao TO 
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING WHILE 
+##
+## Ends in an error in state: 110.
+##
+## comando_for -> FOR variavel ATRIB expressao . TO expressao DO INICIO nonempty_list(comando) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## expressao -> expressao . MAIS expressao [ TO OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
+## expressao -> expressao . MENOS expressao [ TO OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
+## expressao -> expressao . MULT expressao [ TO OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
+## expressao -> expressao . DIV expressao [ TO OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
+## expressao -> expressao . MENOR expressao [ TO OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
+## expressao -> expressao . IGUAL expressao [ TO OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
+## expressao -> expressao . DIFER expressao [ TO OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
+## expressao -> expressao . MAIOR expressao [ TO OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
+## expressao -> expressao . MENORIGUAL expressao [ TO OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
+## expressao -> expressao . MAIORIGUAL expressao [ TO OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
+## expressao -> expressao . ELOG expressao [ TO OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
+## expressao -> expressao . OULOG expressao [ TO OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
+## expressao -> expressao . CONCAT expressao [ TO OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
+##
+## The known suffix of the stack is as follows:
+## FOR variavel ATRIB expressao 
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+programa: PROGRAMA ID PTV INICIO FOR ID ATRIB WHILE 
+##
+## Ends in an error in state: 109.
+##
+## comando_for -> FOR variavel ATRIB . expressao TO expressao DO INICIO nonempty_list(comando) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+##
+## The known suffix of the stack is as follows:
+## FOR variavel ATRIB 
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+programa: PROGRAMA ID PTV INICIO FOR ID WHILE 
+##
+## Ends in an error in state: 108.
+##
+## comando_for -> FOR variavel . ATRIB expressao TO expressao DO INICIO nonempty_list(comando) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## variavel -> variavel . PTO ID [ PTO ATRIB ]
+##
+## The known suffix of the stack is as follows:
+## FOR variavel 
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+programa: PROGRAMA ID PTV INICIO FOR WHILE 
+##
+## Ends in an error in state: 106.
+##
+## comando_for -> FOR . variavel ATRIB expressao TO expressao DO INICIO nonempty_list(comando) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+##
+## The known suffix of the stack is as follows:
+## FOR 
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+programa: PROGRAMA ID PTV INICIO ID APAR WHILE 
+##
+## Ends in an error in state: 45.
+##
+## chamada_func -> ID APAR . loption(separated_nonempty_list(VIRG,expressao)) FPAR [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+##
+## The known suffix of the stack is as follows:
+## ID APAR 
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
 programa: PROGRAMA ID PTV INICIO ID ATRIB STRING WHILE 
 ##
-## Ends in an error in state: 123.
+## Ends in an error in state: 138.
 ##
-## comando_atribuicao -> variavel ATRIB expressao . PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_atribuicao -> variavel ATRIB expressao . PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ## expressao -> expressao . MAIS expressao [ PTV OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
 ## expressao -> expressao . MENOS expressao [ PTV OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
 ## expressao -> expressao . MULT expressao [ PTV OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
@@ -483,9 +630,9 @@ programa: PROGRAMA ID PTV INICIO ID ATRIB STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO ID ATRIB WHILE 
 ##
-## Ends in an error in state: 122.
+## Ends in an error in state: 137.
 ##
-## comando_atribuicao -> variavel ATRIB . expressao PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_atribuicao -> variavel ATRIB . expressao PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## variavel ATRIB 
@@ -495,9 +642,9 @@ programa: PROGRAMA ID PTV INICIO ID ATRIB WHILE
 
 programa: PROGRAMA ID PTV INICIO ID PTO WHILE 
 ##
-## Ends in an error in state: 50.
+## Ends in an error in state: 51.
 ##
-## variavel -> variavel PTO . ID [ VIRG PTV PTO OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ATRIB ]
+## variavel -> variavel PTO . ID [ VIRG TO PTV PTO OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ATRIB ]
 ##
 ## The known suffix of the stack is as follows:
 ## variavel PTO 
@@ -505,25 +652,44 @@ programa: PROGRAMA ID PTV INICIO ID PTO WHILE
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-programa: PROGRAMA ID PTV INICIO ID WHILE 
+programa: PROGRAMA ID PTV INICIO ID VIRG 
 ##
-## Ends in an error in state: 121.
+## Ends in an error in state: 136.
 ##
-## comando_atribuicao -> variavel . ATRIB expressao PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_atribuicao -> variavel . ATRIB expressao PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ## expressao -> variavel . [ PTV OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
 ## variavel -> variavel . PTO ID [ PTV PTO OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ATRIB ]
 ##
 ## The known suffix of the stack is as follows:
 ## variavel 
 ##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 44, spurious reduction of production variavel -> ID 
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+programa: PROGRAMA ID PTV INICIO ID WHILE 
+##
+## Ends in an error in state: 44.
+##
+## chamada_func -> ID . APAR loption(separated_nonempty_list(VIRG,expressao)) FPAR [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## variavel -> ID . [ VIRG TO PTV PTO OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ATRIB ]
+##
+## The known suffix of the stack is as follows:
+## ID 
+##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 programa: PROGRAMA ID PTV INICIO SAIDA APAR STRING FPAR WHILE 
 ##
-## Ends in an error in state: 98.
+## Ends in an error in state: 103.
 ##
-## comando_saida -> SAIDA APAR separated_nonempty_list(VIRG,expressao) FPAR . PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_saida -> SAIDA APAR separated_nonempty_list(VIRG,expressao) FPAR . PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## SAIDA APAR separated_nonempty_list(VIRG,expressao) FPAR 
@@ -533,9 +699,9 @@ programa: PROGRAMA ID PTV INICIO SAIDA APAR STRING FPAR WHILE
 
 programa: PROGRAMA ID PTV INICIO SAIDA APAR WHILE 
 ##
-## Ends in an error in state: 96.
+## Ends in an error in state: 101.
 ##
-## comando_saida -> SAIDA APAR . separated_nonempty_list(VIRG,expressao) FPAR PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_saida -> SAIDA APAR . separated_nonempty_list(VIRG,expressao) FPAR PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## SAIDA APAR 
@@ -545,9 +711,9 @@ programa: PROGRAMA ID PTV INICIO SAIDA APAR WHILE
 
 programa: PROGRAMA ID PTV INICIO SAIDA WHILE 
 ##
-## Ends in an error in state: 95.
+## Ends in an error in state: 100.
 ##
-## comando_saida -> SAIDA . APAR separated_nonempty_list(VIRG,expressao) FPAR PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_saida -> SAIDA . APAR separated_nonempty_list(VIRG,expressao) FPAR PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## SAIDA 
@@ -557,9 +723,9 @@ programa: PROGRAMA ID PTV INICIO SAIDA WHILE
 
 programa: PROGRAMA ID PTV INICIO SAIDALN APAR STRING FPAR WHILE 
 ##
-## Ends in an error in state: 90.
+## Ends in an error in state: 98.
 ##
-## comando_saidaln -> SAIDALN APAR separated_nonempty_list(VIRG,expressao) FPAR . PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_saidaln -> SAIDALN APAR separated_nonempty_list(VIRG,expressao) FPAR . PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## SAIDALN APAR separated_nonempty_list(VIRG,expressao) FPAR 
@@ -569,7 +735,7 @@ programa: PROGRAMA ID PTV INICIO SAIDALN APAR STRING FPAR WHILE
 
 programa: PROGRAMA ID PTV INICIO SAIDALN APAR STRING VIRG WHILE 
 ##
-## Ends in an error in state: 93.
+## Ends in an error in state: 86.
 ##
 ## separated_nonempty_list(VIRG,expressao) -> expressao VIRG . separated_nonempty_list(VIRG,expressao) [ FPAR ]
 ##
@@ -581,7 +747,7 @@ programa: PROGRAMA ID PTV INICIO SAIDALN APAR STRING VIRG WHILE
 
 programa: PROGRAMA ID PTV INICIO SAIDALN APAR STRING WHILE 
 ##
-## Ends in an error in state: 92.
+## Ends in an error in state: 85.
 ##
 ## expressao -> expressao . MAIS expressao [ VIRG OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ELOG DIV DIFER CONCAT ]
 ## expressao -> expressao . MENOS expressao [ VIRG OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ELOG DIV DIFER CONCAT ]
@@ -607,9 +773,9 @@ programa: PROGRAMA ID PTV INICIO SAIDALN APAR STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO SAIDALN APAR WHILE 
 ##
-## Ends in an error in state: 88.
+## Ends in an error in state: 96.
 ##
-## comando_saidaln -> SAIDALN APAR . separated_nonempty_list(VIRG,expressao) FPAR PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_saidaln -> SAIDALN APAR . separated_nonempty_list(VIRG,expressao) FPAR PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## SAIDALN APAR 
@@ -619,9 +785,9 @@ programa: PROGRAMA ID PTV INICIO SAIDALN APAR WHILE
 
 programa: PROGRAMA ID PTV INICIO SAIDALN WHILE 
 ##
-## Ends in an error in state: 87.
+## Ends in an error in state: 95.
 ##
-## comando_saidaln -> SAIDALN . APAR separated_nonempty_list(VIRG,expressao) FPAR PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_saidaln -> SAIDALN . APAR separated_nonempty_list(VIRG,expressao) FPAR PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## SAIDALN 
@@ -629,23 +795,47 @@ programa: PROGRAMA ID PTV INICIO SAIDALN WHILE
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO STRING PTV FIM PTV VIRG 
+programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO INICIO STRING PTV FIM VIRG 
 ##
-## Ends in an error in state: 155.
+## Ends in an error in state: 170.
 ##
-## comando_se -> SE expressao ENTAO INICIO nonempty_list(comando) FIM option(PTV) . option(__anonymous_1) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_case -> INICIO nonempty_list(comando) FIM . option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
-## SE expressao ENTAO INICIO nonempty_list(comando) FIM option(PTV) 
+## INICIO nonempty_list(comando) FIM 
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO STRING PTV FIM SENAO WHILE 
+programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO INICIO VIRG 
 ##
-## Ends in an error in state: 156.
+## Ends in an error in state: 105.
 ##
-## option(__anonymous_1) -> SENAO . myelse [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_case -> INICIO . nonempty_list(comando) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+##
+## The known suffix of the stack is as follows:
+## INICIO 
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO STRING PTV FIM PTV VIRG 
+##
+## Ends in an error in state: 174.
+##
+## comando_se -> SE expressao ENTAO INICIO comando_case FIM option(PTV) . option(__anonymous_1) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+##
+## The known suffix of the stack is as follows:
+## SE expressao ENTAO INICIO comando_case FIM option(PTV) 
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO STRING PTV FIM SENAO VIRG 
+##
+## Ends in an error in state: 175.
+##
+## option(__anonymous_1) -> SENAO . myelse [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## SENAO 
@@ -655,21 +845,33 @@ programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO STRING PTV FIM SENAO WHI
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO STRING PTV FIM VIRG 
 ##
-## Ends in an error in state: 154.
+## Ends in an error in state: 173.
 ##
-## comando_se -> SE expressao ENTAO INICIO nonempty_list(comando) FIM . option(PTV) option(__anonymous_1) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_se -> SE expressao ENTAO INICIO comando_case FIM . option(PTV) option(__anonymous_1) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
-## SE expressao ENTAO INICIO nonempty_list(comando) FIM 
+## SE expressao ENTAO INICIO comando_case FIM 
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO STRING PTV WHILE 
+##
+## Ends in an error in state: 172.
+##
+## comando_se -> SE expressao ENTAO INICIO comando_case . FIM option(PTV) option(__anonymous_1) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+##
+## The known suffix of the stack is as follows:
+## SE expressao ENTAO INICIO comando_case 
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO VIRG 
 ##
-## Ends in an error in state: 86.
+## Ends in an error in state: 94.
 ##
-## comando_se -> SE expressao ENTAO INICIO . nonempty_list(comando) FIM option(PTV) option(__anonymous_1) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_se -> SE expressao ENTAO INICIO . comando_case FIM option(PTV) option(__anonymous_1) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## SE expressao ENTAO INICIO 
@@ -679,9 +881,9 @@ programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO VIRG
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO WHILE 
 ##
-## Ends in an error in state: 85.
+## Ends in an error in state: 93.
 ##
-## comando_se -> SE expressao ENTAO . INICIO nonempty_list(comando) FIM option(PTV) option(__anonymous_1) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_se -> SE expressao ENTAO . INICIO comando_case FIM option(PTV) option(__anonymous_1) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## SE expressao ENTAO 
@@ -691,9 +893,9 @@ programa: PROGRAMA ID PTV INICIO SE STRING ENTAO WHILE
 
 programa: PROGRAMA ID PTV INICIO SE STRING WHILE 
 ##
-## Ends in an error in state: 84.
+## Ends in an error in state: 92.
 ##
-## comando_se -> SE expressao . ENTAO INICIO nonempty_list(comando) FIM option(PTV) option(__anonymous_1) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_se -> SE expressao . ENTAO INICIO comando_case FIM option(PTV) option(__anonymous_1) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ## expressao -> expressao . MAIS expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ENTAO ELOG DIV DIFER CONCAT ]
 ## expressao -> expressao . MENOS expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ENTAO ELOG DIV DIFER CONCAT ]
 ## expressao -> expressao . MULT expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ENTAO ELOG DIV DIFER CONCAT ]
@@ -716,9 +918,9 @@ programa: PROGRAMA ID PTV INICIO SE STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO SE WHILE 
 ##
-## Ends in an error in state: 83.
+## Ends in an error in state: 91.
 ##
-## comando_se -> SE . expressao ENTAO INICIO nonempty_list(comando) FIM option(PTV) option(__anonymous_1) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_se -> SE . expressao ENTAO INICIO comando_case FIM option(PTV) option(__anonymous_1) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## SE 
@@ -728,22 +930,22 @@ programa: PROGRAMA ID PTV INICIO SE WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING CONCAT STRING WHILE 
 ##
-## Ends in an error in state: 68.
+## Ends in an error in state: 70.
 ##
-## expressao -> expressao . MAIS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MULT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIV expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . IGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIFER expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . ELOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . OULOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . CONCAT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao CONCAT expressao . [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MULT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIV expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . IGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIFER expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . ELOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . OULOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . CONCAT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao CONCAT expressao . [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao CONCAT expressao 
@@ -753,9 +955,9 @@ programa: PROGRAMA ID PTV INICIO STRING CONCAT STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING CONCAT WHILE 
 ##
-## Ends in an error in state: 67.
+## Ends in an error in state: 69.
 ##
-## expressao -> expressao CONCAT . expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao CONCAT . expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao CONCAT 
@@ -765,22 +967,22 @@ programa: PROGRAMA ID PTV INICIO STRING CONCAT WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING DIFER STRING WHILE 
 ##
-## Ends in an error in state: 78.
+## Ends in an error in state: 80.
 ##
-## expressao -> expressao . MAIS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MULT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIV expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . IGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIFER expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao DIFER expressao . [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . ELOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . OULOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . CONCAT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MULT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIV expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . IGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIFER expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao DIFER expressao . [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . ELOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . OULOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . CONCAT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao DIFER expressao 
@@ -790,9 +992,9 @@ programa: PROGRAMA ID PTV INICIO STRING DIFER STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING DIFER WHILE 
 ##
-## Ends in an error in state: 77.
+## Ends in an error in state: 79.
 ##
-## expressao -> expressao DIFER . expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao DIFER . expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao DIFER 
@@ -802,9 +1004,9 @@ programa: PROGRAMA ID PTV INICIO STRING DIFER WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING DIV WHILE 
 ##
-## Ends in an error in state: 59.
+## Ends in an error in state: 61.
 ##
-## expressao -> expressao DIV . expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao DIV . expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao DIV 
@@ -814,22 +1016,22 @@ programa: PROGRAMA ID PTV INICIO STRING DIV WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING ELOG STRING WHILE 
 ##
-## Ends in an error in state: 76.
+## Ends in an error in state: 78.
 ##
-## expressao -> expressao . MAIS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MULT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIV expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . IGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIFER expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . ELOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao ELOG expressao . [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . OULOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . CONCAT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MULT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIV expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . IGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIFER expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . ELOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao ELOG expressao . [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . OULOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . CONCAT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao ELOG expressao 
@@ -839,9 +1041,9 @@ programa: PROGRAMA ID PTV INICIO STRING ELOG STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING ELOG WHILE 
 ##
-## Ends in an error in state: 75.
+## Ends in an error in state: 77.
 ##
-## expressao -> expressao ELOG . expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao ELOG . expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao ELOG 
@@ -851,22 +1053,22 @@ programa: PROGRAMA ID PTV INICIO STRING ELOG WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING IGUAL STRING WHILE 
 ##
-## Ends in an error in state: 74.
+## Ends in an error in state: 76.
 ##
-## expressao -> expressao . MAIS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MULT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIV expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . IGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao IGUAL expressao . [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIFER expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . ELOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . OULOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . CONCAT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MULT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIV expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . IGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao IGUAL expressao . [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIFER expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . ELOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . OULOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . CONCAT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao IGUAL expressao 
@@ -876,9 +1078,9 @@ programa: PROGRAMA ID PTV INICIO STRING IGUAL STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING IGUAL WHILE 
 ##
-## Ends in an error in state: 73.
+## Ends in an error in state: 75.
 ##
-## expressao -> expressao IGUAL . expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao IGUAL . expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao IGUAL 
@@ -888,22 +1090,22 @@ programa: PROGRAMA ID PTV INICIO STRING IGUAL WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING MAIOR STRING WHILE 
 ##
-## Ends in an error in state: 70.
+## Ends in an error in state: 72.
 ##
-## expressao -> expressao . MAIS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MULT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIV expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . IGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIFER expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao MAIOR expressao . [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . ELOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . OULOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . CONCAT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MULT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIV expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . IGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIFER expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao MAIOR expressao . [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . ELOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . OULOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . CONCAT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao MAIOR expressao 
@@ -913,9 +1115,9 @@ programa: PROGRAMA ID PTV INICIO STRING MAIOR STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING MAIOR WHILE 
 ##
-## Ends in an error in state: 69.
+## Ends in an error in state: 71.
 ##
-## expressao -> expressao MAIOR . expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao MAIOR . expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao MAIOR 
@@ -925,22 +1127,22 @@ programa: PROGRAMA ID PTV INICIO STRING MAIOR WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING MAIORIGUAL STRING WHILE 
 ##
-## Ends in an error in state: 72.
+## Ends in an error in state: 74.
 ##
-## expressao -> expressao . MAIS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MULT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIV expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . IGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIFER expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao MAIORIGUAL expressao . [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . ELOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . OULOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . CONCAT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MULT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIV expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . IGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIFER expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao MAIORIGUAL expressao . [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . ELOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . OULOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . CONCAT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao MAIORIGUAL expressao 
@@ -950,9 +1152,9 @@ programa: PROGRAMA ID PTV INICIO STRING MAIORIGUAL STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING MAIORIGUAL WHILE 
 ##
-## Ends in an error in state: 71.
+## Ends in an error in state: 73.
 ##
-## expressao -> expressao MAIORIGUAL . expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao MAIORIGUAL . expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao MAIORIGUAL 
@@ -962,22 +1164,22 @@ programa: PROGRAMA ID PTV INICIO STRING MAIORIGUAL WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING MAIS STRING WHILE 
 ##
-## Ends in an error in state: 66.
+## Ends in an error in state: 68.
 ##
-## expressao -> expressao . MAIS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao MAIS expressao . [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MULT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIV expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . IGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIFER expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . ELOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . OULOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . CONCAT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao MAIS expressao . [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MULT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIV expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . IGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIFER expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . ELOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . OULOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . CONCAT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao MAIS expressao 
@@ -987,9 +1189,9 @@ programa: PROGRAMA ID PTV INICIO STRING MAIS STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING MAIS WHILE 
 ##
-## Ends in an error in state: 65.
+## Ends in an error in state: 67.
 ##
-## expressao -> expressao MAIS . expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao MAIS . expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao MAIS 
@@ -999,22 +1201,22 @@ programa: PROGRAMA ID PTV INICIO STRING MAIS WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING MENOR STRING WHILE 
 ##
-## Ends in an error in state: 64.
+## Ends in an error in state: 66.
 ##
-## expressao -> expressao . MAIS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MULT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIV expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao MENOR expressao . [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . IGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIFER expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . ELOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . OULOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . CONCAT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MULT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIV expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao MENOR expressao . [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . IGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIFER expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . ELOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . OULOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . CONCAT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao MENOR expressao 
@@ -1024,9 +1226,9 @@ programa: PROGRAMA ID PTV INICIO STRING MENOR STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING MENOR WHILE 
 ##
-## Ends in an error in state: 63.
+## Ends in an error in state: 65.
 ##
-## expressao -> expressao MENOR . expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao MENOR . expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao MENOR 
@@ -1036,22 +1238,22 @@ programa: PROGRAMA ID PTV INICIO STRING MENOR WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING MENORIGUAL STRING WHILE 
 ##
-## Ends in an error in state: 62.
+## Ends in an error in state: 64.
 ##
-## expressao -> expressao . MAIS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MULT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIV expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . IGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIFER expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao MENORIGUAL expressao . [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . ELOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . OULOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . CONCAT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MULT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIV expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . IGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIFER expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao MENORIGUAL expressao . [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . ELOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . OULOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . CONCAT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao MENORIGUAL expressao 
@@ -1061,9 +1263,9 @@ programa: PROGRAMA ID PTV INICIO STRING MENORIGUAL STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING MENORIGUAL WHILE 
 ##
-## Ends in an error in state: 61.
+## Ends in an error in state: 63.
 ##
-## expressao -> expressao MENORIGUAL . expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao MENORIGUAL . expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao MENORIGUAL 
@@ -1073,22 +1275,22 @@ programa: PROGRAMA ID PTV INICIO STRING MENORIGUAL WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING MENOS STRING WHILE 
 ##
-## Ends in an error in state: 58.
+## Ends in an error in state: 60.
 ##
-## expressao -> expressao . MAIS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao MENOS expressao . [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MULT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIV expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . IGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIFER expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . ELOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . OULOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . CONCAT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao MENOS expressao . [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MULT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIV expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . IGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIFER expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . ELOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . OULOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . CONCAT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao MENOS expressao 
@@ -1098,9 +1300,9 @@ programa: PROGRAMA ID PTV INICIO STRING MENOS STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING MENOS WHILE 
 ##
-## Ends in an error in state: 57.
+## Ends in an error in state: 59.
 ##
-## expressao -> expressao MENOS . expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao MENOS . expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao MENOS 
@@ -1110,9 +1312,9 @@ programa: PROGRAMA ID PTV INICIO STRING MENOS WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING MULT WHILE 
 ##
-## Ends in an error in state: 55.
+## Ends in an error in state: 56.
 ##
-## expressao -> expressao MULT . expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao MULT . expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao MULT 
@@ -1122,22 +1324,22 @@ programa: PROGRAMA ID PTV INICIO STRING MULT WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING OULOG STRING WHILE 
 ##
-## Ends in an error in state: 54.
+## Ends in an error in state: 55.
 ##
-## expressao -> expressao . MAIS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOS expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MULT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIV expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . IGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . DIFER expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIOR expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MENORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . MAIORIGUAL expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . ELOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . OULOG expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao OULOG expressao . [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## expressao -> expressao . CONCAT expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOS expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MULT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIV expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . IGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . DIFER expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIOR expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MENORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . MAIORIGUAL expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . ELOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . OULOG expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao OULOG expressao . [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao . CONCAT expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao OULOG expressao 
@@ -1147,9 +1349,9 @@ programa: PROGRAMA ID PTV INICIO STRING OULOG STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING OULOG WHILE 
 ##
-## Ends in an error in state: 53.
+## Ends in an error in state: 54.
 ##
-## expressao -> expressao OULOG . expressao [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> expressao OULOG . expressao [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## expressao OULOG 
@@ -1159,7 +1361,7 @@ programa: PROGRAMA ID PTV INICIO STRING OULOG WHILE
 
 programa: PROGRAMA ID PTV INICIO STRING PTV VIRG 
 ##
-## Ends in an error in state: 165.
+## Ends in an error in state: 184.
 ##
 ## list(comando) -> comando . list(comando) [ FIM ]
 ##
@@ -1171,9 +1373,9 @@ programa: PROGRAMA ID PTV INICIO STRING PTV VIRG
 
 programa: PROGRAMA ID PTV INICIO STRING WHILE 
 ##
-## Ends in an error in state: 129.
+## Ends in an error in state: 141.
 ##
-## comando_expressao -> expressao . PTV [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_expressao -> expressao . PTV [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ## expressao -> expressao . MAIS expressao [ PTV OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
 ## expressao -> expressao . MENOS expressao [ PTV OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
 ## expressao -> expressao . MULT expressao [ PTV OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DIV DIFER CONCAT ]
@@ -1196,7 +1398,7 @@ programa: PROGRAMA ID PTV INICIO STRING WHILE
 
 programa: PROGRAMA ID PTV INICIO VIRG 
 ##
-## Ends in an error in state: 168.
+## Ends in an error in state: 187.
 ##
 ## programa -> PROGRAMA ID PTV declaracoes list(func) INICIO . list(comando) FIM finalizador EOF [ # ]
 ##
@@ -1206,24 +1408,30 @@ programa: PROGRAMA ID PTV INICIO VIRG
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-programa: PROGRAMA ID PTV INICIO WHILE ID WHILE 
+programa: PROGRAMA ID PTV INICIO WHILE ID ATRIB 
 ##
-## Ends in an error in state: 49.
+## Ends in an error in state: 50.
 ##
-## expressao -> variavel . [ VIRG PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
-## variavel -> variavel . PTO ID [ VIRG PTV PTO OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## expressao -> variavel . [ VIRG TO PTV OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
+## variavel -> variavel . PTO ID [ VIRG TO PTV PTO OULOG OF MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL FPAR ENTAO ELOG DO DIV DIFER CONCAT ]
 ##
 ## The known suffix of the stack is as follows:
 ## variavel 
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 44, spurious reduction of production variavel -> ID 
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING DO INICIO STRING PTV FIM VIRG 
 ##
-## Ends in an error in state: 160.
+## Ends in an error in state: 179.
 ##
-## comando_while -> WHILE expressao DO INICIO nonempty_list(comando) FIM . option(PTV) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_while -> WHILE expressao DO INICIO nonempty_list(comando) FIM . option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## WHILE expressao DO INICIO nonempty_list(comando) FIM 
@@ -1233,7 +1441,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING DO INICIO STRING PTV FIM VIRG
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING DO INICIO STRING PTV VIRG 
 ##
-## Ends in an error in state: 140.
+## Ends in an error in state: 167.
 ##
 ## nonempty_list(comando) -> comando . [ FIM ]
 ## nonempty_list(comando) -> comando . nonempty_list(comando) [ FIM ]
@@ -1246,9 +1454,9 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING DO INICIO STRING PTV VIRG
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING DO INICIO VIRG 
 ##
-## Ends in an error in state: 82.
+## Ends in an error in state: 90.
 ##
-## comando_while -> WHILE expressao DO INICIO . nonempty_list(comando) FIM option(PTV) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_while -> WHILE expressao DO INICIO . nonempty_list(comando) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## WHILE expressao DO INICIO 
@@ -1258,9 +1466,9 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING DO INICIO VIRG
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING DO WHILE 
 ##
-## Ends in an error in state: 81.
+## Ends in an error in state: 89.
 ##
-## comando_while -> WHILE expressao DO . INICIO nonempty_list(comando) FIM option(PTV) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_while -> WHILE expressao DO . INICIO nonempty_list(comando) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## WHILE expressao DO 
@@ -1270,9 +1478,9 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING DO WHILE
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING WHILE 
 ##
-## Ends in an error in state: 80.
+## Ends in an error in state: 88.
 ##
-## comando_while -> WHILE expressao . DO INICIO nonempty_list(comando) FIM option(PTV) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_while -> WHILE expressao . DO INICIO nonempty_list(comando) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ## expressao -> expressao . MAIS expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
 ## expressao -> expressao . MENOS expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
 ## expressao -> expressao . MULT expressao [ OULOG MULT MENOS MENORIGUAL MENOR MAIS MAIORIGUAL MAIOR IGUAL ELOG DO DIV DIFER CONCAT ]
@@ -1297,7 +1505,7 @@ programa: PROGRAMA ID PTV INICIO WHILE WHILE
 ##
 ## Ends in an error in state: 41.
 ##
-## comando_while -> WHILE . expressao DO INICIO nonempty_list(comando) FIM option(PTV) [ WHILE STRING SE SAIDALN SAIDA INT INICIO ID FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
+## comando_while -> WHILE . expressao DO INICIO nonempty_list(comando) FIM option(PTV) [ WHILE STRING SENAO SE SAIDALN SAIDA INT ID FOR FLOAT FIM ENTRADALN ENTRADA CHAR CASE BOOL APAR ]
 ##
 ## The known suffix of the stack is as follows:
 ## WHILE 

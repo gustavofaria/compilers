@@ -27,8 +27,12 @@ BEGIN
     readln(numero);
     x := verifica(numero);
     if ( x = 1) then
+    begin
         writeln('Numero positivo');
+    end
     else if ( x = 0 ) then
-        writeln ('Zero')
+        begin
+        writeln ('Zero');
+        end
         else writeln('Número negativo');
 END.
