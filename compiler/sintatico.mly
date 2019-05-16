@@ -52,7 +52,8 @@ open Ast
 %left CONCAT
 %left MAIS MENOS
 %left MULT DIV
-
+%left SE
+%left SENAO
 
 %start <Ast.programa> programa
 
@@ -113,14 +114,12 @@ comando: c=comando_atribuicao { c }
        | c=comando_switch     { c }
        | c=comando_for        { c }
 
-comando_atribuicao: v=variavel ATRIB e=expressao PTV {
+comando_atribuicao: v=variavel ATRIB e=expressao {
       CmdAtrib (v,e) }
        
 
 comando_se: SE teste=expressao ENTAO
-              INICIO
                entao=comando_case
-              FIM option(PTV)
               senao= option(SENAO _senao = myelse { _senao })
              {
               CmdSe (teste, entao, senao)
@@ -130,49 +129,44 @@ myelse: cs=comando_case {cs}
 
 comando_while: WHILE teste=expressao DO
                doit=comando_case
-               option(PTV)
              {
               CmdWhile (teste, doit)
             }
 
 comando_for: FOR v=variavel ATRIB e=expressao TO exp = expressao DO
-              INICIO
                doit=comando_case
-              FIM option(PTV)
              {
               CmdFor (v, e, exp, doit)
             }
             
-comando_entrada: ENTRADA APAR xs=separated_nonempty_list(VIRG, variavel) FPAR PTV {
+comando_entrada: ENTRADA APAR xs=separated_nonempty_list(VIRG, variavel) FPAR {
                    CmdEntrada xs
                }
 
-comando_entradaln: ENTRADALN APAR xs=separated_nonempty_list(VIRG, variavel) FPAR PTV {
+comando_entradaln: ENTRADALN APAR xs=separated_nonempty_list(VIRG, variavel) FPAR {
                    CmdEntradaln xs
                }
 
-comando_saida: SAIDA APAR xs=separated_nonempty_list(VIRG, expressao) FPAR PTV {
+comando_saida: SAIDA APAR xs=separated_nonempty_list(VIRG, expressao) FPAR {
                  CmdSaida xs
              }
 
-comando_saidaln: SAIDALN APAR xs=separated_nonempty_list(VIRG, expressao) FPAR PTV {
+comando_saidaln: SAIDALN APAR xs=separated_nonempty_list(VIRG, expressao) FPAR {
                  CmdSaidaln xs
              }
   
-comando_expressao: e=expressao PTV { CmdExpressao e }
+comando_expressao: e=expressao { CmdExpressao e }
 
 comando_switch: CASE teste=expressao OF
                 testes=case+
                 senao= option(SENAO _senao = myelse { _senao })
-                FIM 
-                option(PTV)
                 { CmdSwitch (teste, testes, senao) }
 
 
 case: l=literal_case DPTOS c=comando_case { Case (l,c) }
 
-comando_case: c = comando option(finalizador) { [c] }
-              | INICIO c = comando+  FIM option(finalizador) { c }
+comando_case: | c = comando option(PTV) { [c] }
+              | INICIO c = separated_nonempty_list(PTV, comando) PTV FIM option(PTV) { c }
 
 literal_case:| i=INT      { LitInt i    }
             | b=BOOL     { LitBool b   }
