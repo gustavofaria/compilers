@@ -40,9 +40,6 @@ open Ast
 %token OULOG
 %token CONCAT
 %token EOF
-%token FOR
-%token TO
-
 
 %left OULOG
 %left ELOG
@@ -112,20 +109,21 @@ comando: c=comando_atribuicao { c }
        | c=comando_saidaln    { c }
        | c=comando_expressao  { c }
        | c=comando_switch     { c }
-       | c=comando_for        { c }
 
 comando_atribuicao: v=variavel ATRIB e=expressao {
       CmdAtrib (v,e) }
        
 
 comando_se: SE teste=expressao ENTAO
-               entao=comando_case
+              INICIO
+               entao=comando+
+              FIM option(PTV)
               senao= option(SENAO _senao = myelse { _senao })
              {
               CmdSe (teste, entao, senao)
             }
 
-myelse: cs=comando_case {cs}
+myelse: INICIO cs=comando+ FIM option(PTV) {cs}
 
 comando_while: WHILE teste=expressao DO
                doit=comando_case
@@ -133,13 +131,13 @@ comando_while: WHILE teste=expressao DO
               CmdWhile (teste, doit)
             }
 
+comando_entrada: ENTRADA APAR xs=separated_nonempty_list(VIRG, variavel) FPAR PTV {
 comando_for: FOR v=variavel ATRIB e=expressao TO exp = expressao DO
                doit=comando_case
              {
               CmdFor (v, e, exp, doit)
             }
             
-comando_entrada: ENTRADA APAR xs=separated_nonempty_list(VIRG, variavel) FPAR {
                    CmdEntrada xs
                }
 
@@ -165,8 +163,8 @@ comando_switch: CASE teste=expressao OF
 
 case: l=literal_case DPTOS c=comando_case { Case (l,c) }
 
-comando_case: | c = comando option(PTV) { [c] }
-              | INICIO c = separated_nonempty_list(PTV, comando) PTV FIM option(PTV) { c }
+comando_case: c = comando { [c] }
+              | INICIO c = comando+ FIM { c }
 
 literal_case:| i=INT      { LitInt i    }
             | b=BOOL     { LitBool b   }
@@ -175,14 +173,12 @@ literal_case:| i=INT      { LitInt i    }
 expressao:
           | v=variavel { ExpVar v    }
           | i=INT      { ExpInt i    }
-          | c=CHAR     { ExpChar c   }
           | s=STRING   { ExpString s }
           | b=BOOL     { ExpBool b   }
+          | c=CHAR     { ExpChar c   }
           | f=FLOAT    { ExpFloat f  }
           | e1=expressao op=oper e2=expressao { ExpOp (op, e1, e2) }
           | APAR e=expressao FPAR { e }
-          | c = chamada_func { c }
-
 
 %inline oper:
 	      | MAIS  { Mais  }
@@ -202,7 +198,5 @@ expressao:
 variavel:
         | x=ID       { VarSimples x }
         | v=variavel PTO x=ID { VarCampo (v,x) }
-
-chamada_func: x=ID APAR args=separated_list(VIRG,expressao) FPAR { ExpChamFunc (x,args) }
 
 

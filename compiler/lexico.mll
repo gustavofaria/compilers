@@ -76,13 +76,10 @@ rule token =
   | ':'   { DPTOS }
   | ';'   { PTV }
   | ":="  { ATRIB }
-  | '\''   { let buffer = Buffer.create 1 in 
+  | '"'   { let buffer = Buffer.create 1 in 
             let str = leia_string buffer lexbuf in
-              if(length(str)>1) then
-                STRING str
-              else 
-                CHAR str.[0]
-           }
+               STRING str }
+  | '\'' _ as c '\'' { CHAR c.[1] }
   | p r o g r a m  { PROGRAMA } 
   | v a r      { VAR }
   | f u n c t i o n { FUNCTION }
@@ -92,7 +89,6 @@ rule token =
   | i n t e g e r  { INTEIRO }
   | s t r i n g   { CADEIA }
   | b o o l e a n { BOOLEANO }
-  | r e a l
   | f l o a t     { FLUTUANTE }
   | t r u e       { BOOL true }
   | f a l s e    { BOOL false}  
@@ -100,8 +96,6 @@ rule token =
   | t h e n    { ENTAO }
   | e l s e    { SENAO }
   | w h i l e  { WHILE }
-  | f o r      { FOR   }
-  | t o        {  TO   }
   | d o         { DO }
   | c a s e     { CASE }
   | o f         { OF   }
@@ -128,7 +122,7 @@ and comentario_bloco_chave n = parse
 | eof     { raise (Erro "Comentário não terminado") }
 
 and leia_string buffer = parse
-   '\''      { Buffer.contents buffer}
+   '"'      { Buffer.contents buffer}
 | "\\t"     { Buffer.add_char buffer '\t'; leia_string buffer lexbuf }
 | "\\n"     { Buffer.add_char buffer '\n'; leia_string buffer lexbuf }
 | '\\' '\''  { Buffer.add_char buffer '\''; leia_string buffer lexbuf }
