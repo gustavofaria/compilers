@@ -8,7 +8,7 @@ programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS BOOLEANO PTV INICIO FIM PT
 ## func 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 1: Esperando encontar "INICIO"
 
 programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS INTEIRO PTV INICIO FIM WHILE 
 ##
@@ -20,7 +20,7 @@ programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS INTEIRO PTV INICIO FIM WHI
 ## FUNCTION ID APAR argumentos FPAR DPTOS tipo PTV declaracoes INICIO list(comando) FIM 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 2: Erro na sintax, o ";" é esperado após o operador "FIM"
 
 programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS INTEIRO PTV INICIO VIRG 
 ##
@@ -32,7 +32,7 @@ programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS INTEIRO PTV INICIO VIRG
 ## FUNCTION ID APAR argumentos FPAR DPTOS tipo PTV declaracoes INICIO 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 3: Esperado encontar "FIM"
 
 programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS INTEIRO PTV VAR ID DPTOS BOOLEANO PTV FUNCTION 
 ##
@@ -52,7 +52,7 @@ programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS INTEIRO PTV VAR ID DPTOS B
 ## In state 21, spurious reduction of production declaracoes -> option(__anonymous_0) 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 4: Esperava operador "INICIO" 
 
 programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS INTEIRO PTV WHILE 
 ##
@@ -64,7 +64,7 @@ programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS INTEIRO PTV WHILE
 ## FUNCTION ID APAR argumentos FPAR DPTOS tipo PTV 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 5: Corpo da função não declarado
 
 programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS INTEIRO WHILE 
 ##
@@ -76,7 +76,7 @@ programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS INTEIRO WHILE
 ## FUNCTION ID APAR argumentos FPAR DPTOS tipo 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 6: Erro na sintax, falta  ";" 
 
 programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS WHILE 
 ##
@@ -88,7 +88,7 @@ programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR DPTOS WHILE
 ## FUNCTION ID APAR argumentos FPAR DPTOS 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 7: Necessario declarar tipo do retorno da função
 
 programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR WHILE 
 ##
@@ -100,7 +100,7 @@ programa: PROGRAMA ID PTV FUNCTION ID APAR FPAR WHILE
 ## FUNCTION ID APAR argumentos FPAR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 8: Erro na sintax, falta ":" 
 
 programa: PROGRAMA ID PTV FUNCTION ID APAR ID DPTOS BOOLEANO PTV WHILE 
 ##
@@ -112,7 +112,7 @@ programa: PROGRAMA ID PTV FUNCTION ID APAR ID DPTOS BOOLEANO PTV WHILE
 ## declaracao_args PTV 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 9: Necessario ")" após "("
 
 programa: PROGRAMA ID PTV FUNCTION ID APAR ID DPTOS BOOLEANO WHILE 
 ##
@@ -125,7 +125,7 @@ programa: PROGRAMA ID PTV FUNCTION ID APAR ID DPTOS BOOLEANO WHILE
 ## declaracao_args 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 10: Erro na definição dos parametros da função caracteres faltando
 
 programa: PROGRAMA ID PTV FUNCTION ID APAR ID DPTOS WHILE 
 ##
@@ -137,7 +137,7 @@ programa: PROGRAMA ID PTV FUNCTION ID APAR ID DPTOS WHILE
 ## separated_nonempty_list(VIRG,ID) DPTOS 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 11: Necessário definir ")" e o tipo de retorno da função
 
 programa: PROGRAMA ID PTV FUNCTION ID APAR WHILE 
 ##
@@ -149,7 +149,7 @@ programa: PROGRAMA ID PTV FUNCTION ID APAR WHILE
 ## FUNCTION ID APAR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 12: Erro na sintax, necessário que após "(" que exista um ")"
 
 programa: PROGRAMA ID PTV FUNCTION ID WHILE 
 ##
@@ -161,7 +161,7 @@ programa: PROGRAMA ID PTV FUNCTION ID WHILE
 ## FUNCTION ID 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 13: Falta declarar argumentos da função 
 
 programa: PROGRAMA ID PTV FUNCTION WHILE 
 ##
@@ -173,7 +173,7 @@ programa: PROGRAMA ID PTV FUNCTION WHILE
 ## FUNCTION 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 14: Necessário declarar nome da função
 
 programa: PROGRAMA ID PTV INICIO APAR STRING WHILE 
 ##
@@ -198,7 +198,7 @@ programa: PROGRAMA ID PTV INICIO APAR STRING WHILE
 ## APAR expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 15: Falta um ")"
 
 programa: PROGRAMA ID PTV INICIO APAR WHILE 
 ##
@@ -210,7 +210,7 @@ programa: PROGRAMA ID PTV INICIO APAR WHILE
 ## APAR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 16: Esperado após "(" que haja um ")"
 
 programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV FIM VIRG 
 ##
@@ -222,7 +222,7 @@ programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV FIM VIRG
 ## CASE expressao OF nonempty_list(case) option(__anonymous_2) FIM 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 17: Erro na sintax, esperado ";"
 
 programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV SENAO BOOL PTV EOF 
 ##
@@ -234,7 +234,7 @@ programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV SENAO BOOL PT
 ## CASE expressao OF nonempty_list(case) option(__anonymous_2) 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 18: "FIM" não encontrado
 
 programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV SENAO VIRG 
 ##
@@ -246,7 +246,7 @@ programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV SENAO VIRG
 ## SENAO 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 19: Operação incompleta
 
 programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV WHILE 
 ##
@@ -259,7 +259,7 @@ programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS BOOL PTV WHILE
 ## case 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 20: Falta casos na operação
 
 programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS VIRG 
 ##
@@ -271,7 +271,7 @@ programa: PROGRAMA ID PTV INICIO CASE STRING OF INT DPTOS VIRG
 ## literal_case DPTOS 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 21: Resultado para o caso não encontrado
 
 programa: PROGRAMA ID PTV INICIO CASE STRING OF INT WHILE 
 ##
@@ -283,7 +283,7 @@ programa: PROGRAMA ID PTV INICIO CASE STRING OF INT WHILE
 ## literal_case 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 22: ":" não encontrado
 
 programa: PROGRAMA ID PTV INICIO CASE STRING OF WHILE 
 ##
@@ -295,7 +295,7 @@ programa: PROGRAMA ID PTV INICIO CASE STRING OF WHILE
 ## CASE expressao OF 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 23: Estancia não definida
 
 programa: PROGRAMA ID PTV INICIO CASE STRING WHILE 
 ##
@@ -320,7 +320,7 @@ programa: PROGRAMA ID PTV INICIO CASE STRING WHILE
 ## CASE expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 24: "OF" não encontrado
 
 programa: PROGRAMA ID PTV INICIO CASE WHILE 
 ##
@@ -332,7 +332,7 @@ programa: PROGRAMA ID PTV INICIO CASE WHILE
 ## CASE 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 25: Expressão não definida "expressão OF ..."
 
 programa: PROGRAMA ID PTV INICIO ENTRADA APAR ID FPAR WHILE 
 ##
@@ -344,7 +344,7 @@ programa: PROGRAMA ID PTV INICIO ENTRADA APAR ID FPAR WHILE
 ## ENTRADA APAR separated_nonempty_list(VIRG,variavel) FPAR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 26: Não foi encontrado o ";"
 
 programa: PROGRAMA ID PTV INICIO ENTRADA APAR WHILE 
 ##
@@ -356,7 +356,7 @@ programa: PROGRAMA ID PTV INICIO ENTRADA APAR WHILE
 ## ENTRADA APAR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 27: Não foi encontrado o ")"
 
 programa: PROGRAMA ID PTV INICIO ENTRADA WHILE 
 ##
@@ -368,7 +368,7 @@ programa: PROGRAMA ID PTV INICIO ENTRADA WHILE
 ## ENTRADA 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 28: Argumentos nescessarios "()"
 
 programa: PROGRAMA ID PTV INICIO ENTRADALN APAR ID FPAR WHILE 
 ##
@@ -380,7 +380,7 @@ programa: PROGRAMA ID PTV INICIO ENTRADALN APAR ID FPAR WHILE
 ## ENTRADALN APAR separated_nonempty_list(VIRG,variavel) FPAR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 29: Erro, falta ";"
 
 programa: PROGRAMA ID PTV INICIO ENTRADALN APAR ID VIRG WHILE 
 ##
@@ -392,7 +392,7 @@ programa: PROGRAMA ID PTV INICIO ENTRADALN APAR ID VIRG WHILE
 ## variavel VIRG 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 30: Outro argumento era esperado
 
 programa: PROGRAMA ID PTV INICIO ENTRADALN APAR ID WHILE 
 ##
@@ -406,7 +406,7 @@ programa: PROGRAMA ID PTV INICIO ENTRADALN APAR ID WHILE
 ## variavel 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 31: Esta faltando ")"
 
 programa: PROGRAMA ID PTV INICIO ENTRADALN APAR WHILE 
 ##
@@ -418,7 +418,7 @@ programa: PROGRAMA ID PTV INICIO ENTRADALN APAR WHILE
 ## ENTRADALN APAR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 32: Estão faltando argumentos e )
 
 programa: PROGRAMA ID PTV INICIO ENTRADALN WHILE 
 ##
@@ -430,7 +430,7 @@ programa: PROGRAMA ID PTV INICIO ENTRADALN WHILE
 ## ENTRADALN 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 33: Argumento são necessários
 
 programa: PROGRAMA ID PTV INICIO FIM PTV WHILE 
 ##
@@ -442,7 +442,7 @@ programa: PROGRAMA ID PTV INICIO FIM PTV WHILE
 ## PROGRAMA ID PTV declaracoes list(func) INICIO list(comando) FIM finalizador 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 34: Era esperado "."
 
 programa: PROGRAMA ID PTV INICIO FIM WHILE 
 ##
@@ -454,7 +454,7 @@ programa: PROGRAMA ID PTV INICIO FIM WHILE
 ## PROGRAMA ID PTV declaracoes list(func) INICIO list(comando) FIM 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 35: O "." esta faltando
 
 programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING TO STRING DO INICIO STRING PTV FIM VIRG 
 ##
@@ -466,7 +466,7 @@ programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING TO STRING DO INICIO STRING 
 ## FOR variavel ATRIB expressao TO expressao DO INICIO nonempty_list(comando) FIM 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 36: Erro, ";" não encontrado
 
 programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING TO STRING DO INICIO VIRG 
 ##
@@ -478,7 +478,7 @@ programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING TO STRING DO INICIO VIRG
 ## FOR variavel ATRIB expressao TO expressao DO INICIO 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 37: Erro, "FIM" não encontrado
 
 programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING TO STRING DO WHILE 
 ##
@@ -490,7 +490,7 @@ programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING TO STRING DO WHILE
 ## FOR variavel ATRIB expressao TO expressao DO 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 38: Erro, "INICIO" não encontrado
 
 programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING TO STRING WHILE 
 ##
@@ -515,7 +515,7 @@ programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING TO STRING WHILE
 ## FOR variavel ATRIB expressao TO expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 39: Erro, "DO" não encontrado
 
 programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING TO WHILE 
 ##
@@ -527,7 +527,7 @@ programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING TO WHILE
 ## FOR variavel ATRIB expressao TO 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 40: Argumentos insuficientes
 
 programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING WHILE 
 ##
@@ -552,7 +552,7 @@ programa: PROGRAMA ID PTV INICIO FOR ID ATRIB STRING WHILE
 ## FOR variavel ATRIB expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 41: Esperava encontrar "TO"
 
 programa: PROGRAMA ID PTV INICIO FOR ID ATRIB WHILE 
 ##
@@ -564,7 +564,7 @@ programa: PROGRAMA ID PTV INICIO FOR ID ATRIB WHILE
 ## FOR variavel ATRIB 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 42: Termo para atribuição não encontrado
 
 programa: PROGRAMA ID PTV INICIO FOR ID WHILE 
 ##
@@ -577,7 +577,7 @@ programa: PROGRAMA ID PTV INICIO FOR ID WHILE
 ## FOR variavel 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 43: Esperado operador de atribuição
 
 programa: PROGRAMA ID PTV INICIO FOR WHILE 
 ##
@@ -589,7 +589,7 @@ programa: PROGRAMA ID PTV INICIO FOR WHILE
 ## FOR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 44: Variavel não encontrada
 
 programa: PROGRAMA ID PTV INICIO ID APAR WHILE 
 ##
@@ -601,7 +601,7 @@ programa: PROGRAMA ID PTV INICIO ID APAR WHILE
 ## ID APAR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 45: ")" não encontrado
 
 programa: PROGRAMA ID PTV INICIO ID ATRIB STRING WHILE 
 ##
@@ -626,7 +626,7 @@ programa: PROGRAMA ID PTV INICIO ID ATRIB STRING WHILE
 ## variavel ATRIB expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 46: Erro, ";" não encontrado
 
 programa: PROGRAMA ID PTV INICIO ID ATRIB WHILE 
 ##
@@ -638,7 +638,7 @@ programa: PROGRAMA ID PTV INICIO ID ATRIB WHILE
 ## variavel ATRIB 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 47:";" não encontrado
 
 programa: PROGRAMA ID PTV INICIO ID PTO WHILE 
 ##
@@ -650,7 +650,7 @@ programa: PROGRAMA ID PTV INICIO ID PTO WHILE
 ## variavel PTO 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 48: Esperado proximo ID
 
 programa: PROGRAMA ID PTV INICIO ID VIRG 
 ##
@@ -670,7 +670,7 @@ programa: PROGRAMA ID PTV INICIO ID VIRG
 ## In state 44, spurious reduction of production variavel -> ID 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 49: Argumentos insuficientes
 
 programa: PROGRAMA ID PTV INICIO ID WHILE 
 ##
@@ -683,7 +683,7 @@ programa: PROGRAMA ID PTV INICIO ID WHILE
 ## ID 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 50: "()" não encontrados
 
 programa: PROGRAMA ID PTV INICIO SAIDA APAR STRING FPAR WHILE 
 ##
@@ -695,7 +695,7 @@ programa: PROGRAMA ID PTV INICIO SAIDA APAR STRING FPAR WHILE
 ## SAIDA APAR separated_nonempty_list(VIRG,expressao) FPAR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 51: Não encontrado ";"
 
 programa: PROGRAMA ID PTV INICIO SAIDA APAR WHILE 
 ##
@@ -707,7 +707,7 @@ programa: PROGRAMA ID PTV INICIO SAIDA APAR WHILE
 ## SAIDA APAR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 52: Necessário fechar "()"
 
 programa: PROGRAMA ID PTV INICIO SAIDA WHILE 
 ##
@@ -719,7 +719,7 @@ programa: PROGRAMA ID PTV INICIO SAIDA WHILE
 ## SAIDA 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 53: Esperado "()"
 
 programa: PROGRAMA ID PTV INICIO SAIDALN APAR STRING FPAR WHILE 
 ##
@@ -731,7 +731,7 @@ programa: PROGRAMA ID PTV INICIO SAIDALN APAR STRING FPAR WHILE
 ## SAIDALN APAR separated_nonempty_list(VIRG,expressao) FPAR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 54: Arugumentos insuficientes
 
 programa: PROGRAMA ID PTV INICIO SAIDALN APAR STRING VIRG WHILE 
 ##
@@ -743,7 +743,7 @@ programa: PROGRAMA ID PTV INICIO SAIDALN APAR STRING VIRG WHILE
 ## expressao VIRG 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 55: Erro nos argumentos
 
 programa: PROGRAMA ID PTV INICIO SAIDALN APAR STRING WHILE 
 ##
@@ -769,7 +769,7 @@ programa: PROGRAMA ID PTV INICIO SAIDALN APAR STRING WHILE
 ## expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 56:Nescessario após "(" existir um ")"
 
 programa: PROGRAMA ID PTV INICIO SAIDALN APAR WHILE 
 ##
@@ -781,7 +781,7 @@ programa: PROGRAMA ID PTV INICIO SAIDALN APAR WHILE
 ## SAIDALN APAR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 57: Argumento invalido
 
 programa: PROGRAMA ID PTV INICIO SAIDALN WHILE 
 ##
@@ -793,7 +793,7 @@ programa: PROGRAMA ID PTV INICIO SAIDALN WHILE
 ## SAIDALN 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 58: "()" não encontrado
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO INICIO STRING PTV FIM VIRG 
 ##
@@ -805,7 +805,7 @@ programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO INICIO STRING PTV FIM VI
 ## INICIO nonempty_list(comando) FIM 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 59: Procurando por "FIM" para "INICIO"
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO INICIO VIRG 
 ##
@@ -817,7 +817,7 @@ programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO INICIO VIRG
 ## INICIO 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 60: Erro na sintax, "FIM" não encontrado
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO STRING PTV FIM PTV VIRG 
 ##
@@ -829,7 +829,7 @@ programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO STRING PTV FIM PTV VIRG
 ## SE expressao ENTAO INICIO comando_case FIM option(PTV) 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 61: Não encontrado "FIM" EOF
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO STRING PTV FIM SENAO VIRG 
 ##
@@ -841,7 +841,7 @@ programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO STRING PTV FIM SENAO VIR
 ## SENAO 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 62: "INICIO" não encontrado
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO STRING PTV FIM VIRG 
 ##
@@ -853,7 +853,7 @@ programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO STRING PTV FIM VIRG
 ## SE expressao ENTAO INICIO comando_case FIM 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 63:Erro na sintax, ";" esperado
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO STRING PTV WHILE 
 ##
@@ -865,7 +865,7 @@ programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO STRING PTV WHILE
 ## SE expressao ENTAO INICIO comando_case 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 64: Falta "FIM" para o "INICIO" 
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO VIRG 
 ##
@@ -877,7 +877,7 @@ programa: PROGRAMA ID PTV INICIO SE STRING ENTAO INICIO VIRG
 ## SE expressao ENTAO INICIO 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 65: "FIM" não encontrado
 
 programa: PROGRAMA ID PTV INICIO SE STRING ENTAO WHILE 
 ##
@@ -889,7 +889,7 @@ programa: PROGRAMA ID PTV INICIO SE STRING ENTAO WHILE
 ## SE expressao ENTAO 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 66:"INICIO" não encontrado
 
 programa: PROGRAMA ID PTV INICIO SE STRING WHILE 
 ##
@@ -914,7 +914,7 @@ programa: PROGRAMA ID PTV INICIO SE STRING WHILE
 ## SE expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 67: Comando "ENTAO" não encontrado
 
 programa: PROGRAMA ID PTV INICIO SE WHILE 
 ##
@@ -926,7 +926,7 @@ programa: PROGRAMA ID PTV INICIO SE WHILE
 ## SE 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 68: Necessário adicionar argumentos
 
 programa: PROGRAMA ID PTV INICIO STRING CONCAT STRING WHILE 
 ##
@@ -951,7 +951,7 @@ programa: PROGRAMA ID PTV INICIO STRING CONCAT STRING WHILE
 ## expressao CONCAT expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 69: Erro na sintax, ";" não encontrado
 
 programa: PROGRAMA ID PTV INICIO STRING CONCAT WHILE 
 ##
@@ -963,7 +963,7 @@ programa: PROGRAMA ID PTV INICIO STRING CONCAT WHILE
 ## expressao CONCAT 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 70: Expressão invalida, operação incompleta
 
 programa: PROGRAMA ID PTV INICIO STRING DIFER STRING WHILE 
 ##
@@ -988,7 +988,7 @@ programa: PROGRAMA ID PTV INICIO STRING DIFER STRING WHILE
 ## expressao DIFER expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 71: Erro na sintax, ";"
 
 programa: PROGRAMA ID PTV INICIO STRING DIFER WHILE 
 ##
@@ -1000,7 +1000,7 @@ programa: PROGRAMA ID PTV INICIO STRING DIFER WHILE
 ## expressao DIFER 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 72: Expressão invalida, falta argumentos
 
 programa: PROGRAMA ID PTV INICIO STRING DIV WHILE 
 ##
@@ -1012,7 +1012,7 @@ programa: PROGRAMA ID PTV INICIO STRING DIV WHILE
 ## expressao DIV 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 73: Expressão invalida, incompleta
 
 programa: PROGRAMA ID PTV INICIO STRING ELOG STRING WHILE 
 ##
@@ -1037,7 +1037,7 @@ programa: PROGRAMA ID PTV INICIO STRING ELOG STRING WHILE
 ## expressao ELOG expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 74: Erro na sintax, ";"
 
 programa: PROGRAMA ID PTV INICIO STRING ELOG WHILE 
 ##
@@ -1049,7 +1049,7 @@ programa: PROGRAMA ID PTV INICIO STRING ELOG WHILE
 ## expressao ELOG 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 75: Falta elementos na operação
 
 programa: PROGRAMA ID PTV INICIO STRING IGUAL STRING WHILE 
 ##
@@ -1074,7 +1074,7 @@ programa: PROGRAMA ID PTV INICIO STRING IGUAL STRING WHILE
 ## expressao IGUAL expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 76:Erro na sintax, ";"
 
 programa: PROGRAMA ID PTV INICIO STRING IGUAL WHILE 
 ##
@@ -1086,7 +1086,7 @@ programa: PROGRAMA ID PTV INICIO STRING IGUAL WHILE
 ## expressao IGUAL 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 77: Necessario adcionar o restante da expressão
 
 programa: PROGRAMA ID PTV INICIO STRING MAIOR STRING WHILE 
 ##
@@ -1111,7 +1111,7 @@ programa: PROGRAMA ID PTV INICIO STRING MAIOR STRING WHILE
 ## expressao MAIOR expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 78: Erro na sintax, ";" não encontrado
 
 programa: PROGRAMA ID PTV INICIO STRING MAIOR WHILE 
 ##
@@ -1123,7 +1123,7 @@ programa: PROGRAMA ID PTV INICIO STRING MAIOR WHILE
 ## expressao MAIOR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 79: Falta de argumentos na expressão
 
 programa: PROGRAMA ID PTV INICIO STRING MAIORIGUAL STRING WHILE 
 ##
@@ -1148,7 +1148,7 @@ programa: PROGRAMA ID PTV INICIO STRING MAIORIGUAL STRING WHILE
 ## expressao MAIORIGUAL expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 80: Erro na sintax, ";" não encontrado
 
 programa: PROGRAMA ID PTV INICIO STRING MAIORIGUAL WHILE 
 ##
@@ -1160,7 +1160,7 @@ programa: PROGRAMA ID PTV INICIO STRING MAIORIGUAL WHILE
 ## expressao MAIORIGUAL 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 81: Outro elemento da comparação não encontrado
 
 programa: PROGRAMA ID PTV INICIO STRING MAIS STRING WHILE 
 ##
@@ -1185,7 +1185,7 @@ programa: PROGRAMA ID PTV INICIO STRING MAIS STRING WHILE
 ## expressao MAIS expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 82: Erro na sintax, não encontrado ";"
 
 programa: PROGRAMA ID PTV INICIO STRING MAIS WHILE 
 ##
@@ -1197,7 +1197,7 @@ programa: PROGRAMA ID PTV INICIO STRING MAIS WHILE
 ## expressao MAIS 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 83: Necessario outro elemento da operação
 
 programa: PROGRAMA ID PTV INICIO STRING MENOR STRING WHILE 
 ##
@@ -1222,7 +1222,7 @@ programa: PROGRAMA ID PTV INICIO STRING MENOR STRING WHILE
 ## expressao MENOR expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 84: Erro na sintax, ";" não encontrado
 
 programa: PROGRAMA ID PTV INICIO STRING MENOR WHILE 
 ##
@@ -1234,7 +1234,7 @@ programa: PROGRAMA ID PTV INICIO STRING MENOR WHILE
 ## expressao MENOR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 85: Não encontrado outro elemento da comparação
 
 programa: PROGRAMA ID PTV INICIO STRING MENORIGUAL STRING WHILE 
 ##
@@ -1259,7 +1259,7 @@ programa: PROGRAMA ID PTV INICIO STRING MENORIGUAL STRING WHILE
 ## expressao MENORIGUAL expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 86: Erro na sintax, ";" faltando
 
 programa: PROGRAMA ID PTV INICIO STRING MENORIGUAL WHILE 
 ##
@@ -1271,7 +1271,7 @@ programa: PROGRAMA ID PTV INICIO STRING MENORIGUAL WHILE
 ## expressao MENORIGUAL 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 87: Não encontrado outro elemento da comparação
 
 programa: PROGRAMA ID PTV INICIO STRING MENOS STRING WHILE 
 ##
@@ -1296,7 +1296,7 @@ programa: PROGRAMA ID PTV INICIO STRING MENOS STRING WHILE
 ## expressao MENOS expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 88: Erro na sintax, ";" não encontrado na operação
 
 programa: PROGRAMA ID PTV INICIO STRING MENOS WHILE 
 ##
@@ -1308,7 +1308,7 @@ programa: PROGRAMA ID PTV INICIO STRING MENOS WHILE
 ## expressao MENOS 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 89: Erro, não encontrado outro argumento da operação
 
 programa: PROGRAMA ID PTV INICIO STRING MULT WHILE 
 ##
@@ -1320,7 +1320,7 @@ programa: PROGRAMA ID PTV INICIO STRING MULT WHILE
 ## expressao MULT 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 90: Não encontrado outro elemento desta operação
 
 programa: PROGRAMA ID PTV INICIO STRING OULOG STRING WHILE 
 ##
@@ -1345,7 +1345,7 @@ programa: PROGRAMA ID PTV INICIO STRING OULOG STRING WHILE
 ## expressao OULOG expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 91: Erro na sintax, ";" esperado
 
 programa: PROGRAMA ID PTV INICIO STRING OULOG WHILE 
 ##
@@ -1357,7 +1357,7 @@ programa: PROGRAMA ID PTV INICIO STRING OULOG WHILE
 ## expressao OULOG 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 92: Não encontrado outro argumento
 
 programa: PROGRAMA ID PTV INICIO STRING PTV VIRG 
 ##
@@ -1369,7 +1369,7 @@ programa: PROGRAMA ID PTV INICIO STRING PTV VIRG
 ## comando 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 93: "FIM" não encontrado
 
 programa: PROGRAMA ID PTV INICIO STRING WHILE 
 ##
@@ -1394,7 +1394,7 @@ programa: PROGRAMA ID PTV INICIO STRING WHILE
 ## expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 94: Erro na sintax, não encontrado ";"
 
 programa: PROGRAMA ID PTV INICIO VIRG 
 ##
@@ -1406,7 +1406,7 @@ programa: PROGRAMA ID PTV INICIO VIRG
 ## PROGRAMA ID PTV declaracoes list(func) INICIO 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 95: Comando "FIM." não encontrado
 
 programa: PROGRAMA ID PTV INICIO WHILE ID ATRIB 
 ##
@@ -1425,7 +1425,7 @@ programa: PROGRAMA ID PTV INICIO WHILE ID ATRIB
 ## In state 44, spurious reduction of production variavel -> ID 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 96: Argumento não valido
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING DO INICIO STRING PTV FIM VIRG 
 ##
@@ -1437,7 +1437,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING DO INICIO STRING PTV FIM VIRG
 ## WHILE expressao DO INICIO nonempty_list(comando) FIM 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 97: Erro na sintax, não encontrado ";"
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING DO INICIO STRING PTV VIRG 
 ##
@@ -1450,7 +1450,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING DO INICIO STRING PTV VIRG
 ## comando 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 98: "FIM" não encontrado
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING DO INICIO VIRG 
 ##
@@ -1462,7 +1462,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING DO INICIO VIRG
 ## WHILE expressao DO INICIO 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 99: Argumento expressão não encontrado
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING DO WHILE 
 ##
@@ -1474,7 +1474,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING DO WHILE
 ## WHILE expressao DO 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 100: "INICIO" não encontrado
 
 programa: PROGRAMA ID PTV INICIO WHILE STRING WHILE 
 ##
@@ -1499,7 +1499,7 @@ programa: PROGRAMA ID PTV INICIO WHILE STRING WHILE
 ## WHILE expressao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 101: EXPRESSÃO "DO" não encontrada
 
 programa: PROGRAMA ID PTV INICIO WHILE WHILE 
 ##
@@ -1511,7 +1511,7 @@ programa: PROGRAMA ID PTV INICIO WHILE WHILE
 ## WHILE 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 102: Argumentos do comando "WHILE" não encontrado
 
 programa: PROGRAMA ID PTV VAR ID DPTOS BOOLEANO PTV WHILE 
 ##
@@ -1524,7 +1524,7 @@ programa: PROGRAMA ID PTV VAR ID DPTOS BOOLEANO PTV WHILE
 ## declaracao 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 103: Esperado encontar "INICIO"
 
 programa: PROGRAMA ID PTV VAR ID DPTOS INTEIRO WHILE 
 ##
@@ -1536,7 +1536,7 @@ programa: PROGRAMA ID PTV VAR ID DPTOS INTEIRO WHILE
 ## separated_nonempty_list(VIRG,ID) DPTOS tipo 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 104: Erro na sintax, ";" não encontrado
 
 programa: PROGRAMA ID PTV VAR ID DPTOS WHILE 
 ##
@@ -1548,7 +1548,7 @@ programa: PROGRAMA ID PTV VAR ID DPTOS WHILE
 ## separated_nonempty_list(VIRG,ID) DPTOS 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 105: Necessário declarar tipo da variavel
 
 programa: PROGRAMA ID PTV VAR ID VIRG WHILE 
 ##
@@ -1560,7 +1560,7 @@ programa: PROGRAMA ID PTV VAR ID VIRG WHILE
 ## ID VIRG 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 106: Erro na sintax, esperado ":"
 
 programa: PROGRAMA ID PTV VAR ID WHILE 
 ##
@@ -1573,7 +1573,7 @@ programa: PROGRAMA ID PTV VAR ID WHILE
 ## ID 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 107: Erro na sintax, ":" não encontrado
 
 programa: PROGRAMA ID PTV VAR WHILE 
 ##
@@ -1585,7 +1585,7 @@ programa: PROGRAMA ID PTV VAR WHILE
 ## VAR 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 108: Variaeis não declaradas
 
 programa: PROGRAMA ID PTV WHILE 
 ##
@@ -1597,7 +1597,7 @@ programa: PROGRAMA ID PTV WHILE
 ## PROGRAMA ID PTV 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 109: Corpo do programa não declarado
 
 programa: PROGRAMA ID WHILE 
 ##
@@ -1609,7 +1609,7 @@ programa: PROGRAMA ID WHILE
 ## PROGRAMA ID 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 110: Erro na sintax, era esperado ";"
 
 programa: PROGRAMA WHILE 
 ##
@@ -1621,7 +1621,7 @@ programa: PROGRAMA WHILE
 ## PROGRAMA 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
+Erro 111: Nome do programa não declarado
 
 programa: WHILE 
 ##
@@ -1633,5 +1633,4 @@ programa: WHILE
 ## 
 ##
 
-<YOUR SYNTAX ERROR MESSAGE HERE>
-
+Erro 112: Erro na sintax, nescessário iniciar com "PROGRAMA" 
