@@ -8,21 +8,25 @@ open Sast
 %token <int * Lexing.position> INT
 %token <string * Lexing.position> ID
 %token <string * Lexing.position> STRING
+%token <char * Lexing.position> CHAR
 %token <bool * Lexing.position> BOOL
+%token <float * Lexing.position> FLOAT
 %token <Lexing.position> PROGRAMA
+%token <Lexing.position> VAR
+%token <Lexing.position> FUNCTION
 %token <Lexing.position> INICIO
 %token <Lexing.position> FIM
-%token <Lexing.position> FUNCAO
-%token <Lexing.position> VIRG DPTOS PTO PPTO PTV
-%token <Lexing.position> ACOL FCOL
+%token <Lexing.position> VIRG DPTOS PTO PTV
 %token <Lexing.position> APAR FPAR
-%token <Lexing.position> INTEIRO CADEIA BOOLEANO
-%token <Lexing.position> ARRANJO DE
-%token <Lexing.position> REGISTRO
+%token <Lexing.position> INTEIRO CADEIA CARACTER BOOLEANO FLUTUANTE
 %token <Lexing.position> SE ENTAO SENAO
+%token <Lexing.position> WHILE DO
+%token <Lexing.position> CASE OF
 %token <Lexing.position> ENTRADA
+%token <Lexing.position> ENTRADALN
 %token <Lexing.position> SAIDA
-%token <Lexing.position> ATRIB RETORNE
+%token <Lexing.position> SAIDALN
+%token <Lexing.position> ATRIB
 %token <Lexing.position> MAIS
 %token <Lexing.position> MENOS
 %token <Lexing.position> MULT
@@ -31,14 +35,19 @@ open Sast
 %token <Lexing.position> IGUAL
 %token <Lexing.position> DIFER
 %token <Lexing.position> MAIOR
+%token <Lexing.position> MENORIGUAL
+%token <Lexing.position> MAIORIGUAL
 %token <Lexing.position> ELOG
 %token <Lexing.position> OULOG
 %token <Lexing.position> CONCAT
 %token EOF
+%token <Lexing.position> FOR
+%token <Lexing.position> TO
 
 %left OULOG
 %left ELOG
 %left IGUAL DIFER
+%left MAIORIGUAL MENORIGUAL
 %left MAIOR MENOR
 %left CONCAT
 %left MAIS MENOS
@@ -49,116 +58,161 @@ open Sast
 
 %%
 
-programa: PROGRAMA
-          ds = declaracao_de_variavel*
-          fs = declaracao_de_funcao*
+programa: PROGRAMA 
+            nome = ID
+          PTV   
+            ds = declaracoes 
+            fn = func *
           INICIO
             cs = comando*
-          FIM PTV
-          EOF { Programa (List.flatten ds, fs, cs) }
+          FIM 
+            finalizador
+          EOF { Programa (nome, ds, fn, cs) }
+
+declaracoes: decs = option(VAR dec = declaracao+ { List.flatten dec}) {decs}
 
 
-declaracao_de_variavel:
-  ids = separated_nonempty_list(VIRG, ID) DPTOS t = tipo PTV {
-                   List.map (fun id -> DecVar (id,t)) ids  }
+declaracao: ids = separated_nonempty_list(VIRG, ID) DPTOS t = tipo PTV {
+                   List.map (fun id -> DecVar (id,t)) ids
+          }
 
-declaracao_de_funcao:
-  FUNCAO nome = ID APAR formais = separated_list(VIRG, parametro) FPAR DPTOS tret = tipo
-  ds = declaracao_de_variavel*
-  INICIO
-  cs = comando*
-  FIM PTV {
-    DecFun {
-      fn_nome = nome;
-      fn_tiporet = tret ;
-      fn_formais = formais;
-      fn_locais = List.flatten ds;
-      fn_corpo = cs
-    }
- }
+func: FUNCTION 
+            nome = ID
+          APAR
+            args = argumentos
+          FPAR
+          DPTOS 
+            retorno = tipo
+            PTV 
+          ds = declaracoes 
+          INICIO
+            cs = comando*
+          FIM PTV { DecFun (nome, args, retorno, ds, cs) }
 
-parametro: nome = ID DPTOS t = tipo { (nome, t) }
+argumentos: dec = separated_list(PTV, declaracao_args) { List.flatten dec}
+
+declaracao_args: ids = separated_nonempty_list(VIRG, ID) DPTOS t = tipo {
+                   List.map (fun id -> DecVar (id,t)) ids
+          }
+
+finalizador:  PTO  {}
+            | PTV  {}
 
 tipo: t=tipo_simples  { t }
-    | t=tipo_arranjo  { t }
-    | t=tipo_registro { t }
 
-
-tipo_simples: INTEIRO  { TipoInt    }
-            | CADEIA   { TipoString }
-            | BOOLEANO { TipoBool   }
-
-
-tipo_arranjo: ARRANJO ACOL lim=limites FCOL DE tp=tipo {
-                let (inicio, fim) = lim in
-                TipoArranjo (tp, inicio, fim)
-            }
-
-tipo_registro: REGISTRO
-                 campos=nonempty_list(id=ID DPTOS tp=tipo PTV { (id,tp) } )
-               FIM REGISTRO { TipoRegistro campos }
-
-
-limites: inicio=INT PPTO fim=INT { (inicio, fim) }
+tipo_simples: INTEIRO   { TipoInt    }
+            | CADEIA    { TipoString }
+            | BOOLEANO  { TipoBool   }
+            | CARACTER  { TipoChar   }
+            | FLUTUANTE { TipoFloat  }
 
 comando: c=comando_atribuicao { c }
        | c=comando_se         { c }
+       | c=comando_while      { c }
        | c=comando_entrada    { c }
        | c=comando_saida      { c }
-       | c=comando_chamada    { c }
-       | c=comando_retorno    { c }
+       | c=comando_entradaln  { c }
+       | c=comando_saidaln    { c }
+       | c=comando_expressao  { c }
+       | c=comando_switch     { c }
+       | c=comando_for        { c }
 
-comando_atribuicao: esq=expressao ATRIB dir=expressao PTV {
-      CmdAtrib (esq,dir)
-}
+comando_atribuicao: v=variavel ATRIB e=expressao PTV {
+      CmdAtrib (v,e) }
+       
 
-comando_se: SE APAR teste=expressao FPAR ENTAO
-               entao=comando+
-               senao=option(SENAO cs=comando+ {cs})
-            FIM SE PTV {
+comando_se: SE teste=expressao ENTAO
+              INICIO
+               entao=comando_case
+              FIM option(PTV)
+              senao= option(SENAO _senao = myelse { _senao })
+             {
               CmdSe (teste, entao, senao)
             }
 
-comando_entrada: ENTRADA xs=separated_nonempty_list(VIRG, expressao) PTV {
+myelse: cs=comando_case {cs}
+
+comando_while: WHILE teste=expressao DO
+              INICIO
+               doit=comando+
+              FIM option(PTV)
+             {
+              CmdWhile (teste, doit)
+            }
+
+comando_for: FOR v=variavel ATRIB e=expressao TO exp = expressao DO
+              INICIO
+               doit=comando+
+              FIM option(PTV)
+             {
+              CmdFor (v, e, exp, doit)
+            }
+            
+comando_entrada: ENTRADA APAR xs=separated_nonempty_list(VIRG, variavel) FPAR PTV {
                    CmdEntrada xs
                }
 
-comando_saida: SAIDA xs=separated_nonempty_list(VIRG, expressao) PTV {
+comando_entradaln: ENTRADALN APAR xs=separated_nonempty_list(VIRG, variavel) FPAR PTV {
+                   CmdEntradaln xs
+               }
+
+comando_saida: SAIDA APAR xs=separated_nonempty_list(VIRG, expressao) FPAR PTV {
                  CmdSaida xs
-         }
+             }
 
-comando_chamada: exp=chamada PTV { CmdChamada exp }
+comando_saidaln: SAIDALN APAR xs=separated_nonempty_list(VIRG, expressao) FPAR PTV {
+                 CmdSaidaln xs
+             }
+  
+comando_expressao: e=expressao PTV { CmdExpressao e }
 
-comando_retorno: RETORNE e=expressao? PTV { CmdRetorno e}
+comando_switch: CASE teste=expressao OF
+                testes=case+
+                senao= option(SENAO _senao = myelse { _senao })
+                FIM 
+                option(PTV)
+                { CmdSwitch (teste, testes, senao) }
+
+
+case: l=literal_case DPTOS c=comando_case { Case (l,c) }
+
+comando_case: c = comando { [c] }
+              | INICIO c = comando+ FIM option(PTV) { c }
+
+literal_case:| i=INT      { LitInt i    }
+            | b=BOOL     { LitBool b   }
+            | c=CHAR     { LitChar c   }
 
 expressao:
-         | v=variavel { ExpVar v    }
-         | i=INT      { ExpInt i    }
-         | s=STRING   { ExpString s }
-         | b=BOOL     { ExpBool b   }
-	 | e1=expressao op=oper e2=expressao { ExpOp (op, e1, e2) }
-         | c = chamada  { c }
- 	 | APAR e=expressao FPAR { e }
+          | v=variavel { ExpVar v    }
+          | i=INT      { ExpInt i    }
+          | c=CHAR     { ExpChar c   }
+          | s=STRING   { ExpString s }
+          | b=BOOL     { ExpBool b   }
+          | f=FLOAT    { ExpFloat f  }
+          | e1=expressao op=oper e2=expressao { ExpOp (op, e1, e2) }
+          | APAR e=expressao FPAR { e }
+          | c = chamada_func { c }
 
-chamada : nome=ID APAR args=separated_list(VIRG, expressao) FPAR {
-             ExpChamada  (nome, args)}
 
 %inline oper:
-	| pos = MAIS   { (Mais, pos)  }
-        | pos = MENOS  { (Menos, pos) }
-        | pos = MULT   { (Mult, pos)  }
-        | pos = DIV    { (Div, pos)   }
-        | pos = MENOR  { (Menor, pos) }
-        | pos = IGUAL  { (Igual, pos) }
-        | pos = DIFER  { (Difer, pos) }
-        | pos = MAIOR  { (Maior, pos) }
-        | pos = ELOG   { (E, pos)     }
-        | pos = OULOG  { (Ou, pos)    }
-        | pos = CONCAT { (Concat, pos)}
+	      | MAIS  { Mais  }
+        | MENOS { Menos }
+        | MULT  { Mult  }
+        | DIV   { Div   }
+        | MENOR { Menor }
+        | IGUAL { Igual }
+        | DIFER { Difer }
+        | MAIOR { Maior }
+        | MENORIGUAL { Menorigual }
+        | MAIORIGUAL { Maiorigual }
+        | ELOG  { E     }
+        | OULOG { Ou    }
+        | CONCAT   { Concat   }
 
 variavel:
         | x=ID       { VarSimples x }
         | v=variavel PTO x=ID { VarCampo (v,x) }
-        | v=variavel ACOL e=expressao FCOL { VarElemento (v,e) }
 
+chamada_func: x=ID APAR args=separated_list(VIRG,expressao) FPAR { ExpChamFunc (x,args) }
 
