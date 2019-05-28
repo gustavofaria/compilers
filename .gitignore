@@ -210,3 +210,6 @@ nbdist/
 .nb-gradle/
 
 # End of https://www.gitignore.io/api/java,code,maven,eclipse,netbeans,intellij
+
+_build/
+semanticoTest\.byte
