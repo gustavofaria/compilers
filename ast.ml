@@ -4,18 +4,26 @@ open Lexing
 type ident = string
 type 'a pos =  'a * Lexing.position (* tipo e posição no arquivo fonte *)
 
-type 'expr programa = Programa of ident * declaracoesopt * ('expr declaracoesfunc ) * ('expr comandos )
-and declaracoesfunc = ('expr declaracaofunc ) list
+type 'expr programa = Programa of (ident pos) * declaracoes * ('expr declaracoesfunc ) * ('expr comandos )
+and 'expr declaracoesfunc = ('expr declaracaofunc ) list
 and declaracoesopt = declaracoes option
 and declaracoes = declaracao list
-and comandos = ('expr comando ) list
+and 'expr comandos = ('expr comando ) list
 and declaracao = DecVar of (ident pos) * tipo
 
-and declaracaofunc = DecFun of ident pos * declaracoes * (ident pos * tipo) list * declaracoesopt * 'expr comandos
-                                     
+and 'expr declaracaofunc = DecFun of ('expr decfn)
+
+and 'expr decfn = {
+  fn_nome:    ident pos;
+  fn_tiporet: tipo;
+  fn_formais: (ident pos * tipo) list;
+  fn_locais:  declaracoes;
+  fn_corpo:   'expr comandos
+}                                     
 and tipo = TipoInt
          | TipoString
          | TipoBool
+         | TipoVoid
          | TipoChar
          | TipoFloat
 
@@ -25,33 +33,24 @@ and campo = ident pos * tipo
 and 'expr comando = CmdAtrib of 'expr * 'expr
             | CmdSe of 'expr * ( 'expr comandos ) * ( 'expr comandos option)
             | CmdWhile of 'expr * ( 'expr comandos )
-            | CmdEntrada of ( 'expr variaveis )
-            | CmdSaida of ('expr expressao ) list
-            | CmdEntradaln of ( 'expr variaveis )
-            | CmdSaidaln of ('expr expressao ) list
-            | CmdExpressao of ('expr expressao )
+            | CmdEntrada of ( 'expr ) list
+            | CmdSaida of ('expr ) list
+            | CmdEntradaln of ( 'expr ) list
+            | CmdSaidaln of ('expr ) list
+            | CmdExpressao of ('expr )
             | CmdSwitch of ('expr ) * ('expr case ) list * ( 'expr comandos option)
-            | CmdFor of variavel * expressao * expressao * comandos
+            | CmdFor of ('expr variavel) * ('expr  )* ('expr  ) * ('expr comandos )
 
-and case = Case of literal_case * (comando list)
+and 'expr case = Case of literal_case * ('expr comando list)
 
-and literal_case = LitInt of int
-              | LitBool of bool
-              | LitChar of char
+and literal_case = LitInt of (int pos)
+              | LitBool of (bool pos)
+              | LitChar of (char pos)
 
-and variaveis = variavel list
-and variavel = VarSimples of ident
-             | VarCampo of variavel * ident
-             | VarElemento of variavel * expressao
+and 'expr variaveis = ('expr variavel) list
+and 'expr variavel = VarSimples of ident pos
 
-and expressao = ExpVar of variavel
-              | ExpInt of int
-              | ExpFloat of float
-              | ExpChar of char
-              | ExpString of string
-              | ExpOp of oper * expressao * expressao
-              | ExpBool of bool
-              | ExpChamFunc of ident * (expressao list)
+and 'expr expressoes = 'expr list
 
 and oper = Mais
          | Menos

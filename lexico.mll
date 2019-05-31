@@ -80,9 +80,9 @@ rule token =
   | '\''   { let buffer = Buffer.create 1 in 
             let str = leia_string buffer lexbuf in
               if(length(str)>1) then
-                STRING str (pos_atual lexbuf) 
+                STRING (str, pos_atual lexbuf) 
               else 
-                CHAR str.[0] (pos_atual lexbuf) 
+                CHAR (str.[0], pos_atual lexbuf) 
            }
   | p r o g r a m  { PROGRAMA (pos_atual lexbuf) } 
   | v a r      { VAR (pos_atual lexbuf) }

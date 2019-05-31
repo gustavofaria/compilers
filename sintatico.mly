@@ -69,7 +69,13 @@ programa: PROGRAMA
             finalizador
           EOF { Programa (nome, ds, fn, cs) }
 
-declaracoes: decs = option(VAR dec = declaracao+ { List.flatten dec}) {decs}
+declaracoesi: decs = option(VAR dec = declaracao+ { List.flatten dec}) {decs}
+
+declaracoes: opt = declaracoesi {match opt with
+                                    None -> []
+                                  | Some e ->  e 
+                                }
+
 
 
 declaracao: ids = separated_nonempty_list(VIRG, ID) DPTOS t = tipo PTV {
@@ -87,12 +93,19 @@ func: FUNCTION
           ds = declaracoes 
           INICIO
             cs = comando*
-          FIM PTV { DecFun (nome, args, retorno, ds, cs) }
+          FIM PTV {   DecFun {
+                        fn_nome = nome;
+                        fn_tiporet = retorno ;
+                        fn_formais = args;
+                        fn_locais = ds;
+                        fn_corpo = cs
+                      }
+                  }
 
 argumentos: dec = separated_list(PTV, declaracao_args) { List.flatten dec}
 
 declaracao_args: ids = separated_nonempty_list(VIRG, ID) DPTOS t = tipo {
-                   List.map (fun id -> DecVar (id,t)) ids
+                   List.map (fun id -> (id,t)) ids
           }
 
 finalizador:  PTO  {}
@@ -117,7 +130,7 @@ comando: c=comando_atribuicao { c }
        | c=comando_switch     { c }
        | c=comando_for        { c }
 
-comando_atribuicao: v=variavel ATRIB e=expressao PTV {
+comando_atribuicao: v=expressao ATRIB e=expressao PTV {
       CmdAtrib (v,e) }
        
 
@@ -148,11 +161,11 @@ comando_for: FOR v=variavel ATRIB e=expressao TO exp = expressao DO
               CmdFor (v, e, exp, doit)
             }
             
-comando_entrada: ENTRADA APAR xs=separated_nonempty_list(VIRG, variavel) FPAR PTV {
+comando_entrada: ENTRADA APAR xs=separated_nonempty_list(VIRG, expressao) FPAR PTV {
                    CmdEntrada xs
                }
 
-comando_entradaln: ENTRADALN APAR xs=separated_nonempty_list(VIRG, variavel) FPAR PTV {
+comando_entradaln: ENTRADALN APAR xs=separated_nonempty_list(VIRG, expressao) FPAR PTV {
                    CmdEntradaln xs
                }
 
@@ -196,23 +209,22 @@ expressao:
 
 
 %inline oper:
-	      | MAIS  { Mais  }
-        | MENOS { Menos }
-        | MULT  { Mult  }
-        | DIV   { Div   }
-        | MENOR { Menor }
-        | IGUAL { Igual }
-        | DIFER { Difer }
-        | MAIOR { Maior }
-        | MENORIGUAL { Menorigual }
-        | MAIORIGUAL { Maiorigual }
-        | ELOG  { E     }
-        | OULOG { Ou    }
-        | CONCAT   { Concat   }
+	    | pos = MAIS   { (Mais, pos)  }
+        | pos = MENOS  { (Menos, pos) }
+        | pos = MULT   { (Mult, pos)  }
+        | pos = DIV    { (Div, pos)   }
+        | pos = MENOR  { (Menor, pos) }
+        | pos = IGUAL  { (Igual, pos) }
+        | pos = DIFER  { (Difer, pos) }
+        | pos = MAIOR  { (Maior, pos) }
+        | pos = MENORIGUAL { (Menorigual, pos) }
+        | pos = MAIORIGUAL { (Maiorigual, pos) }
+        | pos = ELOG   { (E, pos)     }
+        | pos = OULOG  { (Ou, pos)    }
+        | pos = CONCAT { (Concat, pos)}
 
 variavel:
         | x=ID       { VarSimples x }
-        | v=variavel PTO x=ID { VarCampo (v,x) }
 
 chamada_func: x=ID APAR args=separated_list(VIRG,expressao) FPAR { ExpChamFunc (x,args) }
 

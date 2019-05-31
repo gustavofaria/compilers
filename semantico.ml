@@ -7,14 +7,14 @@ let rec posicao exp = let open S in
   match exp with
   | ExpVar v -> (match v with
       | A.VarSimples (_,pos) -> pos
-      | A.VarCampo (_, (_,pos)) -> pos
-      | A.VarElemento (_,exp2) -> posicao exp2
     )
   | ExpInt (_,pos) -> pos
+  | ExpChar (_,pos) -> pos
+  | ExpFloat (_,pos) -> pos
   | ExpString  (_,pos) -> pos
   | ExpBool (_,pos) -> pos
   | ExpOp ((_,pos),_,_)  -> pos
-  | ExpChamada ((_,pos), _) -> pos
+  | ExpChamFunc ((_,pos), _) -> pos
 
 type classe_op = Aritmetico | Relacional | Logico | Cadeia
 
@@ -25,6 +25,8 @@ let classifica op =
   | E  -> Logico
   | Menor
   | Maior
+  | Menorigual
+  | Maiorigual
   | Igual
   | Difer -> Relacional
   | Mais
@@ -50,8 +52,8 @@ let nome_tipo t =
     | TipoString -> "string"
     | TipoBool -> "bool"
     | TipoVoid -> "void"
-    | TipoArranjo (t,i,f) -> "arranjo"
-    | TipoRegistro cs -> "registro"
+    | TipoChar -> "char"
+    | TipoFloat -> "float"
 
 let mesmo_tipo pos msg tinf tdec =
   if tinf <> tdec
@@ -64,6 +66,8 @@ let rec infere_exp amb exp =
     S.ExpInt n    -> (T.ExpInt (fst n, A.TipoInt),       A.TipoInt)
   | S.ExpString s -> (T.ExpString (fst s, A.TipoString), A.TipoString)
   | S.ExpBool b   -> (T.ExpBool (fst b, A.TipoBool),     A.TipoBool)
+  | S.ExpChar b   -> (T.ExpChar (fst b, A.TipoChar),     A.TipoChar)
+  | S.ExpFloat b   -> (T.ExpFloat (fst b, A.TipoFloat),     A.TipoFloat)
   | S.ExpVar v ->
     (match v with
        A.VarSimples nome ->
@@ -152,7 +156,7 @@ let rec infere_exp amb exp =
     in
       (T.ExpOp ((op,tinf), (esq, tesq), (dir, tdir)), tinf)
 
-  | S.ExpChamada (nome, args) ->
+  | S.ExpChamFunc (nome, args) ->
      let rec verifica_parametros ags ps fs =
         match (ags, ps, fs) with
          (a::ags), (p::ps), (f::fs) ->
@@ -177,7 +181,7 @@ let rec infere_exp amb exp =
            (* Verifica se o tipo de cada argumento confere com o tipo declarado *)
            (* do parâmetro formal correspondente.                               *)
            let _ = verifica_parametros args (List.map snd argst) tipos_formais
-            in (T.ExpChamada (id, (List.map fst argst), tipo_fn), tipo_fn)
+            in (T.ExpChamFunc (id, (List.map fst argst), tipo_fn), tipo_fn)
          | Amb.EntVar _ -> (* Se estiver associada a uma variável, falhe *)
            let msg = id ^ " eh uma variavel e nao uma funcao" in
            failwith (msg_erro nome msg)
@@ -189,7 +193,7 @@ let rec infere_exp amb exp =
 let rec verifica_cmd amb tiporet cmd =
   let open A in
   match cmd with
-    CmdRetorno exp ->
+ (*    CmdRetorno exp ->
     (match exp with
      (* Se a função não retornar nada, verifica se ela foi declarada como void *)
        None ->
@@ -205,8 +209,8 @@ let rec verifica_cmd amb tiporet cmd =
                               "O tipo retornado eh %s mas foi declarado como %s"
                               tinf tiporet
            in CmdRetorno (Some e1)
-      )
-  | CmdSe (teste, entao, senao) ->
+      ) 
+  |*) CmdSe (teste, entao, senao) ->
     let (teste1,tinf) = infere_exp amb teste in
     (* O tipo inferido para a expressão 'teste' do condicional deve ser booleano *)
     let _ = mesmo_tipo (posicao teste)
@@ -232,19 +236,29 @@ let rec verifica_cmd amb tiporet cmd =
                        "Atribuicao com tipos diferentes: %s = %s" tesq tdir
     in CmdAtrib (elem1, exp)
 
-  | CmdChamada exp ->
+  | CmdExpressao exp ->
      let (exp,tinf) = infere_exp amb exp in
-     CmdChamada exp
+     CmdExpressao exp
 
   | CmdEntrada exps ->
     (* Verifica o tipo de cada argumento da função 'entrada' *)
     let exps = List.map (infere_exp amb) exps in
     CmdEntrada (List.map fst exps)
+  | CmdEntradaln exps ->
+    (* Verifica o tipo de cada argumento da função 'entrada' *)
+    let exps = List.map (infere_exp amb) exps in
+    CmdEntradaln (List.map fst exps)
 
   | CmdSaida exps ->
     (* Verifica o tipo de cada argumento da função 'saida' *)
     let exps = List.map (infere_exp amb) exps in
     CmdSaida (List.map fst exps)
+
+  | CmdSaidaln exps ->
+    (* Verifica o tipo de cada argumento da função 'saida' *)
+    let exps = List.map (infere_exp amb) exps in
+    CmdSaidaln (List.map fst exps)
+
 
 and verifica_fun amb ast =
   let open A in
@@ -303,11 +317,11 @@ let semantico ast =
   (* cria ambiente global inicialmente vazio *)
   let amb_global = Amb.novo_amb [] in
   let _ = declara_predefinidas amb_global in
-  let (A.Programa (decs_globais, decs_funs, corpo)) = ast in
+  let (A.Programa (nome, decs_globais, decs_funs, corpo)) = ast in
   let _ = List.iter (insere_declaracao_var amb_global) decs_globais in
   let _ = List.iter (insere_declaracao_fun amb_global) decs_funs in
   (* Verificação de tipos nas funções *)
   let decs_funs = List.map (verifica_fun amb_global) decs_funs in
   (* Verificação de tipos na função principal *)
   let corpo = List.map (verifica_cmd amb_global A.TipoVoid) corpo in
-     (A.Programa (decs_globais, decs_funs, corpo),  amb_global)
+     (A.Programa (nome, decs_globais, decs_funs, corpo),  amb_global)
