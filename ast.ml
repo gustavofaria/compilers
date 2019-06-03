@@ -40,11 +40,12 @@ and 'expr comando = CmdAtrib of 'expr * 'expr
             | CmdExpressao of ('expr )
             | CmdSwitch of ('expr ) * 'expr cases * ( 'expr comandos option)
             | CmdFor of ('expr ) * ('expr  )* ('expr  ) * ('expr comandos )
+            | CmdRetorno of ('expr option)
 
 (* and 'expr case = Case of ('expr) * ('expr comando list) *)
 
 and 'expr cases = ('expr case) list
-and 'expr case = Case of 'expr comandos
+and 'expr case = Case of ('expr ) * ('expr comandos)
 
 and 'expr variaveis = ('expr variavel) list
 and 'expr variavel = VarSimples of ident pos

@@ -190,10 +190,35 @@ let rec infere_exp amb exp =
        let msg = "Nao existe a funcao de nome " ^ id in
        failwith (msg_erro nome msg)
 
+
+let rec infere_var amb exp =
+  match exp with
+  | S.ExpVar v ->
+    (match v with
+       A.VarSimples nome ->
+       (* Tenta encontrar a definição da variável no escopo local, se não      *)
+       (* encontar tenta novamente no escopo que engloba o atual. Prossegue-se *)
+       (* assim até encontrar a definição em algum escopo englobante ou até    *)
+       (* encontrar o escopo global. Se em algum lugar for encontrado,         *)
+       (* devolve-se a definição. Em caso contrário, devolve uma exceção       *)
+       let id = fst nome in
+         (try (match (Amb.busca amb id) with
+               | Amb.EntVar tipo -> (T.ExpVar (A.VarSimples nome, tipo), tipo)
+               | Amb.EntFun _ ->
+                 let msg = "nome de funcao usado como nome de variavel: " ^ id in
+                  failwith (msg_erro nome msg)
+             )
+          with Not_found ->
+                 let msg = "A variavel " ^ id ^ " nao foi declarada" in
+                 failwith (msg_erro nome msg)
+         )
+     | _ -> failwith "infere_var: não implementado"
+    )
+
 let rec verifica_cmd amb tiporet cmd =
   let open A in
   match cmd with
- (*    CmdRetorno exp ->
+    CmdRetorno exp ->
     (match exp with
      (* Se a função não retornar nada, verifica se ela foi declarada como void *)
        None ->
@@ -210,7 +235,7 @@ let rec verifica_cmd amb tiporet cmd =
                               tinf tiporet
            in CmdRetorno (Some e1)
       ) 
-  |*) CmdSe (teste, entao, senao) ->
+  | CmdSe (teste, entao, senao) ->
     let (teste1,tinf) = infere_exp amb teste in
     (* O tipo inferido para a expressão 'teste' do condicional deve ser booleano *)
     let _ = mesmo_tipo (posicao teste)
@@ -228,7 +253,7 @@ let rec verifica_cmd amb tiporet cmd =
 
   | CmdAtrib (elem, exp) ->
     (* Infere o tipo da expressão no lado direito da atribuição *)
-    let (exp,  tdir) = infere_exp amb exp
+    let (exp,  tdir) = infere_var amb exp
     (* Faz o mesmo para o lado esquerdo *)
     and (elem1, tesq) = infere_exp amb elem in
     (* Os dois tipos devem ser iguais *)
@@ -271,7 +296,7 @@ let rec verifica_cmd amb tiporet cmd =
      CmdWhile (teste1, doit1)
 
   | CmdFor (v, inicio, fim, doit) ->
-    let (teste1,tinf) = infere_exp amb v in
+    let (teste1,tinf) = infere_var amb v in
     (* O tipo inferido para a expressão 'teste' do condicional deve ser booleano *)
     let _ = mesmo_tipo (posicao v)
              "O teste do if deveria ser do tipo %s e nao %s"
@@ -296,25 +321,24 @@ let rec verifica_cmd amb tiporet cmd =
      CmdFor(teste1,inicio1,fim1,doit1)
 
   | CmdSwitch (comparer, case, myelse) ->
-    let (comparer1,tinf) = infere_exp amb comparer in
+    let (comparer1,tcomparer) = infere_exp amb comparer in
     (* O tipo inferido para a expressão 'teste' do condicional deve ser booleano *)
-    let _ = mesmo_tipo (posicao comparer)
-             "O teste do if deveria ser do tipo %s e nao %s"
-             TipoInt tinf in
-    
-
-    (* let case1 = 
-      List.map (fun caseunit ->
-        let (exprcase, cmdscase) = caseunit in 
-          let (exprcase,tinf) =  infere_exp amb exprcase in 
-          ( let cmdscase2 =
-            List.map (verifica_cmd amb tiporet ) cmdscase in cmdscase2) ) 
-          case in *)
+    let _ = if (tcomparer <> TipoInt && tcomparer <> TipoBool && tcomparer <> TipoChar)
+  then
+    let msg = Printf.sprintf "O comando case deve ser do tipo %s, %s ou %s " (nome_tipo TipoInt) (nome_tipo TipoBool) (nome_tipo TipoChar) in
+    failwith (msg_erro_pos (posicao comparer) msg) in
         let case1 = List.map 
         (fun elem -> 
          match elem with
-          A.Case ( cmds)  -> 
-          A.Case (List.map  (verifica_cmd amb tiporet)  cmds)
+          A.Case (express, cmds)  -> 
+          let (exprt,tinf) = infere_exp amb express in
+    (* O tipo inferido para a expressão 'teste' do condicional deve ser booleano *)
+    let _ = mesmo_tipo (posicao express)
+             "O teste do if deveria ser do tipo %s e nao %s"
+             tcomparer tinf in
+
+          A.Case (exprt, 
+          (List.map  (verifica_cmd amb tiporet)  cmds))
          )
          case in
 
@@ -340,7 +364,7 @@ and verifica_fun amb ast =
     (* Insere as variáveis locais no novo ambiente *)
     let insere_local = function
         (DecVar (v,t)) -> Amb.insere_local ambfn (fst v)  t in
-    let _ = List.iter insere_local fn_locais in
+    let _ = List.iter insere_local  fn_locais  in
     (* Verifica cada comando presente no corpo da função usando o novo ambiente *)
     let corpo_tipado = List.map (verifica_cmd ambfn fn_tiporet) fn_corpo in
       A.DecFun {fn_nome; fn_tiporet; fn_formais; fn_locais; fn_corpo = corpo_tipado}
@@ -374,7 +398,9 @@ let insere_declaracao_fun amb dec =
 (* Lista de cabeçalhos das funções pré definidas *)
 let fn_predefs = let open A in [
    ("entrada", [("x", TipoInt); ("y", TipoInt)], TipoVoid);
-   ("saida",   [("x", TipoInt); ("y", TipoInt)], TipoVoid)
+   ("entradaln", [("x", TipoInt); ("y", TipoInt)], TipoVoid);
+   ("saida",   [("x", TipoInt); ("y", TipoInt)], TipoVoid);
+   ("saidaln",   [("x", TipoInt); ("y", TipoInt)], TipoVoid)
 ]
 
 (* insere as funções pré definidas no ambiente global *)

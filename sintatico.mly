@@ -43,6 +43,7 @@ open Sast
 %token EOF
 %token <Lexing.position> FOR
 %token <Lexing.position> TO
+%token <Lexing.position> RETORNE
 
 %left OULOG
 %left ELOG
@@ -129,6 +130,7 @@ comando: c=comando_atribuicao { c }
        | c=comando_expressao  { c }
        | c=comando_switch     { c }
        | c=comando_for        { c }
+       | c=comando_retorno    { c }
 
 comando_atribuicao: v=expressao ATRIB e=expressao PTV {
       CmdAtrib (v,e) }
@@ -187,10 +189,13 @@ comando_switch: CASE teste=expressao OF
                 { CmdSwitch (teste, testes, senao) }
 
 
-case: l=expressao DPTOS c=comando+ { Case (c) }
+case: l=expressao DPTOS INICIO c=comando+ FIM option(PTV) { Case (l, c) }
 
 comando_case: c = comando { [c] }
               | INICIO c = comando+ FIM option(PTV) { c }
+
+comando_retorno: RETORNE v=option(expressao) option(PTV) {
+      CmdRetorno (v) }
 
 expressao:
           | v=variavel { ExpVar v    }
