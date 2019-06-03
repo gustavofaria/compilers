@@ -258,7 +258,75 @@ let rec verifica_cmd amb tiporet cmd =
     (* Verifica o tipo de cada argumento da função 'saida' *)
     let exps = List.map (infere_exp amb) exps in
     CmdSaidaln (List.map fst exps)
+   
+  | CmdWhile (teste, doit) ->
+    let (teste1,tinf) = infere_exp amb teste in
+    (* O tipo inferido para a expressão 'teste' do condicional deve ser booleano *)
+    let _ = mesmo_tipo (posicao teste)
+             "O teste do if deveria ser do tipo %s e nao %s"
+             TipoBool tinf in
+    (* Verifica a validade de cada comando do bloco de comandos *)
+    let doit1 = List.map (verifica_cmd amb tiporet) doit in
+    
+     CmdWhile (teste1, doit1)
 
+  | CmdFor (v, inicio, fim, doit) ->
+    let (teste1,tinf) = infere_exp amb v in
+    (* O tipo inferido para a expressão 'teste' do condicional deve ser booleano *)
+    let _ = mesmo_tipo (posicao v)
+             "O teste do if deveria ser do tipo %s e nao %s"
+             TipoInt tinf in
+    
+    let (inicio1,tinf) = infere_exp amb inicio in
+    (* O tipo inferido para a expressão 'teste' do condicional deve ser booleano *)
+    let _ = mesmo_tipo (posicao inicio)
+             "O teste do if deveria ser do tipo %s e nao %s"
+             TipoInt tinf in
+
+    let (fim1,tinf) = infere_exp amb fim in
+    (* O tipo inferido para a expressão 'teste' do condicional deve ser booleano *)
+    let _ = mesmo_tipo (posicao fim)
+             "O teste do if deveria ser do tipo %s e nao %s"
+             TipoInt tinf in
+
+ 
+    (* Verifica a validade de cada comando do bloco 'então' *)
+    let doit1 = List.map (verifica_cmd amb tiporet) doit in
+    (* Verifica a validade de cada comando do bloco 'senão', se houver *)
+     CmdFor(teste1,inicio1,fim1,doit1)
+
+  | CmdSwitch (comparer, case, myelse) ->
+    let (comparer1,tinf) = infere_exp amb comparer in
+    (* O tipo inferido para a expressão 'teste' do condicional deve ser booleano *)
+    let _ = mesmo_tipo (posicao comparer)
+             "O teste do if deveria ser do tipo %s e nao %s"
+             TipoInt tinf in
+    
+
+    (* let case1 = 
+      List.map (fun caseunit ->
+        let (exprcase, cmdscase) = caseunit in 
+          let (exprcase,tinf) =  infere_exp amb exprcase in 
+          ( let cmdscase2 =
+            List.map (verifica_cmd amb tiporet ) cmdscase in cmdscase2) ) 
+          case in *)
+        let case1 = List.map 
+        (fun elem -> 
+         match elem with
+          A.Case ( cmds)  -> 
+          A.Case (List.map  (verifica_cmd amb tiporet)  cmds)
+         )
+         case in
+
+    let myelse1 =
+        match myelse with
+          None -> None
+        | Some bloco -> Some (List.map (verifica_cmd amb tiporet) bloco)
+     in
+    
+    
+  CmdSwitch(comparer1,case1,myelse1)
+     
 
 and verifica_fun amb ast =
   let open A in

@@ -38,14 +38,13 @@ and 'expr comando = CmdAtrib of 'expr * 'expr
             | CmdEntradaln of ( 'expr ) list
             | CmdSaidaln of ('expr ) list
             | CmdExpressao of ('expr )
-            | CmdSwitch of ('expr ) * ('expr case ) list * ( 'expr comandos option)
-            | CmdFor of ('expr variavel) * ('expr  )* ('expr  ) * ('expr comandos )
+            | CmdSwitch of ('expr ) * 'expr cases * ( 'expr comandos option)
+            | CmdFor of ('expr ) * ('expr  )* ('expr  ) * ('expr comandos )
 
-and 'expr case = Case of literal_case * ('expr comando list)
+(* and 'expr case = Case of ('expr) * ('expr comando list) *)
 
-and literal_case = LitInt of (int pos)
-              | LitBool of (bool pos)
-              | LitChar of (char pos)
+and 'expr cases = ('expr case) list
+and 'expr case = Case of 'expr comandos
 
 and 'expr variaveis = ('expr variavel) list
 and 'expr variavel = VarSimples of ident pos

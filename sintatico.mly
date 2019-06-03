@@ -153,12 +153,12 @@ comando_while: WHILE teste=expressao DO
               CmdWhile (teste, doit)
             }
 
-comando_for: FOR v=variavel ATRIB e=expressao TO exp = expressao DO
+comando_for: FOR v=expressao ATRIB inicio=expressao TO fim = expressao DO
               INICIO
                doit=comando+
               FIM option(PTV)
              {
-              CmdFor (v, e, exp, doit)
+              CmdFor (v, inicio, fim, doit)
             }
             
 comando_entrada: ENTRADA APAR xs=separated_nonempty_list(VIRG, expressao) FPAR PTV {
@@ -187,14 +187,10 @@ comando_switch: CASE teste=expressao OF
                 { CmdSwitch (teste, testes, senao) }
 
 
-case: l=literal_case DPTOS c=comando_case { Case (l,c) }
+case: l=expressao DPTOS c=comando+ { Case (c) }
 
 comando_case: c = comando { [c] }
               | INICIO c = comando+ FIM option(PTV) { c }
-
-literal_case:| i=INT      { LitInt i    }
-            | b=BOOL     { LitBool b   }
-            | c=CHAR     { LitChar c   }
 
 expressao:
           | v=variavel { ExpVar v    }
