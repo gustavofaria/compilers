@@ -110,7 +110,6 @@ rule token =
   | r e a d l n { ENTRADALN (pos_atual lexbuf) }
   | w r i t e    { SAIDA (pos_atual lexbuf) }
   | w r i t e l n { SAIDALN (pos_atual lexbuf) }
-  | r e t u r n { RETORNE (pos_atual lexbuf) }
   | identificador as x    { ID (uppercase_ascii x, pos_atual lexbuf ) }
   | inteiro as n  { INT (int_of_string n, pos_atual lexbuf) }
   | float as f    { FLOAT (float_of_string  f, pos_atual lexbuf) }

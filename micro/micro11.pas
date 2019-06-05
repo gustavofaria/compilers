@@ -14,10 +14,9 @@ begin
     begin 
         if ( n < 0 ) then
         begin
-            res := -1;
+            res + 1 := -1;
         end
         else res := 0;
-            verifica := res;
         
     end
 end;

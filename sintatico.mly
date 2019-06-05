@@ -43,7 +43,6 @@ open Sast
 %token EOF
 %token <Lexing.position> FOR
 %token <Lexing.position> TO
-%token <Lexing.position> RETORNE
 
 %left OULOG
 %left ELOG
@@ -94,12 +93,45 @@ func: FUNCTION
           ds = declaracoes 
           INICIO
             cs = comando*
-          FIM PTV {   DecFun {
+          FIM PTV { 
+            let trasformaRetorno e exp = (
+                    match e with 
+                      ExpVar ( VarSimples e1) -> if (fst e1 ) = (fst nome)  then
+
+                          CmdRetorno (Some exp)  
+                        else
+                          CmdAtrib (e, exp) 
+                  
+                      | _ ->  CmdAtrib (e, exp) 
+                  ) in 
+             let rec parse_CmdRetorno comandos = List.map (
+              fun elem -> 
+                match elem with
+                    CmdAtrib (e, exp) -> trasformaRetorno e exp
+                  | CmdFor (a,b,c, doit) -> let doit_ret = parse_CmdRetorno doit in CmdFor (a,b,c, doit_ret) 
+                  | CmdSe (teste, entao, senao) -> let entao_ret = parse_CmdRetorno entao in 
+                    let else_ret = (match senao with
+                                  | None -> None
+                                  | Some e -> Some (parse_CmdRetorno e)) in
+                    CmdSe (teste, entao_ret, else_ret)
+                  | CmdWhile (a, doit) -> let doit_ret = parse_CmdRetorno doit in CmdWhile (a, doit_ret) 
+                  | CmdSwitch (teste, testes, senao) -> let testes_ret = List.map (fun teste -> match teste with
+                   Case (l, c) -> 
+                   let c_ret = parse_CmdRetorno c in
+                    Case (l, c_ret) ) testes in 
+                    let else_ret = (match senao with
+                                  | None -> None
+                                  | Some e -> Some (parse_CmdRetorno e)) in
+                   CmdSwitch (teste, testes_ret, else_ret)
+                  | _ as outros -> outros
+            ) comandos  in
+            let comando_com_ret  = parse_CmdRetorno cs in
+            DecFun {
                         fn_nome = nome;
                         fn_tiporet = retorno ;
                         fn_formais = args;
                         fn_locais = ds;
-                        fn_corpo = cs
+                        fn_corpo = comando_com_ret
                       }
                   }
 
@@ -130,7 +162,6 @@ comando: c=comando_atribuicao { c }
        | c=comando_expressao  { c }
        | c=comando_switch     { c }
        | c=comando_for        { c }
-       | c=comando_retorno    { c }
 
 comando_atribuicao: v=expressao ATRIB e=expressao PTV {
       CmdAtrib (v,e) }
@@ -194,8 +225,6 @@ case: l=expressao DPTOS INICIO c=comando+ FIM option(PTV) { Case (l, c) }
 comando_case: c = comando { [c] }
               | INICIO c = comando+ FIM option(PTV) { c }
 
-comando_retorno: RETORNE v=option(expressao) option(PTV) {
-      CmdRetorno (v) }
 
 expressao:
           | v=variavel { ExpVar v    }

@@ -214,6 +214,7 @@ let rec infere_var amb exp =
          )
      | _ -> failwith "infere_var: não implementado"
     )
+  | _ as v -> failwith (msg_erro_pos (posicao v) "Esperava uma variável, encontrou uma expressão")
 
 let rec verifica_cmd amb tiporet cmd =
   let open A in
@@ -253,9 +254,9 @@ let rec verifica_cmd amb tiporet cmd =
 
   | CmdAtrib (elem, exp) ->
     (* Infere o tipo da expressão no lado direito da atribuição *)
-    let (exp,  tdir) = infere_var amb exp
+    let (exp,  tdir) = infere_exp amb exp
     (* Faz o mesmo para o lado esquerdo *)
-    and (elem1, tesq) = infere_exp amb elem in
+    and (elem1, tesq) = infere_var amb elem in
     (* Os dois tipos devem ser iguais *)
     let _ = mesmo_tipo (posicao elem)
                        "Atribuicao com tipos diferentes: %s = %s" tesq tdir
