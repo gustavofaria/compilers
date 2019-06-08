@@ -69,13 +69,11 @@ programa: PROGRAMA
             finalizador
           EOF { Programa (nome, ds, fn, cs) }
 
-declaracoesi: decs = option(VAR dec = declaracao+ { List.flatten dec}) {decs}
-
-declaracoes: opt = declaracoesi {match opt with
-                                    None -> []
-                                  | Some e ->  e 
-                                }
-
+	declaracoes: decs = option(VAR dec = declaracao+ { List.flatten dec}) {
+    match decs with
+        None -> []
+      | Some e ->  e 
+    }
 
 
 declaracao: ids = separated_nonempty_list(VIRG, ID) DPTOS t = tipo PTV {
@@ -163,8 +161,8 @@ comando: c=comando_atribuicao { c }
        | c=comando_switch     { c }
        | c=comando_for        { c }
 
-comando_atribuicao: v=expressao ATRIB e=expressao PTV {
-      CmdAtrib (v,e) }
+comando_atribuicao: v=variavel ATRIB e=expressao PTV {
+      CmdAtrib (ExpVar(v),e) }
        
 
 comando_se: SE teste=expressao ENTAO
@@ -186,12 +184,12 @@ comando_while: WHILE teste=expressao DO
               CmdWhile (teste, doit)
             }
 
-comando_for: FOR v=expressao ATRIB inicio=expressao TO fim = expressao DO
+comando_for: FOR v=variavel ATRIB inicio=expressao TO fim = expressao DO
               INICIO
                doit=comando+
               FIM option(PTV)
              {
-              CmdFor (v, inicio, fim, doit)
+              CmdFor (ExpVar(v), inicio, fim, doit)
             }
             
 comando_entrada: ENTRADA APAR xs=separated_nonempty_list(VIRG, expressao) FPAR PTV {

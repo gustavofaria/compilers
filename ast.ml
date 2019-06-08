@@ -42,7 +42,6 @@ and 'expr comando = CmdAtrib of 'expr * 'expr
             | CmdFor of ('expr ) * ('expr  )* ('expr  ) * ('expr comandos )
             | CmdRetorno of ('expr option)
 
-(* and 'expr case = Case of ('expr) * ('expr comando list) *)
 
 and 'expr cases = ('expr case) list
 and 'expr case = Case of ('expr ) * ('expr comandos)
