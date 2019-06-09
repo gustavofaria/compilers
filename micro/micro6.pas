@@ -5,11 +5,21 @@ BEGIN
 write('Digite um número de 1 a 5: ');
 readln(numero);
 case numero of
-    1 : writeln('Um');
-    2 : writeln('Dois');
-    3 : writeln('Três');
-    4 : writeln('Quatro');
-    5 : writeln('Cinco');
+    1 : BEGIN 
+        writeln('Um');
+    END;
+    2 : BEGIN 
+        writeln('Dois');
+    END;
+    3 : BEGIN 
+        writeln('Três');
+    END;
+    4 : BEGIN 
+        writeln('Quatro');
+    END;
+    5 : BEGIN 
+        writeln('Cinco');
+    END;
     else
     BEGIN
         writeln('Número Inválido!!!');
