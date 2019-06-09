@@ -18,7 +18,7 @@
 }
 
 let digito = ['0' - '9']
-let inteiro = '-'? digito+
+let inteiro = digito+
 let float =  digito+ '.' digito+
 
 let letra = ['a' - 'z' 'A' - 'Z']

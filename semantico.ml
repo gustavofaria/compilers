@@ -95,7 +95,8 @@ let rec infere_exp amb exp =
 
     let verifica_aritmetico () =
       (match tesq with
-         A.TipoInt ->
+          A.TipoFloat
+        | A.TipoInt ->
          let _ = mesmo_tipo (snd op)
                       "O operando esquerdo eh do tipo %s mas o direito eh do tipo %s"
                       tesq tdir
@@ -109,6 +110,8 @@ let rec infere_exp amb exp =
     and verifica_relacional () =
       (match tesq with
          A.TipoInt
+       | A.TipoFloat
+       | A.TipoChar
        | A.TipoString ->
          let _ = mesmo_tipo (snd op)
                    "O operando esquerdo eh do tipo %s mas o direito eh do tipo %s"
@@ -134,6 +137,7 @@ let rec infere_exp amb exp =
       )
     and verifica_cadeia () =
       (match tesq with
+
          A.TipoString ->
          let _ = mesmo_tipo (snd op)
                    "O operando esquerdo eh do tipo %s mas o direito eh do tipo %s"

@@ -1,6 +1,6 @@
 PROGRAM MICRO01;
 VAR
-cel, fahr : real;
+cel, fahr : integer;
 BEGIN
     writeln( 'Tabela de conversão: Celsius -> Fahrenhiet');
     write('Digite a temperatura em Celsius: ');

@@ -16,7 +16,10 @@ begin
         begin
             res := -1;
         end
-        else res := 0;
+        else 
+        begin
+            res := 0;
+        end;
         
     end
 end;
@@ -29,9 +32,15 @@ BEGIN
     begin
         writeln('Numero positivo');
     end
-    else if ( x = 0 ) then
+    else
+    begin
+         if ( x = 0 ) then
         begin
         writeln ('Zero');
         end
-        else writeln('Número negativo');
+        else 
+        begin
+            writeln('Número negativo');
+        end;
+    end;
 END.
