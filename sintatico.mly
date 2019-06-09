@@ -37,6 +37,7 @@ open Sast
 %token <Lexing.position> MAIOR
 %token <Lexing.position> MENORIGUAL
 %token <Lexing.position> MAIORIGUAL
+%token <Lexing.position> NAO
 %token <Lexing.position> ELOG
 %token <Lexing.position> OULOG
 %token <Lexing.position> CONCAT
@@ -237,6 +238,7 @@ expressao:
           | f=FLOAT    { ExpFloat f  }
           | e1=expressao op=oper e2=expressao { ExpOp (op, e1, e2) }
           | APAR e=expressao FPAR { e }
+          | opun=operun e=expressao { ExpOpUn(opun,e) }
           | c = chamada_func { c }
 
 
@@ -254,6 +256,10 @@ expressao:
         | pos = ELOG   { (E, pos)     }
         | pos = OULOG  { (Ou, pos)    }
         | pos = CONCAT { (Concat, pos)}
+
+%inline operun:
+  | pos = MENOS { (Menosun, pos) }
+  | pos = NAO   { (Naoun, pos) }
 
 variavel:
         | x=ID       { VarSimples x }

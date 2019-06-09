@@ -9,5 +9,6 @@ type expressao = ExpVar of (expressao variavel) * tipo
               | ExpOp of (oper * tipo) * (expressao * tipo) * (expressao * tipo)
               | ExpChamFunc of ident * (expressao expressoes) * tipo
               | ExpVoid
+              | ExpOpUn of (operun * tipo) * (expressao * tipo)
 
 

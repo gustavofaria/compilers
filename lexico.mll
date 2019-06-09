@@ -58,25 +58,26 @@ rule token =
   | comentario { token lexbuf }
   | "(*"       { comentario_bloco_ast 0 lexbuf }  
   | "{"       { comentario_bloco_chave 0 lexbuf }  
-  | '+'   { MAIS (pos_atual lexbuf) }
-  | '-'   { MENOS (pos_atual lexbuf) }
-  | '*'   { MULT (pos_atual lexbuf) }
-  | '/'   { DIV (pos_atual lexbuf) }
-  | '<'   { MENOR (pos_atual lexbuf) }
+  | '+'   { MAIS       (pos_atual lexbuf) }
+  | '-'   { MENOS      (pos_atual lexbuf) }
+  | '*'   { MULT       (pos_atual lexbuf) }
+  | '/'   { DIV        (pos_atual lexbuf) }
+  | '<'   { MENOR      (pos_atual lexbuf) }
   | "<="  { MENORIGUAL (pos_atual lexbuf) }
   | ">="  { MAIORIGUAL (pos_atual lexbuf) }
-  | '='   { IGUAL (pos_atual lexbuf) }
-  | "<>"  { DIFER (pos_atual lexbuf) }
-  | '>'   { MAIOR (pos_atual lexbuf) }
-  | a n d { ELOG (pos_atual lexbuf) }
-  | o r   { OULOG (pos_atual lexbuf) }
-  | '('   { APAR (pos_atual lexbuf) }
-  | ')'   { FPAR (pos_atual lexbuf) }
-  | ','   { VIRG (pos_atual lexbuf) }
-  | '.'   { PTO (pos_atual lexbuf) }
-  | ':'   { DPTOS (pos_atual lexbuf) }
-  | ';'   { PTV (pos_atual lexbuf) }
-  | ":="  { ATRIB (pos_atual lexbuf) }
+  | '='   { IGUAL      (pos_atual lexbuf) }
+  | "<>"  { DIFER      (pos_atual lexbuf) }
+  | '>'   { MAIOR      (pos_atual lexbuf) }
+  | '!'   { NAO        (pos_atual lexbuf) }
+  | a n d { ELOG       (pos_atual lexbuf) }
+  | o r   { OULOG      (pos_atual lexbuf) }
+  | '('   { APAR       (pos_atual lexbuf) }
+  | ')'   { FPAR       (pos_atual lexbuf) }
+  | ','   { VIRG       (pos_atual lexbuf) }
+  | '.'   { PTO        (pos_atual lexbuf) }
+  | ':'   { DPTOS      (pos_atual lexbuf) }
+  | ';'   { PTV        (pos_atual lexbuf) }
+  | ":="  { ATRIB      (pos_atual lexbuf) }
   | '\''   { let buffer = Buffer.create 1 in 
             let str = leia_string buffer lexbuf in
               if(length(str)>1) then

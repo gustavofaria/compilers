@@ -9,3 +9,4 @@ type expressao =
   | ExpFloat of float pos
   | ExpOp of oper pos * expressao * expressao
   | ExpChamFunc of ident pos * (expressao expressoes)
+  | ExpOpUn of operun pos * expressao 
