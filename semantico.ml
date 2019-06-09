@@ -15,6 +15,7 @@ let rec posicao exp = let open S in
   | ExpBool (_,pos) -> pos
   | ExpOp ((_,pos),_,_)  -> pos
   | ExpChamFunc ((_,pos), _) -> pos
+  | ExpOpUn ((_,pos),_)  -> pos
 
 type classe_op = Aritmetico | Relacional | Logico | Cadeia
 
@@ -34,6 +35,12 @@ let classifica op =
   | Mult
   | Div -> Aritmetico
   | Concat -> Cadeia
+
+let classificaUn op =
+  let open A in
+  match op with
+    Naoun -> Logico
+  | Menosun -> Aritmetico
 
 let msg_erro_pos pos msg =
   let open Lexing in
@@ -89,13 +96,46 @@ let rec infere_exp amb exp =
          )
      | _ -> failwith "infere_exp: não implementado"
     )
+  | S.ExpOpUn (op, esq) ->
+    let (esq, tesq) = infere_exp amb esq in
+
+    let verifica_aritmetico () =
+      (match tesq with
+          A.TipoFloat
+        | A.TipoInt -> tesq (* O tipo da expressão aritmética como um todo *)
+
+       | t -> let msg = "um operador aritmetico nao pode ser usado com o tipo " ^
+                        (nome_tipo t)
+         in failwith (msg_erro_pos (snd op) msg)
+      )
+
+    and verifica_logico () =
+      (match tesq with
+         A.TipoBool -> A.TipoBool (* O tipo da expressão lógica é sempre booleano *)
+
+       | t -> let msg = "um operador logico nao pode ser usado com o tipo " ^
+                        (nome_tipo t)
+              in failwith (msg_erro_pos (snd op) msg)
+      )
+
+    in
+    let op = fst op in
+    let tinf = (match (classificaUn op) with
+          Aritmetico -> verifica_aritmetico ()
+        | Logico -> verifica_logico ()
+        | _ ->  failwith "infere_exp: Um operador unário não pode ser desse tipo"
+      )
+    in
+      (T.ExpOpUn ((op,tinf), (esq, tesq)),tinf)
+
   | S.ExpOp (op, esq, dir) ->
     let (esq, tesq) = infere_exp amb esq
     and (dir, tdir) = infere_exp amb dir in
 
     let verifica_aritmetico () =
       (match tesq with
-         A.TipoInt ->
+        A.TipoFloat
+        | A.TipoInt ->
          let _ = mesmo_tipo (snd op)
                       "O operando esquerdo eh do tipo %s mas o direito eh do tipo %s"
                       tesq tdir
@@ -109,6 +149,8 @@ let rec infere_exp amb exp =
     and verifica_relacional () =
       (match tesq with
          A.TipoInt
+       | A.TipoFloat
+       | A.TipoChar
        | A.TipoString ->
          let _ = mesmo_tipo (snd op)
                    "O operando esquerdo eh do tipo %s mas o direito eh do tipo %s"

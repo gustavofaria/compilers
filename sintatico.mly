@@ -37,6 +37,7 @@ open Sast
 %token <Lexing.position> MAIOR
 %token <Lexing.position> MENORIGUAL
 %token <Lexing.position> MAIORIGUAL
+%token <Lexing.position> NAO
 %token <Lexing.position> ELOG
 %token <Lexing.position> OULOG
 %token <Lexing.position> CONCAT
@@ -167,14 +168,15 @@ comando_atribuicao: v=variavel ATRIB e=expressao PTV {
 
 comando_se: SE teste=expressao ENTAO
               INICIO
-               entao=comando_case
+               entao=comando*
               FIM option(PTV)
-              senao= option(SENAO _senao = myelse { _senao })
+              senao= option(SENAO 
+                INICIO 
+                  myelse = comando*  
+                FIM option(PTV)    {myelse} )
              {
               CmdSe (teste, entao, senao)
             }
-
-myelse: cs=comando_case {cs}
 
 comando_while: WHILE teste=expressao DO
               INICIO
@@ -192,11 +194,13 @@ comando_for: FOR v=variavel ATRIB inicio=expressao TO fim = expressao DO
               CmdFor (ExpVar(v), inicio, fim, doit)
             }
             
-comando_entrada: ENTRADA APAR xs=separated_nonempty_list(VIRG, expressao) FPAR PTV {
+comando_entrada: ENTRADA APAR xs=separated_nonempty_list(VIRG, variavel) FPAR PTV {
+         let xs = List.map (fun elem -> ExpVar elem) xs in 
                    CmdEntrada xs
                }
 
-comando_entradaln: ENTRADALN APAR xs=separated_nonempty_list(VIRG, expressao) FPAR PTV {
+comando_entradaln: ENTRADALN APAR xs=separated_nonempty_list(VIRG, variavel) FPAR PTV {
+           let xs = List.map (fun elem -> ExpVar elem) xs in
                    CmdEntradaln xs
                }
 
@@ -212,7 +216,10 @@ comando_expressao: e=expressao PTV { CmdExpressao e }
 
 comando_switch: CASE teste=expressao OF
                 testes=case+
-                senao= option(SENAO _senao = myelse { _senao })
+                senao= option(SENAO 
+                INICIO 
+                  myelse = comando*  
+                FIM option(PTV)    {myelse} )
                 FIM 
                 option(PTV)
                 { CmdSwitch (teste, testes, senao) }
@@ -220,8 +227,6 @@ comando_switch: CASE teste=expressao OF
 
 case: l=expressao DPTOS INICIO c=comando+ FIM option(PTV) { Case (l, c) }
 
-comando_case: c = comando { [c] }
-              | INICIO c = comando+ FIM option(PTV) { c }
 
 
 expressao:
@@ -233,6 +238,7 @@ expressao:
           | f=FLOAT    { ExpFloat f  }
           | e1=expressao op=oper e2=expressao { ExpOp (op, e1, e2) }
           | APAR e=expressao FPAR { e }
+          | opun=operun e=expressao { ExpOpUn(opun,e) }
           | c = chamada_func { c }
 
 
@@ -250,6 +256,10 @@ expressao:
         | pos = ELOG   { (E, pos)     }
         | pos = OULOG  { (Ou, pos)    }
         | pos = CONCAT { (Concat, pos)}
+
+%inline operun:
+  | pos = MENOS { (Menosun, pos) }
+  | pos = NAO   { (Naoun, pos) }
 
 variavel:
         | x=ID       { VarSimples x }

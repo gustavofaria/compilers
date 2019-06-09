@@ -8,7 +8,10 @@ begin
     begin
         fatorial := 1;
     end
-    else fatorial := numero * fatorial(numero - 1);
+    else
+    begin 
+        fatorial := numero * fatorial(numero - 1);
+    end;
 end;
 BEGIN
     write('Digite um número: ');

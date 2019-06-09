@@ -6,22 +6,24 @@ BEGIN
     readln(preco);
     write('Digite a venda: ');
     readln(venda);
-    if ( (venda < 500) or (preco < 30)) then
+    if ( (venda < 500.0) or (preco < 30.0)) then
     BEGIN
-        novo_preco := preco + 10/100 * preco;
+        novo_preco := preco + 10.0/100.0 * preco;
     end
     else 
-        if ((venda >= 500) and (venda < 1200)) or ((preco >= 30) and ( preco <
-        80)) then
+    BEGIN
+        if ((venda >= 500.0) and (venda < 1200.0)) or ((preco >= 30.0) and ( preco <
+        80.0)) then
         BEGIN
-            novo_preco := preco + 15/100 * preco;
+            novo_preco := preco + 15.0/100.0 * preco;
         end
         else
         BEGIN
-            if ((venda >= 1200) or (preco >= 80)) then
+            if ((venda >= 1200.0) or (preco >= 80.0)) then
             BEGIN
-                novo_preco := preco - 20/100 * preco;
+                novo_preco := preco - 20.0/100.0 * preco;
             end;
             writeln('O novo preco é ', novo_preco);
         end;
+    END;
 END;

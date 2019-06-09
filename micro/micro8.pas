@@ -12,6 +12,8 @@ begin
         writeln('O número ', numero, ' é maior que 10');
     END
     else
+    begin
         writeln('O número ', numero, ' é menor que 10');
+    end;
 end;
 END.

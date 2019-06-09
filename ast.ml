@@ -64,3 +64,7 @@ and oper = Mais
          | E
          | Ou
          | Concat
+
+and operun = 
+  |Menosun
+  |Naoun
