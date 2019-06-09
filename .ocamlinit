@@ -14,10 +14,12 @@ let () =
 #load "tabsimb.cmo";;
 #load "ambiente.cmo";;
 #load "semantico.cmo";;
-#load "semanticoTest.cmo";;
+#load "ambInterp.cmo";;
+#load "interprete.cmo";;
+#load "interpreteTeste.cmo";;
 
 open Ast
-open Ambiente
-open SemanticoTest
+open AmbInterp
+open InterpreteTeste
 
 
