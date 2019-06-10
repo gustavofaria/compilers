@@ -45,6 +45,7 @@ open Sast
 %token <Lexing.position> FOR
 %token <Lexing.position> TO
 
+%left NAO
 %left OULOG
 %left ELOG
 %left IGUAL DIFER

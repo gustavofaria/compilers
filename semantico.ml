@@ -94,7 +94,7 @@ let rec infere_exp amb exp =
                  let msg = "A variavel " ^ id ^ " nao foi declarada" in
                  failwith (msg_erro nome msg)
          )
-     | _ -> failwith "infere_exp: não implementado"
+     (* | _ -> failwith "infere_exp: não implementado" *)
     )
   | S.ExpOpUn (op, esq) ->
     let (esq, tesq) = infere_exp amb esq in
@@ -181,6 +181,11 @@ let rec infere_exp amb exp =
                    "O operando esquerdo eh do tipo %s mas o direito eh do tipo %s"
                    tesq tdir
          in A.TipoString (* O tipo da expressão relacional é sempre string *)
+       | A.TipoChar ->
+         let _ = mesmo_tipo (snd op)
+                   "O operando esquerdo eh do tipo %s mas o direito eh do tipo %s"
+                   tesq tdir
+         in A.TipoString (* O tipo da expressão relacional é sempre string *)
 
        | t -> let msg = "um operador relacional nao pode ser usado com o tipo " ^
                         (nome_tipo t)
@@ -254,7 +259,7 @@ let rec infere_var amb exp =
                  let msg = "A variavel " ^ id ^ " nao foi declarada" in
                  failwith (msg_erro nome msg)
          )
-     | _ -> failwith "infere_var: não implementado"
+     (* | _ -> failwith "infere_var: não implementado" *)
     )
   | _ as v -> failwith (msg_erro_pos (posicao v) "Esperava uma variável, encontrou uma expressão")
 
