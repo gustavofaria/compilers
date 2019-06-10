@@ -68,6 +68,7 @@ rule token =
   | '='   { IGUAL      (pos_atual lexbuf) }
   | "<>"  { DIFER      (pos_atual lexbuf) }
   | '>'   { MAIOR      (pos_atual lexbuf) }
+  | '^'   { CONCAT      (pos_atual lexbuf) }
   | '!'   { NAO        (pos_atual lexbuf) }
   | a n d { ELOG       (pos_atual lexbuf) }
   | o r   { OULOG      (pos_atual lexbuf) }

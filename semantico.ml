@@ -45,7 +45,7 @@ let classificaUn op =
 let msg_erro_pos pos msg =
   let open Lexing in
   let lin = pos.pos_lnum
-  and col = pos.pos_cnum - pos.pos_bol - 1 in
+  and col = pos.pos_cnum - pos.pos_bol + 1 in
   Printf.sprintf "Semantico -> linha %d, coluna %d: %s" lin col msg
 
 let msg_erro nome msg =
@@ -418,27 +418,28 @@ and verifica_fun amb ast =
       A.DecFun {fn_nome; fn_tiporet; fn_formais; fn_locais; fn_corpo = corpo_tipado}
 
 
-let rec verifica_dup xs =
+let rec verifica_dup xs  msg =
   match xs with
     [] -> []
   | (nome,t)::xs ->
     let id = fst nome in
     if (List.for_all (fun (n,t) -> (fst n) <> id) xs)
-    then (id, t) :: verifica_dup xs
-    else let msg = "Parametro duplicado " ^ id in
+    then (id, t) :: verifica_dup xs msg
+    else let msg = msg ^ id in
       failwith (msg_erro nome msg)
 
 let insere_declaracao_var amb dec =
   let open A in
     match dec with
-        DecVar (nome, tipo) ->  Amb.insere_local amb (fst nome) tipo
+        DecVar (nome, tipo) -> let _ = verifica_dup [nome,tipo] "Variável duplicada " in
+          Amb.insere_local amb (fst nome) tipo
 
 let insere_declaracao_fun amb dec =
   let open A in
     match dec with
       DecFun {fn_nome; fn_tiporet; fn_formais; fn_corpo} ->
         (* Verifica se não há parâmetros duplicados *)
-        let formais = verifica_dup fn_formais in
+        let formais = verifica_dup fn_formais "Parametro duplicado "  in
         let nome = fst fn_nome in
         Amb.insere_fun amb nome formais fn_tiporet
 
