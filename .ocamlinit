@@ -16,10 +16,10 @@ let () =
 #load "semantico.cmo";;
 #load "ambInterp.cmo";;
 #load "interprete.cmo";;
-#load "interpreteTeste.cmo";;
+#load "interpreteTest.cmo";;
 
 open Ast
 open AmbInterp
-open InterpreteTeste
+open InterpreteTest
 
 

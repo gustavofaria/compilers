@@ -10,7 +10,6 @@ let obtem_nome_tipo_var exp = let open T in
   | ExpVar (v,tipo) ->
     (match v with
       | A.VarSimples (nome,_) -> (nome,tipo)
-      | _ -> failwith "obtem_nome_tipo_var: nao implementado"
     )
   | _ -> failwith "obtem_nome_tipo_var: nao eh variavel"
 
@@ -57,6 +56,12 @@ let classifica op =
   | Mult
   | Div -> Aritmetico
   | Concat -> Cadeia
+
+let classificaun op =
+  let open A in
+  match op with
+   Menosun  -> Aritmetico
+  | Naoun -> Logico
 
 let rec interpreta_exp amb exp =
 let open A in
@@ -169,13 +174,51 @@ let open T in
          )
        | _ ->  failwith "interpreta_cadeia"
       )
-
-    in
+      in
     let valor = (match (classifica op) with
           Aritmetico -> interpreta_aritmetico ()
-        | Relacional -> interpreta_relacional ()
         | Logico -> interpreta_logico ()
+        | Relacional -> interpreta_relacional ()
         | Cadeia -> interpreta_cadeia ()
+      )
+    in
+      valor  
+  | ExpOpUn ((op,top), (esq, tesq)) ->
+    let vesq = interpreta_exp amb esq in
+
+    let interpreta_aritmetico () =
+      (match tesq with
+       | TipoInt ->
+         (match op with
+          | Menosun -> ExpInt (-(pega_int vesq), top)
+          | _ -> failwith "interpreta_aritmetico"
+         )
+       | TipoFloat ->
+         (match op with
+         | Menosun -> ExpFloat (-.(pega_float vesq), top)
+          | _ -> failwith "interpreta_aritmetico"
+         )
+       | _ -> failwith "interpreta_aritmetico"
+      )
+
+    and interpreta_logico () =
+      (match tesq with
+       | TipoBool ->
+         (match op with
+          | Naoun ->let vvesq = pega_bool vesq in 
+          if vvesq then  ExpBool (false , top)
+          else 
+           ExpBool (true, top)
+          | _ -> failwith "interpreta_logico bool"
+         )
+       | _ ->  failwith "interpreta_relacional"
+      )
+
+    in
+    let valor = (match (classificaun op) with
+          Aritmetico -> interpreta_aritmetico ()
+        | Logico -> interpreta_logico ()
+        | _ -> failwith "Classifica unário: não implementado"
       )
     in
       valor
@@ -311,27 +354,50 @@ and interpreta_cmd amb cmd =
      let teste1 = interpreta_exp amb teste in
    (match teste1 with
        ExpBool (true,_) ->
-       (* Interpreta cada comando do corpo do while *)
+       (* Interpreta uma iteraçao comando do corpo do while *)
        let _ = List.iter (interpreta_cmd amb) doit in 
+       (* interpreta recursivamente as possíveis demais iterações do comando *)
         interpreta_cmd amb (CmdWhile (teste, doit))
        | _ -> ()
    )
 
-  (* | CmdSwitch (teste, doit) ->
+  | CmdSwitch (teste, cases, senao) ->
      let teste1 = interpreta_exp amb teste in
-      (match teste1 with
-       ExpBool (true,_) ->
-       (* Interpreta cada comando do corpo do while *)
-       let _ = List.iter (interpreta_cmd amb) doit in 
-        interpreta_cmd amb (CmdWhile (teste, doit))
-       | _ -> ()
-   )  *)
+    let rec match_cases listacase = ( match listacase with 
+      head::tail ->
+      (* Percorre a lista de cases *)
+      (match head with Case (l,c) ->
+      (* se a expressao do case for igual 
+      a expressao do comando swith, então*)
+       if (interpreta_exp amb l) = teste1 then 
+        (* avalie cada comando desse case *)
+        List.iter (interpreta_cmd amb) c
+        (*caso não sejam iguais, avalie o próximo case*)
+        else match_cases tail )
+        (* se alcançou o fim da lista, é porque não acho nenhum case compatível,
+        logo, hora de executar o bloco default*)
+      | [] ->( match senao with 
+        Some c -> 
+        List.iter (interpreta_cmd amb) c
+        (* não sei de um comando return em Ocaml,
+         acredito que esse seja o jeito correto*)
+        | None -> ignore()) )
+    in match_cases cases
 
   | CmdFor (variavel, inicio, fim, doit) ->
+  (* Interpreta o For como uma atribuição seguida de um while,
+   que ao final do corpo tem uma operação de incremento na variável de iteração *)
+
+   (* incializa variável de iteração *)
     let _ = interpreta_cmd amb (CmdAtrib (variavel, inicio)) in
+    (* monta artificialmente o comando de incremento *)
     let inc = CmdAtrib (variavel, (ExpOp((Mais, TipoInt ),( variavel,TipoInt), (ExpInt (1, TipoInt),TipoInt) ))) in
-    let novocorpo = List.append doit ([inc]) in
+    (* adiciona esse incremento ao final do corpo *)    
+    let novocorpo = List.append doit [inc] in
+    (* cria o teste (variavel_de_iteração < fim) *)
     let teste = (ExpOp((Menor, TipoInt ),( variavel,TipoInt),(fim,TipoInt) )) in
+
+    (* relança o comando while para a funçao interpretá-lo*)
     interpreta_cmd amb (CmdWhile (teste, novocorpo))
   
 
