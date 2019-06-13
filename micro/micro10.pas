@@ -3,6 +3,10 @@ VAR
 numero : integer;
 fat : integer;
 FUNCTION fatorial( numero : integer) : integer;
+VAR
+numerasdfo : integer;
+fat : integer;
+fat : integer;
 begin
     if ( numero <= 0) then
     begin
