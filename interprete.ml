@@ -134,23 +134,27 @@ let open T in
           | Maiorigual  -> ExpBool (pega_float vesq >= pega_float vdir, top)
           | Igual   -> ExpBool (pega_float vesq == pega_float vdir, top)
           | Difer   -> ExpBool (pega_float vesq != pega_float vdir, top)
-          | _ -> failwith "interpreta_relacional f"
+          | _ -> failwith "interpreta_relacional float"
          )
        | TipoString ->
          (match op with
           | Menor -> ExpBool (pega_string vesq < pega_string vdir, top)
           | Maior  -> ExpBool (pega_string vesq > pega_string vdir, top)
-          | Igual   -> ExpBool (pega_string vesq == pega_string vdir, top)
-          | Difer   -> ExpBool (pega_string vesq != pega_string vdir, top)
-          | _ -> failwith "interpreta_relacional"
+          | Menorigual -> ExpBool  ((pega_string vesq < pega_string vdir) || not(pega_string vesq <> pega_string vdir), top)
+          | Maiorigual  -> ExpBool ((pega_string vesq > pega_string vdir) || not(pega_string vesq <> pega_string vdir), top)
+          | Igual   -> ExpBool (not(pega_string vesq <> pega_string vdir), top)
+          | Difer   -> ExpBool (pega_string vesq <> pega_string vdir, top)
+          | _ -> failwith "interpreta_relacional string"
          )
-       | TipoBool ->
+       | TipoChar ->
          (match op with
-          | Menor -> ExpBool (pega_bool vesq < pega_bool vdir, top)
-          | Maior  -> ExpBool (pega_bool vesq > pega_bool vdir, top)
-          | Igual   -> ExpBool (pega_bool vesq == pega_bool vdir, top)
-          | Difer   -> ExpBool (pega_bool vesq != pega_bool vdir, top)
-          | _ -> failwith "interpreta_relacional"
+          | Menor -> ExpBool (pega_char vesq < pega_char vdir, top)
+          | Maior  -> ExpBool (pega_char vesq > pega_char vdir, top)
+          | Menorigual -> ExpBool  ((pega_char vesq < pega_char vdir) || not(pega_char vesq <> pega_char vdir), top)
+          | Maiorigual  -> ExpBool ((pega_char vesq > pega_char vdir) || not(pega_char vesq <> pega_char vdir), top)
+          | Igual   -> ExpBool (not(pega_char vesq <> pega_char vdir), top)
+          | Difer   -> ExpBool (pega_char vesq <> pega_char vdir, top)
+          | _ -> failwith "interpreta_relacional char"
          )
        | _ ->  failwith "interpreta_relacional"
       )
@@ -161,7 +165,7 @@ let open T in
          (match op with
           | Ou -> ExpBool (pega_bool vesq || pega_bool vdir, top)
           | E ->   ExpBool (pega_bool vesq && pega_bool vdir, top)
-          | _ ->  failwith "interpreta_logico"
+          | _ ->  failwith "interpreta_logico bool"
          )
        | _ ->  failwith "interpreta_logico"
       )
@@ -211,7 +215,7 @@ let open T in
            ExpBool (true, top)
           | _ -> failwith "interpreta_logico bool"
          )
-       | _ ->  failwith "interpreta_relacional"
+       | _ ->  failwith "interpreta_logico"
       )
 
     in
@@ -323,6 +327,8 @@ and interpreta_cmd amb cmd =
       (match exp with
        | T.ExpInt (n,_) ->      let _ = print_int n in print_string " "
        | T.ExpString (s,_) -> let _ = print_string s in print_string " "
+       | T.ExpFloat (f,_) -> let _ = print_float  f in print_string " "
+       | T.ExpChar (c,_) -> let _ = print_char  c in print_string " "
        | T.ExpBool (b,_) ->
          let _ = print_string (if b then "true" else "false")
          in print_string " "
@@ -339,6 +345,8 @@ and interpreta_cmd amb cmd =
       (match exp with
        | T.ExpInt (n,_) ->      let _ = print_int n in print_string " "
        | T.ExpString (s,_) -> let _ = print_string s in print_string " "
+       | T.ExpFloat (f,_) -> let _ = print_float  f in print_string " "
+       | T.ExpChar (c,_) -> let _ = print_char  c in print_string " "
        | T.ExpBool (b,_) ->
          let _ = print_string (if b then "true" else "false")
          in print_string " "
@@ -388,12 +396,15 @@ and interpreta_cmd amb cmd =
   (* Interpreta o For como uma atribuição seguida de um while,
    que ao final do corpo tem uma operação de incremento na variável de iteração *)
 
-   (* incializa variável de iteração *)
+    (* incializa variável de iteração *)
     let _ = interpreta_cmd amb (CmdAtrib (variavel, inicio)) in
+    
     (* monta artificialmente o comando de incremento *)
     let inc = CmdAtrib (variavel, (ExpOp((Mais, TipoInt ),( variavel,TipoInt), (ExpInt (1, TipoInt),TipoInt) ))) in
+    
     (* adiciona esse incremento ao final do corpo *)    
     let novocorpo = List.append doit [inc] in
+
     (* cria o teste (variavel_de_iteração < fim) *)
     let teste = (ExpOp((Menor, TipoInt ),( variavel,TipoInt),(fim,TipoInt) )) in
 
