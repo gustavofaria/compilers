@@ -22,6 +22,7 @@ begin
         end;
         
     end
+    verifica:= res;
 end;
 
 BEGIN

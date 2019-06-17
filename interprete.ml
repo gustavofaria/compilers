@@ -292,10 +292,10 @@ and interpreta_cmd amb cmd =
 
   | CmdAtrib (elem, exp) ->
     (* Interpreta o lado direito da atribuição *)
-    let exp = interpreta_exp amb exp
+    let exp1 = interpreta_exp amb exp
     (* Faz o mesmo para o lado esquerdo *)
     and (elem1,tipo) = obtem_nome_tipo_var elem in
-    Amb.atualiza_var amb elem1 tipo (Some exp)
+    Amb.atualiza_var amb elem1 tipo (Some exp1)
 
   | CmdExpressao exp -> ignore( interpreta_exp amb exp)
 
