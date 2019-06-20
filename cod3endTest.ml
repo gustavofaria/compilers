@@ -8,6 +8,8 @@ module S = MenhirLib.General (* Streams *)
 module I = Sintatico.MenhirInterpreter
 
 open Semantico
+open Codigo
+open Cod3End
 
 let message =
   fun s ->
@@ -211,7 +213,44 @@ let verifica_tipos nome =
     Some (Some ast) -> semantico ast
   | _ -> failwith "Nada a fazer!\n"
 
+let traduz nome =
+  let (arv,tab) = verifica_tipos nome in
+  tradutor arv
 
-let interprete nome =
-  let tast,amb = verifica_tipos nome in
-  Interprete.interprete tast
+let imprime_traducao cod =
+   let _ = printf "\n" in
+   escreve_codigo cod
+
+
+(* Para compilar:
+     ocamlbuild -use-ocamlfind -use-menhir -menhir "menhir --table" -package menhirLib cod3endTest.byte
+  
+   Para usar, entre no ocaml 
+
+     rlwrap ocaml
+
+   e se desejar ver apenas a árvore sintática que sai do analisador sintático, digite
+
+     parse_arq "exemplos/Tipos/ex8.tip";;
+
+   Depois, para ver a saída do analisador semântico já com a árvore anotada com 
+   o tipos, digite:
+
+   verifica_tipos "exemplos/Tipos/ex8.tip";;
+
+   Note que o analisador semântico está retornando também o ambiente global. Se 
+   quiser separá-los, digite:
+
+   let (arv, amb) = verifica_tipos "exemplos/Tipos/ex8.tip";;
+   
+   Para ver o código de 3 endereços:
+   traduz "exemplos/Tipos/ex8.tip";;
+   
+   ou se quiser ver em um formato mais legível:
+   
+   let cod = traduz "exemplos/Tipos/ex8.tip" in imprime_traducao cod;;
+   
+
+    
+
+ *)

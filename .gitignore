@@ -213,3 +213,5 @@ nbdist/
 
 _build/
 interpreteTest\.byte
+
+micro/
