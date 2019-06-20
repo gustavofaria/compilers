@@ -9,8 +9,8 @@ let num_bytes t =
     | TipoString -> 4
     | TipoBool -> 4
     | TipoVoid -> 4
-    | TipoArranjo (t,i,f) -> 4
-    | TipoRegistro cs -> 4
+    | TipoChar -> 4
+    | TipoFloat -> 4
 
 
 let emite_cabecalho oc arq = 

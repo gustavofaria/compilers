@@ -42,8 +42,9 @@ let tipo_to_str t =
     | TipoString -> "string"
     | TipoBool -> "bool"
     | TipoVoid -> "void"
-    | TipoArranjo (t,i,f) -> "arranjo"
-    | TipoRegistro cs -> "registro"
+    | TipoFloat -> "double"
+    | TipoChar -> "char"
+
 
 let op_to_str op = 
   match op with
@@ -55,8 +56,8 @@ let op_to_str op =
   | Igual -> "="
   | Difer -> "!="
   | Maior -> ">"
-  | MaiorIgual -> ">="
-  | MenorIgual -> ">="
+  | Maiorigual -> ">="
+  | Menorigual -> ">="
   | E     -> "&&"
   | Ou    -> "||"
   | Concat -> "^"
@@ -190,7 +191,7 @@ let rec traduz_cmd cmd =
               [rotulo_falso] @ codigo_senao @
               [rotulo_fim]
     )
-  | CmdChamada (ExpChamFunc (id, args, tipo_fn)) -> 
+  | CmdExpressao (ExpChamFunc (id, args, tipo_fn)) -> 
       let (enderecos, codigos) = List.split (List.map traduz_exp args) in
       let tipos = List.map pega_tipo args in
       let endr_tipos = List.combine enderecos tipos in
@@ -237,7 +238,7 @@ let tradutor ast_tipada =
       DecVar ((id,pos),t) -> Global (id,t)
   in
   let _ = zera_contadores () in 
-  let (Programa (decs_globais, decs_funs, corpo)) = ast_tipada in
+  let (Programa (nome, decs_globais, decs_funs, corpo)) = ast_tipada in
   let globais_trad = List.map trad_global decs_globais in
   let funs_trad = List.map traduz_fun decs_funs in
   let corpo_trad = traduz_cmds corpo in

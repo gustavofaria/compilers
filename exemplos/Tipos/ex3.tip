@@ -1,6 +1,0 @@
-programa
-   a: inteiro;
-
-inicio
-   a := 2;
-fim;
