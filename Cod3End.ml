@@ -55,6 +55,8 @@ let op_to_str op =
   | Igual -> "="
   | Difer -> "!="
   | Maior -> ">"
+  | MaiorIgual -> ">="
+  | MenorIgual -> ">="
   | E     -> "&&"
   | Ou    -> "||"
   | Concat -> "^"
@@ -115,7 +117,7 @@ let pega_tipo exp =
   | ExpInt (n, t) -> t
   | ExpVar (v, t) -> t
   | ExpOp ((op,t),_,_) -> t
-  | ExpChamada (id, args, t) -> t
+  | ExpChamFunc (id, args, t) -> t
   | _ -> failwith "pega_tipo: não implementado"
 
 
@@ -138,7 +140,7 @@ let rec traduz_exp exp =
     let codigo = codigo1 @ codigo2 @ [AtribBin (t, endr1, op, endr2)] in
     (t, codigo)    
 
-  | ExpChamada (id, args, tipo_fn) ->
+  | ExpChamFunc (id, args, tipo_fn) ->
       let (enderecos, codigos) = List.split (List.map traduz_exp args) in
       let tipos = List.map pega_tipo args in
       let endr_tipos = List.combine enderecos tipos  
@@ -188,7 +190,7 @@ let rec traduz_cmd cmd =
               [rotulo_falso] @ codigo_senao @
               [rotulo_fim]
     )
-  | CmdChamada (ExpChamada (id, args, tipo_fn)) -> 
+  | CmdChamada (ExpChamFunc (id, args, tipo_fn)) -> 
       let (enderecos, codigos) = List.split (List.map traduz_exp args) in
       let tipos = List.map pega_tipo args in
       let endr_tipos = List.combine enderecos tipos in
